@@ -1,17 +1,17 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using Ocelot.Middleware;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Net;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using Ocelot.Middleware;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class CustomMiddlewareTests : IDisposable
     {
         private readonly string _configurationPath;
@@ -36,7 +36,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -52,16 +52,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -79,7 +79,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -95,16 +95,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -122,7 +122,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -138,16 +138,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -165,7 +165,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -181,16 +181,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -208,7 +208,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -224,16 +224,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -251,7 +251,7 @@
                 {
                     _counter++;
                     await next.Invoke();
-                }
+                },
             };
 
             var fileConfiguration = new FileConfiguration
@@ -267,16 +267,16 @@
                                 {
                                     Host = "localhost",
                                     Port = 41879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, ""))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41879", 200, string.Empty))
                 .And(x => _steps.GivenThereIsAConfiguration(fileConfiguration, _configurationPath))
                 .And(x => _steps.GivenOcelotIsRunning(configuration))
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -314,13 +314,13 @@
                                 {
                                     Host = "localhost",
                                     Port = 41880,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:41880", 200, "/test"))

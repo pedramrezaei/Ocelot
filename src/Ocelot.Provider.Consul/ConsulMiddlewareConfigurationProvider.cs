@@ -1,17 +1,17 @@
-﻿namespace Ocelot.Provider.Consul
-{
-    using Configuration.Creator;
-    using Configuration.File;
-    using Configuration.Repository;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
-    using Middleware;
-    using Responses;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration.Creator;
+using Ocelot.Configuration.File;
+using Ocelot.Configuration.Repository;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Ocelot.Middleware;
+using Ocelot.Responses;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Consul
+{
     public static class ConsulMiddlewareConfigurationProvider
     {
         public static OcelotMiddlewareConfigurationDelegate Get = async builder =>

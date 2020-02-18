@@ -1,13 +1,13 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using global::Rafty.Concensus.Node;
-    using global::Rafty.Infrastructure;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.DependencyInjection;
-    using Middleware;
-    using System.Threading.Tasks;
+﻿using Rafty.Concensus.Node;
+using Rafty.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Ocelot.Middleware;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     public static class RaftyMiddlewareConfigurationProvider
     {
         public static OcelotMiddlewareConfigurationDelegate Get = builder =>
@@ -33,7 +33,7 @@
 
         private static void SetUpRafty(IApplicationBuilder builder)
         {
-            var applicationLifetime = builder.ApplicationServices.GetService<IApplicationLifetime>();
+            var applicationLifetime = builder.ApplicationServices.GetService<IHostApplicationLifetime>();
             applicationLifetime.ApplicationStopping.Register(() => OnShutdown(builder));
             var node = builder.ApplicationServices.GetService<INode>();
             var nodeId = builder.ApplicationServices.GetService<NodeId>();

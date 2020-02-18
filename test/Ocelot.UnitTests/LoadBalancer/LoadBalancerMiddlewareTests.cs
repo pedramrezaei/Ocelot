@@ -1,27 +1,25 @@
 using System;
-using System.Linq.Expressions;
 using Ocelot.Middleware;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Errors;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Ocelot.LoadBalancer.Middleware;
+using Ocelot.Logging;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+using Ocelot.Values;
+using Shouldly;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.LoadBalancer
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Errors;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Ocelot.LoadBalancer.Middleware;
-    using Ocelot.Logging;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Responses;
-    using Ocelot.Values;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class LoadBalancerMiddlewareTests
     {
         private readonly Mock<ILoadBalancerHouse> _loadBalancerHouse;
@@ -29,13 +27,13 @@ namespace Ocelot.UnitTests.LoadBalancer
         private ServiceHostAndPort _hostAndPort;
         private ErrorResponse<ILoadBalancer> _getLoadBalancerHouseError;
         private ErrorResponse<ServiceHostAndPort> _getHostAndPortError;
-        private HttpRequestMessage _downstreamRequest;
+        private readonly HttpRequestMessage _downstreamRequest;
         private ServiceProviderConfiguration _config;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private LoadBalancingMiddleware _middleware;
-        private DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly DownstreamContext _downstreamContext;
+        private readonly OcelotRequestDelegate _next;
 
         public LoadBalancerMiddlewareTests()
         {
@@ -145,7 +143,7 @@ namespace Ocelot.UnitTests.LoadBalancer
 
         private void GivenTheDownStreamUrlIs(string downstreamUrl)
         {
-            _downstreamRequest.RequestUri = new System.Uri(downstreamUrl);
+            _downstreamRequest.RequestUri = new Uri(downstreamUrl);
             _downstreamContext.DownstreamRequest = new DownstreamRequest(_downstreamRequest);
         }
 
@@ -187,9 +185,9 @@ namespace Ocelot.UnitTests.LoadBalancer
 
         private void GivenTheLoadBalancerHouseReturnsAnError()
         {
-            _getLoadBalancerHouseError = new ErrorResponse<ILoadBalancer>(new List<Ocelot.Errors.Error>()
+            _getLoadBalancerHouseError = new ErrorResponse<ILoadBalancer>(new List<Error>()
             {
-                new UnableToFindLoadBalancerError($"unabe to find load balancer for bah")
+                new UnableToFindLoadBalancerError($"unabe to find load balancer for bah"),
             });
 
             _loadBalancerHouse

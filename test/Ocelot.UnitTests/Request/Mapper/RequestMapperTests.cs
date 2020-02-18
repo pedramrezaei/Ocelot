@@ -1,23 +1,23 @@
-﻿namespace Ocelot.UnitTests.Request.Mapper
-{
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Primitives;
-    using Ocelot.Request.Mapper;
-    using Ocelot.Responses;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Ocelot.Request.Mapper;
+using Ocelot.Responses;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.Request.Mapper
+{
     public class RequestMapperTests
     {
         private readonly HttpContext _httpContext;
@@ -235,7 +235,6 @@
         {
             _inputRequest.ContentType = null;
         }
-
 
         private void ThenTheContentHeadersAreNotAddedToNonContentHeaders()
         {

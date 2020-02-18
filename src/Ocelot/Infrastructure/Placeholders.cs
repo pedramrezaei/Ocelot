@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Infrastructure.RequestData;
+using Ocelot.Middleware;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+using System;
+using System.Collections.Generic;
+
 namespace Ocelot.Infrastructure
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Infrastructure.RequestData;
-    using Ocelot.Middleware;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Responses;
-    using System;
-    using System.Collections.Generic;
-
     public class Placeholders : IPlaceholders
     {
         private readonly Dictionary<string, Func<Response<string>>> _placeholders;
@@ -25,12 +25,12 @@ namespace Ocelot.Infrastructure
             {
                 { "{BaseUrl}", GetBaseUrl() },
                 { "{TraceId}", GetTraceId() },
-                { "{RemoteIpAddress}", GetRemoteIpAddress() }
+                { "{RemoteIpAddress}", GetRemoteIpAddress() },
             };
 
             _requestPlaceholders = new Dictionary<string, Func<DownstreamRequest, string>>
             {
-                { "{DownstreamBaseUrl}", GetDownstreamBaseUrl() }
+                { "{DownstreamBaseUrl}", GetDownstreamBaseUrl() },
             };
         }
 

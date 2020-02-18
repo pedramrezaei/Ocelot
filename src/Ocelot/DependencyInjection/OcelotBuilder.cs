@@ -1,49 +1,48 @@
 using Ocelot.Configuration.ChangeTracking;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Ocelot.Authorisation;
+using Ocelot.Cache;
+using Ocelot.Claims;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Creator;
+using Ocelot.Configuration.File;
+using Ocelot.Configuration.Parser;
+using Ocelot.Configuration.Repository;
+using Ocelot.Configuration.Setter;
+using Ocelot.Configuration.Validator;
+using Ocelot.DownstreamRouteFinder.Finder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.DownstreamUrlCreator.UrlTemplateReplacer;
+using Ocelot.Headers;
+using Ocelot.Infrastructure;
+using Ocelot.Infrastructure.Claims.Parser;
+using Ocelot.Infrastructure.RequestData;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Middleware.Multiplexer;
+using Ocelot.PathManipulation;
+using Ocelot.QueryStrings;
+using Ocelot.RateLimit;
+using Ocelot.Request.Creator;
+using Ocelot.Request.Mapper;
+using Ocelot.Requester;
+using Ocelot.Requester.QoS;
+using Ocelot.Responder;
+using Ocelot.Security;
+using Ocelot.Security.IPSecurity;
+using Ocelot.ServiceDiscovery;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
 
 namespace Ocelot.DependencyInjection
 {
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.Extensions.Options;
-    using Ocelot.Authorisation;
-    using Ocelot.Cache;
-    using Ocelot.Claims;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Creator;
-    using Ocelot.Configuration.File;
-    using Ocelot.Configuration.Parser;
-    using Ocelot.Configuration.Repository;
-    using Ocelot.Configuration.Setter;
-    using Ocelot.Configuration.Validator;
-    using Ocelot.DownstreamRouteFinder.Finder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.DownstreamUrlCreator.UrlTemplateReplacer;
-    using Ocelot.Headers;
-    using Ocelot.Infrastructure;
-    using Ocelot.Infrastructure.Claims.Parser;
-    using Ocelot.Infrastructure.RequestData;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Middleware.Multiplexer;
-    using Ocelot.PathManipulation;
-    using Ocelot.QueryStrings;
-    using Ocelot.RateLimit;
-    using Ocelot.Request.Creator;
-    using Ocelot.Request.Mapper;
-    using Ocelot.Requester;
-    using Ocelot.Requester.QoS;
-    using Ocelot.Responder;
-    using Ocelot.Security;
-    using Ocelot.Security.IPSecurity;
-    using Ocelot.ServiceDiscovery;
-    using System;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Reflection;
-
     public class OcelotBuilder : IOcelotBuilder
     {
         public IServiceCollection Services { get; }
@@ -102,7 +101,7 @@ namespace Ocelot.DependencyInjection
             Services.TryAddSingleton<IUrlPathToUrlTemplateMatcher, RegExUrlMatcher>();
             Services.TryAddSingleton<IPlaceholderNameAndValueFinder, UrlPathPlaceholderNameAndValueFinder>();
             Services.TryAddSingleton<IDownstreamPathPlaceholderReplacer, DownstreamTemplatePathPlaceholderReplacer>();
-            Services.AddSingleton<IDownstreamRouteProvider, DownstreamRouteFinder>();
+            Services.AddSingleton<IDownstreamRouteProvider, DownstreamRouteFinder.Finder.DownstreamRouteFinder>();
             Services.AddSingleton<IDownstreamRouteProvider, DownstreamRouteCreator>();
             Services.TryAddSingleton<IDownstreamRouteProviderFactory, DownstreamRouteProviderFactory>();
             Services.TryAddSingleton<IHttpRequester, HttpClientHttpRequester>();
@@ -147,7 +146,7 @@ namespace Ocelot.DependencyInjection
                   .AddApplicationPart(assembly)
                   .AddControllersAsServices()
                   .AddAuthorization()
-                  .AddNewtonsoftJson(); 
+                  .AddNewtonsoftJson();
 
             Services.AddLogging();
             Services.AddMiddlewareAnalysis();
@@ -176,14 +175,16 @@ namespace Ocelot.DependencyInjection
 
         public IOcelotBuilder AddDelegatingHandler(Type delegateType, bool global = false)
         {
-            if (!typeof(DelegatingHandler).IsAssignableFrom(delegateType)) throw new ArgumentOutOfRangeException(nameof(delegateType), delegateType.Name, "It is not a delegatin handler");
+            if (!typeof(DelegatingHandler).IsAssignableFrom(delegateType))
+            {
+                throw new ArgumentOutOfRangeException(nameof(delegateType), delegateType.Name, "It is not a delegatin handler");
+            }
 
             if (global)
             {
                 Services.AddTransient(delegateType);
-                Services.AddTransient<GlobalDelegatingHandler>(s =>
+                Services.AddTransient(s =>
                 {
-
                     var service = s.GetService(delegateType) as DelegatingHandler;
                     return new GlobalDelegatingHandler(service);
                 });
@@ -202,7 +203,7 @@ namespace Ocelot.DependencyInjection
             if (global)
             {
                 Services.AddTransient<THandler>();
-                Services.AddTransient<GlobalDelegatingHandler>(s =>
+                Services.AddTransient(s =>
                 {
                     var service = s.GetService<THandler>();
                     return new GlobalDelegatingHandler(service);
@@ -227,8 +228,8 @@ namespace Ocelot.DependencyInjection
 
             Services.Replace(ServiceDescriptor.Describe(
                 typeof(IPlaceholders),
-                s => (IPlaceholders) objectFactory(s,
-                    new[] {CreateInstance(s, wrappedDescriptor)}),
+                s => (IPlaceholders)objectFactory(s,
+                    new[] { CreateInstance(s, wrappedDescriptor) }),
                 wrappedDescriptor.Lifetime
             ));
 

@@ -1,49 +1,48 @@
 ﻿using Ocelot.Configuration.ChangeTracking;
+using Ocelot.AcceptanceTests.Caching;
+using Ocelot.Configuration.Repository;
+using CacheManager.Core;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Newtonsoft.Json;
+using Ocelot.Cache.CacheManager;
+using Ocelot.Configuration.Creator;
+using Ocelot.Configuration.File;
+using Ocelot.DependencyInjection;
+using Ocelot.Infrastructure;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Middleware.Multiplexer;
+using Ocelot.Provider.Consul;
+using Ocelot.Provider.Eureka;
+using Ocelot.Provider.Polly;
+using Ocelot.Tracing.Butterfly;
+using Ocelot.Requester;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using static Ocelot.AcceptanceTests.HttpDelegatingHandlersTests;
+using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
+using CookieHeaderValue = Microsoft.Net.Http.Headers.CookieHeaderValue;
+using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
 namespace Ocelot.AcceptanceTests
 {
-    using Caching;
-    using Configuration.Repository;
-    using global::CacheManager.Core;
-    using IdentityServer4.AccessTokenValidation;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.TestHost;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Moq;
-    using Newtonsoft.Json;
-    using Ocelot.Cache.CacheManager;
-    using Ocelot.Configuration.Creator;
-    using Ocelot.Configuration.File;
-    using Ocelot.DependencyInjection;
-    using Ocelot.Infrastructure;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Middleware.Multiplexer;
-    using Ocelot.Provider.Consul;
-    using Ocelot.Provider.Eureka;
-    using Ocelot.Provider.Polly;
-    using Ocelot.Tracing.Butterfly;
-    using Requester;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using static Ocelot.AcceptanceTests.HttpDelegatingHandlersTests;
-    using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
-    using CookieHeaderValue = Microsoft.Net.Http.Headers.CookieHeaderValue;
-    using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
-
     public class Steps : IDisposable
     {
         private TestServer _ocelotServer;
@@ -205,14 +204,8 @@ namespace Ocelot.AcceptanceTests
                     config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: shouldReload);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(s => s.AddOcelot())
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -241,14 +234,8 @@ namespace Ocelot.AcceptanceTests
                     config.AddJsonFile("ocelot.json", false, false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(s => s.AddOcelot())
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -269,14 +256,8 @@ namespace Ocelot.AcceptanceTests
                     config.AddJsonFile("ocelot.json", false, false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot().AddConsul();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(s => s.AddOcelot().AddConsul())
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -315,10 +296,7 @@ namespace Ocelot.AcceptanceTests
                 })
                 .Configure(app =>
                 {
-                    app.Use(async (context, next) =>
-                    {
-                        await next.Invoke();
-                    });
+                    app.Use(async (context, next) => await next.Invoke());
                     app.UseOcelot().Wait();
                 });
 
@@ -356,10 +334,7 @@ namespace Ocelot.AcceptanceTests
                         .AddConsul()
                         .AddConfigStoredInConsul();
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -380,14 +355,8 @@ namespace Ocelot.AcceptanceTests
                     config.AddJsonFile("ocelot.json", optional: true, reloadOnChange: false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot().AddConsul().AddConfigStoredInConsul();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(s => s.AddOcelot().AddConsul().AddConfigStoredInConsul())
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -440,10 +409,7 @@ namespace Ocelot.AcceptanceTests
                                 .WithHandle(typeof(InMemoryJsonHandle<>));
                         });
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -466,13 +432,10 @@ namespace Ocelot.AcceptanceTests
                 })
                 .ConfigureServices(s =>
                 {
-                    s.AddSingleton<IHttpClientCache>(cache);
+                    s.AddSingleton(cache);
                     s.AddOcelot();
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -498,10 +461,7 @@ namespace Ocelot.AcceptanceTests
                     config.AddJsonFile("ocelot.json", optional: true, reloadOnChange: false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot();
-                })
+                .ConfigureServices(s => s.AddOcelot())
                 .Configure(app =>
                 {
                     app.UseMiddleware<T>(callback);
@@ -536,10 +496,7 @@ namespace Ocelot.AcceptanceTests
                         .AddDelegatingHandler<TOne>()
                         .AddDelegatingHandler<TWo>();
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot().Wait();
-                });
+                .Configure(a => a.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -569,10 +526,7 @@ namespace Ocelot.AcceptanceTests
                     s.AddOcelot()
                         .AddSingletonDefinedAggregator<TAggregator>();
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot().Wait();
-                });
+                .Configure(a => a.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -602,10 +556,7 @@ namespace Ocelot.AcceptanceTests
                         .AddDelegatingHandler<TOne>(true)
                         .AddDelegatingHandler<TWo>(true);
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot().Wait();
-                });
+                .Configure(a => a.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -633,10 +584,7 @@ namespace Ocelot.AcceptanceTests
                     s.AddOcelot()
                         .AddDelegatingHandler<TOne>(true);
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot().Wait();
-                });
+                .Configure(a => a.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -661,14 +609,11 @@ namespace Ocelot.AcceptanceTests
                 .ConfigureServices(s =>
                 {
                     s.AddSingleton(_webHostBuilder);
-                    s.AddSingleton<FakeDependency>(dependency);
+                    s.AddSingleton(dependency);
                     s.AddOcelot()
                         .AddDelegatingHandler<TOne>(true);
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot().Wait();
-                });
+                .Configure(a => a.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -703,10 +648,7 @@ namespace Ocelot.AcceptanceTests
                     s.AddAuthentication()
                         .AddIdentityServerAuthentication(authenticationProviderKey, options);
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -737,26 +679,17 @@ namespace Ocelot.AcceptanceTests
 
             var configuration = builder.Build();
             _webHostBuilder = new WebHostBuilder();
-            _webHostBuilder.ConfigureServices(s =>
-            {
-                s.AddSingleton(_webHostBuilder);
-            });
+            _webHostBuilder.ConfigureServices(s => s.AddSingleton(_webHostBuilder));
 
             _ocelotServer = new TestServer(_webHostBuilder
                 .UseConfiguration(configuration)
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot(configuration);
-                })
+                .ConfigureServices(s => s.AddOcelot(configuration))
                 .ConfigureLogging(l =>
                 {
                     l.AddConsole();
                     l.AddDebug();
                 })
-                .Configure(a =>
-                {
-                    a.UseOcelot(ocelotPipelineConfig).Wait();
-                }));
+                .Configure(a => a.UseOcelot(ocelotPipelineConfig).Wait()));
 
             _ocelotClient = _ocelotServer.CreateClient();
         }
@@ -776,7 +709,7 @@ namespace Ocelot.AcceptanceTests
                 new KeyValuePair<string, string>("scope", "api"),
                 new KeyValuePair<string, string>("username", "test"),
                 new KeyValuePair<string, string>("password", "test"),
-                new KeyValuePair<string, string>("grant_type", "password")
+                new KeyValuePair<string, string>("grant_type", "password"),
             };
             var content = new FormUrlEncodedContent(formData);
 
@@ -799,7 +732,7 @@ namespace Ocelot.AcceptanceTests
                 new KeyValuePair<string, string>("scope", "api.readOnly"),
                 new KeyValuePair<string, string>("username", "test"),
                 new KeyValuePair<string, string>("password", "test"),
-                new KeyValuePair<string, string>("grant_type", "password")
+                new KeyValuePair<string, string>("grant_type", "password"),
             };
             var content = new FormUrlEncodedContent(formData);
 
@@ -822,7 +755,7 @@ namespace Ocelot.AcceptanceTests
                 new KeyValuePair<string, string>("scope", "api2"),
                 new KeyValuePair<string, string>("username", "test"),
                 new KeyValuePair<string, string>("password", "test"),
-                new KeyValuePair<string, string>("grant_type", "password")
+                new KeyValuePair<string, string>("grant_type", "password"),
             };
             var content = new FormUrlEncodedContent(formData);
 
@@ -864,10 +797,7 @@ namespace Ocelot.AcceptanceTests
                     s.AddOcelot()
                         .AddEureka();
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -911,7 +841,7 @@ namespace Ocelot.AcceptanceTests
 
         public void WhenIGetUrlOnTheApiGateway(string url, HttpContent content)
         {
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url) {Content = content};
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, url) { Content = content };
             _response = _ocelotClient.SendAsync(httpRequestMessage).Result;
         }
 
@@ -924,7 +854,7 @@ namespace Ocelot.AcceptanceTests
         public void WhenIGetUrlOnTheApiGateway(string url, string cookie, string value)
         {
             var request = _ocelotServer.CreateRequest(url);
-            request.And(x => { x.Headers.Add("Cookie", new CookieHeaderValue(cookie, value).ToString()); });
+            request.And(x => x.Headers.Add("Cookie", new CookieHeaderValue(cookie, value).ToString()));
             var response = request.GetAsync().Result;
             _response = response;
         }
@@ -965,7 +895,7 @@ namespace Ocelot.AcceptanceTests
         private async Task GetForServiceDiscoveryTest(string url, string cookie, string value)
         {
             var request = _ocelotServer.CreateRequest(url);
-            request.And(x => { x.Headers.Add("Cookie", new CookieHeaderValue(cookie, value).ToString()); });
+            request.And(x => x.Headers.Add("Cookie", new CookieHeaderValue(cookie, value).ToString()));
             var response = await request.GetAsync();
             var content = await response.Content.ReadAsStringAsync();
             int count = int.Parse(content);
@@ -1130,13 +1060,10 @@ namespace Ocelot.AcceptanceTests
                 })
                 .ConfigureServices(s =>
                 {
-                    s.AddSingleton<IFileConfigurationRepository>(fake);
+                    s.AddSingleton(fake);
                     s.AddOcelot();
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -1147,7 +1074,7 @@ namespace Ocelot.AcceptanceTests
         {
             _changeToken.ChangeToken.HasChanged.ShouldBe(itShouldBeActive);
         }
-        
+
         public void GivenOcelotIsRunningWithLogger()
         {
             _webHostBuilder = new WebHostBuilder();
@@ -1167,10 +1094,7 @@ namespace Ocelot.AcceptanceTests
                     s.AddOcelot();
                     s.AddSingleton<IOcelotLoggerFactory, MockLoggerFactory>();
                 })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .Configure(app => app.UseOcelot().Wait());
 
             _ocelotServer = new TestServer(_webHostBuilder);
 
@@ -1179,7 +1103,7 @@ namespace Ocelot.AcceptanceTests
 
         public void ThenWarningShouldBeLogged()
         {
-            MockLoggerFactory loggerFactory = (MockLoggerFactory)_ocelotServer.Host.Services.GetService<IOcelotLoggerFactory>();
+            var loggerFactory = (MockLoggerFactory)_ocelotServer.Host.Services.GetService<IOcelotLoggerFactory>();
             loggerFactory.Verify();
         }
 
@@ -1194,6 +1118,7 @@ namespace Ocelot.AcceptanceTests
                     _logger = new Mock<IOcelotLogger>();
                     _logger.Setup(x => x.LogWarning(It.IsAny<string>())).Verifiable();
                 }
+
                 return _logger.Object;
             }
 

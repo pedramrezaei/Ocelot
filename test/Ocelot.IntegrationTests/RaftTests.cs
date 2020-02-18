@@ -1,29 +1,29 @@
-﻿namespace Ocelot.IntegrationTests
-{
-    using Administration;
-    using Configuration.File;
-    using DependencyInjection;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Data.Sqlite;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Middleware;
-    using Newtonsoft.Json;
-    using Ocelot.Provider.Rafty;
-    using Rafty.Infrastructure;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Xunit;
-    using Xunit.Abstractions;
-    using Wait = Rafty.Infrastructure.Wait;
+﻿using Ocelot.Administration;
+using Ocelot.Configuration.File;
+using Ocelot.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.Middleware;
+using Newtonsoft.Json;
+using Ocelot.Provider.Rafty;
+using Rafty.Infrastructure;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
+using Xunit.Abstractions;
+using Wait = Rafty.Infrastructure.Wait;
 
+namespace Ocelot.IntegrationTests
+{
     public class RaftTests : IDisposable
     {
         private readonly List<IWebHost> _builders;
@@ -35,7 +35,7 @@
         private BearerToken _token;
         private HttpResponseMessage _response;
         private static readonly object _lock = new object();
-        private ITestOutputHelper _output;
+        private readonly ITestOutputHelper _output;
 
         public RaftTests(ITestOutputHelper output)
         {
@@ -59,14 +59,14 @@
 
                 new FilePeer {HostAndPort = "http://localhost:5003"},
 
-                new FilePeer {HostAndPort = "http://localhost:5004"}
+                new FilePeer {HostAndPort = "http://localhost:5004"},
             };
 
             var configuration = new FileConfiguration
             {
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                }
+                },
             };
 
             var updatedConfiguration = new FileConfiguration
@@ -84,12 +84,12 @@
                             {
                                 Host = "127.0.0.1",
                                 Port = 80,
-                            }
+                            },
                         },
                         DownstreamScheme = "http",
                         DownstreamPathTemplate = "/geoffrey",
                         UpstreamHttpMethod = new List<string> { "get" },
-                        UpstreamPathTemplate = "/"
+                        UpstreamPathTemplate = "/",
                     },
                     new FileReRoute()
                     {
@@ -99,14 +99,14 @@
                             {
                                 Host = "123.123.123",
                                 Port = 443,
-                            }
+                            },
                         },
                         DownstreamScheme = "https",
                         DownstreamPathTemplate = "/blooper/{productId}",
                         UpstreamHttpMethod = new List<string> { "post" },
-                        UpstreamPathTemplate = "/test"
-                    }
-                }
+                        UpstreamPathTemplate = "/test",
+                    },
+                },
             };
 
             var command = new UpdateFileConfiguration(updatedConfiguration);
@@ -132,7 +132,7 @@
 
                 new FilePeer {HostAndPort = "http://localhost:5008"},
 
-                new FilePeer {HostAndPort = "http://localhost:5009"}
+                new FilePeer {HostAndPort = "http://localhost:5009"},
             };
 
             var configuration = new FileConfiguration
@@ -151,12 +151,12 @@
                             {
                                 Host = "127.0.0.1",
                                 Port = 80,
-                            }
+                            },
                         },
                         DownstreamScheme = "http",
                         DownstreamPathTemplate = "/geoffrey",
                         UpstreamHttpMethod = new List<string> { "get" },
-                        UpstreamPathTemplate = "/"
+                        UpstreamPathTemplate = "/",
                     },
                     new FileReRoute()
                     {
@@ -166,14 +166,14 @@
                             {
                                 Host = "123.123.123",
                                 Port = 443,
-                            }
+                            },
                         },
                         DownstreamScheme = "https",
                         DownstreamPathTemplate = "/blooper/{productId}",
                         UpstreamHttpMethod = new List<string> { "post" },
-                        UpstreamPathTemplate = "/test"
-                    }
-                }
+                        UpstreamPathTemplate = "/test",
+                    },
+                },
             };
 
             var command = new UpdateFileConfiguration(updatedConfiguration);
@@ -188,7 +188,7 @@
 
         private void GivenThePeersAre(List<FilePeer> peers)
         {
-            FilePeers filePeers = new FilePeers();
+            var filePeers = new FilePeers();
             filePeers.Peers.AddRange(peers);
             var json = JsonConvert.SerializeObject(filePeers);
             File.WriteAllText("peers.json", json);
@@ -206,7 +206,7 @@
                     var p = _peers.Peers.First();
                     var json = JsonConvert.SerializeObject(command, new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     });
                     var httpContent = new StringContent(json);
                     httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -260,7 +260,7 @@
                     var passed = 0;
                     foreach (var peer in _peers.Peers)
                     {
-                        var path = $"{peer.HostAndPort.Replace("/", "").Replace(":", "")}.db";
+                        var path = $"{peer.HostAndPort.Replace("/", string.Empty).Replace(":", string.Empty)}.db";
                         using (var connection = new SqliteConnection($"Data Source={path};"))
                         {
                             connection.Open();
@@ -373,7 +373,7 @@
                         new KeyValuePair<string, string>("client_id", "admin"),
                         new KeyValuePair<string, string>("client_secret", "secret"),
                         new KeyValuePair<string, string>("scope", "admin"),
-                        new KeyValuePair<string, string>("grant_type", "client_credentials")
+                        new KeyValuePair<string, string>("grant_type", "client_credentials"),
                     };
                     var content = new FormUrlEncodedContent(formData);
 
@@ -461,10 +461,7 @@
                             .AddAdministration("/administration", "secret")
                             .AddRafty();
                     })
-                    .Configure(app =>
-                    {
-                        app.UseOcelot().Wait();
-                    });
+                    .Configure(app => app.UseOcelot().Wait());
 
                 var builder = webHostBuilder.Build();
                 builder.Start();
@@ -481,8 +478,8 @@
 
             foreach (var peer in _peers.Peers)
             {
-                File.Delete(peer.HostAndPort.Replace("/", "").Replace(":", ""));
-                File.Delete($"{peer.HostAndPort.Replace("/", "").Replace(":", "")}.db");
+                File.Delete(peer.HostAndPort.Replace("/", string.Empty).Replace(":", string.Empty));
+                File.Delete($"{peer.HostAndPort.Replace("/", string.Empty).Replace(":", string.Empty)}.db");
                 var thread = new Thread(() => GivenAServerIsRunning(peer.HostAndPort));
                 thread.Start();
                 _threads.Add(thread);
@@ -500,8 +497,8 @@
             {
                 try
                 {
-                    File.Delete(peer.HostAndPort.Replace("/", "").Replace(":", ""));
-                    File.Delete($"{peer.HostAndPort.Replace("/", "").Replace(":", "")}.db");
+                    File.Delete(peer.HostAndPort.Replace("/", string.Empty).Replace(":", string.Empty));
+                    File.Delete($"{peer.HostAndPort.Replace("/", string.Empty).Replace(":", string.Empty)}.db");
                 }
                 catch (Exception e)
                 {

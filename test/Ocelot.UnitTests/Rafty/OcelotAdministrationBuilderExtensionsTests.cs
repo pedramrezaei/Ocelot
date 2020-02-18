@@ -1,19 +1,19 @@
-﻿namespace Ocelot.UnitTests.Rafty
-{
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Moq;
-    using Ocelot.Administration;
-    using Ocelot.DependencyInjection;
-    using Provider.Rafty;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Ocelot.Administration;
+using Ocelot.DependencyInjection;
+using Ocelot.Provider.Rafty;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.Rafty
+{
     public class OcelotAdministrationBuilderExtensionsTests
     {
         private readonly IServiceCollection _services;
@@ -26,7 +26,7 @@
         {
             _configRoot = new ConfigurationRoot(new List<IConfigurationProvider>());
             _services = new ServiceCollection();
-            _services.AddSingleton<IWebHostEnvironment>(GetHostingEnvironment());
+            _services.AddSingleton(GetHostingEnvironment());
             _services.AddSingleton(_configRoot);
         }
 

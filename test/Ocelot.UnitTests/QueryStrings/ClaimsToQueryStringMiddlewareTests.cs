@@ -1,33 +1,32 @@
 ﻿using Ocelot.Middleware;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.Logging;
+using Ocelot.QueryStrings;
+using Ocelot.QueryStrings.Middleware;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.QueryStrings
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.Logging;
-    using Ocelot.QueryStrings;
-    using Ocelot.QueryStrings.Middleware;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Responses;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ClaimsToQueryStringMiddlewareTests
     {
         private readonly Mock<IAddQueriesToRequest> _addQueries;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
-        private ClaimsToQueryStringMiddleware _middleware;
-        private DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
+        private readonly ClaimsToQueryStringMiddleware _middleware;
+        private readonly DownstreamContext _downstreamContext;
+        private readonly OcelotRequestDelegate _next;
 
         public ClaimsToQueryStringMiddlewareTests()
         {
@@ -50,7 +49,7 @@ namespace Ocelot.UnitTests.QueryStrings
                         .WithDownstreamPathTemplate("any old string")
                         .WithClaimsToQueries(new List<ClaimToThing>
                         {
-                            new ClaimToThing("UserId", "Subject", "", 0)
+                            new ClaimToThing("UserId", "Subject", string.Empty, 0),
                         })
                         .WithUpstreamHttpMethod(new List<string> { "Get" })
                         .Build())

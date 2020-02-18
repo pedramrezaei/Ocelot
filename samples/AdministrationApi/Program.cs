@@ -29,15 +29,9 @@ namespace AdministrationApi
                 s.AddOcelot()
                     .AddAdministration("/administration", "secret");
             })
-            .ConfigureLogging((hostingContext, logging) =>
-            {
-                logging.AddConsole();
-            })
+            .ConfigureLogging((hostingContext, logging) => logging.AddConsole())
             .UseIISIntegration()
-            .Configure(app =>
-            {
-                app.UseOcelot().Wait();
-            })
+            .Configure(app => app.UseOcelot().Wait())
             .Build()
             .Run();
     }

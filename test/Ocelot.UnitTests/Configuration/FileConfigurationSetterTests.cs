@@ -9,7 +9,6 @@ using Ocelot.Errors;
 using Ocelot.Responses;
 using Shouldly;
 using System.Collections.Generic;
-using Ocelot.Configuration.ChangeTracking;
 using TestStack.BDDfy;
 using Xunit;
 
@@ -18,12 +17,12 @@ namespace Ocelot.UnitTests.Configuration
     public class FileConfigurationSetterTests
     {
         private FileConfiguration _fileConfiguration;
-        private FileAndInternalConfigurationSetter _configSetter;
-        private Mock<IInternalConfigurationRepository> _configRepo;
-        private Mock<IInternalConfigurationCreator> _configCreator;
+        private readonly FileAndInternalConfigurationSetter _configSetter;
+        private readonly Mock<IInternalConfigurationRepository> _configRepo;
+        private readonly Mock<IInternalConfigurationCreator> _configCreator;
         private Response<IInternalConfiguration> _configuration;
         private object _result;
-        private Mock<IFileConfigurationRepository> _repo;
+        private readonly Mock<IFileConfigurationRepository> _repo;
 
         public FileConfigurationSetterTests()
         {
@@ -38,7 +37,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var fileConfig = new FileConfiguration();
             var serviceProviderConfig = new ServiceProviderConfigurationBuilder().Build();
-            var config = new InternalConfiguration(new List<ReRoute>(), string.Empty, serviceProviderConfig, "asdf", new LoadBalancerOptionsBuilder().Build(), "", new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build());
+            var config = new InternalConfiguration(new List<ReRoute>(), string.Empty, serviceProviderConfig, "asdf", new LoadBalancerOptionsBuilder().Build(), string.Empty, new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build());
 
             this.Given(x => GivenTheFollowingConfiguration(fileConfig))
                 .And(x => GivenTheRepoReturns(new OkResponse()))

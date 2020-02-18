@@ -196,7 +196,7 @@ namespace Ocelot.UnitTests.Requester
             var handlers = new List<Func<DelegatingHandler>>()
             {
                 () => fakeOne,
-                () => fakeTwo
+                () => fakeTwo,
             };
 
             this.Given(x => GivenTheFactoryReturns(handlers))

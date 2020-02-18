@@ -108,14 +108,8 @@ namespace Ocelot.IntegrationTests
                     config.AddJsonFile("ocelot.json", false, false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(x =>
-                {
-                    x.AddOcelot();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(x => x.AddOcelot())
+                .Configure(app => app.UseOcelot().Wait());
 
             _builder = _webHostBuilder.Build();
 

@@ -47,7 +47,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_return_round_robin_load_balancer()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("RoundRobin", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("RoundRobin", string.Empty, 0))
                 .WithUpstreamHttpMethod(new List<string> { "Get" })
                 .Build();
 
@@ -63,7 +63,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_return_round_least_connection_balancer()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("LeastConnection", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("LeastConnection", string.Empty, 0))
                 .WithUpstreamHttpMethod(new List<string> { "Get" })
                 .Build();
 
@@ -79,7 +79,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_call_service_provider()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("RoundRobin", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("RoundRobin", string.Empty, 0))
                 .WithUpstreamHttpMethod(new List<string> { "Get" })
                 .Build();
 
@@ -95,7 +95,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_return_sticky_session()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("CookieStickySessions", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("CookieStickySessions", string.Empty, 0))
                 .WithUpstreamHttpMethod(new List<string> { "Get" })
                 .Build();
 

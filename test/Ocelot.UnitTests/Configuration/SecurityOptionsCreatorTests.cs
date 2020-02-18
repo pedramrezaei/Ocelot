@@ -11,9 +11,8 @@ namespace Ocelot.UnitTests.Configuration
     public class SecurityOptionsCreatorTests
     {
         private FileReRoute _fileReRoute;
-        private FileGlobalConfiguration _fileGlobalConfig;
         private SecurityOptions _result;
-        private ISecurityOptionsCreator _creator;
+        private readonly ISecurityOptionsCreator _creator;
 
         public SecurityOptionsCreatorTests()
         {
@@ -30,8 +29,8 @@ namespace Ocelot.UnitTests.Configuration
                 SecurityOptions = new FileSecurityOptions()
                 {
                     IPAllowedList = ipAllowedList,
-                    IPBlockedList = ipBlockedList
-                }
+                    IPBlockedList = ipBlockedList,
+                },
             };
 
             var expected = new SecurityOptions(ipAllowedList, ipBlockedList);

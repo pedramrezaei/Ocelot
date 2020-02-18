@@ -42,12 +42,12 @@ namespace Ocelot.UnitTests.Middleware
             {
                 new DownstreamContext(new DefaultHttpContext())
                 {
-                    DownstreamResponse = new DownstreamResponse(new StringContent("Tom"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason")
+                    DownstreamResponse = new DownstreamResponse(new StringContent("Tom"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
                 },
                 new DownstreamContext(new DefaultHttpContext())
                 {
-                    DownstreamResponse = new DownstreamResponse(new StringContent("Laura"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason")
-                }
+                    DownstreamResponse = new DownstreamResponse(new StringContent("Laura"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
+                },
             };
 
             this.Given(_ => GivenTheProviderReturnsAggregator())
@@ -71,12 +71,12 @@ namespace Ocelot.UnitTests.Middleware
             {
                 new DownstreamContext(new DefaultHttpContext())
                 {
-                    DownstreamResponse = new DownstreamResponse(new StringContent("Tom"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason")
+                    DownstreamResponse = new DownstreamResponse(new StringContent("Tom"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
                 },
                 new DownstreamContext(new DefaultHttpContext())
                 {
-                    DownstreamResponse = new DownstreamResponse(new StringContent("Laura"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason")
-                }
+                    DownstreamResponse = new DownstreamResponse(new StringContent("Laura"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
+                },
             };
 
             this.Given(_ => GivenTheProviderReturnsError())

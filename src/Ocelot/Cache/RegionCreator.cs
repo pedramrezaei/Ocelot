@@ -12,9 +12,9 @@ namespace Ocelot.Cache
                 return reRoute?.FileCacheOptions?.Region;
             }
 
-            var methods = string.Join("", reRoute.UpstreamHttpMethod.Select(m => m));
+            var methods = string.Join(string.Empty, reRoute.UpstreamHttpMethod.Select(m => m));
 
-            var region = $"{methods}{reRoute.UpstreamPathTemplate.Replace("/", "")}";
+            var region = $"{methods}{reRoute.UpstreamPathTemplate.Replace("/", string.Empty)}";
 
             return region;
         }

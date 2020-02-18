@@ -1,35 +1,34 @@
+using Ocelot.Configuration.File;
+using Ocelot.DependencyInjection;
+using CacheManager.Core;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Ocelot.Administration;
+using Ocelot.Cache.CacheManager;
+using Ocelot.Middleware;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.IntegrationTests
 {
-    using Configuration.File;
-    using DependencyInjection;
-    using global::CacheManager.Core;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
-    using Ocelot.Administration;
-    using Ocelot.Cache.CacheManager;
-    using Ocelot.Middleware;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class CacheManagerTests : IDisposable
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private readonly HttpClient _httpClientTwo;
         private HttpResponseMessage _response;
         private IHost _builder;
         private IHostBuilder _webHostBuilder;
-        private string _ocelotBaseUrl;
+        private readonly string _ocelotBaseUrl;
         private BearerToken _token;
 
         public CacheManagerTests()
@@ -146,24 +145,21 @@ namespace Ocelot.IntegrationTests
                     {
                         s.WithMicrosoftLogging(log =>
                         {
-                             //log.AddConsole(LogLevel.Debug);
-                         })
+                            //log.AddConsole(LogLevel.Debug);
+                        })
                         .WithDictionaryHandle();
                     };
                     x.AddMvc(option => option.EnableEndpointRouting = false);
                     x.AddOcelot()
                     .AddCacheManager(settings)
                     .AddAdministration("/administration", "secret");
-                })  
+                })
                 .ConfigureWebHost(webBuilder =>
             {
                 webBuilder.UseUrls(_ocelotBaseUrl)
                 .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())                
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .Configure(app => app.UseOcelot().Wait());
             });
 
             _builder = _webHostBuilder.Build();
@@ -184,7 +180,7 @@ namespace Ocelot.IntegrationTests
 
             File.WriteAllText(configurationPath, jsonConfiguration);
 
-            var text = File.ReadAllText(configurationPath);
+            _ = File.ReadAllText(configurationPath);
 
             configurationPath = $"{AppContext.BaseDirectory}/ocelot.json";
 
@@ -195,7 +191,7 @@ namespace Ocelot.IntegrationTests
 
             File.WriteAllText(configurationPath, jsonConfiguration);
 
-            text = File.ReadAllText(configurationPath);
+            _ = File.ReadAllText(configurationPath);
         }
 
         private void WhenIDeleteOnTheApiGateway(string url)
@@ -210,10 +206,11 @@ namespace Ocelot.IntegrationTests
 
         public void Dispose()
         {
-            Environment.SetEnvironmentVariable("OCELOT_CERTIFICATE", "");
-            Environment.SetEnvironmentVariable("OCELOT_CERTIFICATE_PASSWORD", "");
+            Environment.SetEnvironmentVariable("OCELOT_CERTIFICATE", string.Empty);
+            Environment.SetEnvironmentVariable("OCELOT_CERTIFICATE_PASSWORD", string.Empty);
             _builder?.Dispose();
             _httpClient?.Dispose();
+
             //_identityServerBuilder?.Dispose();
         }
     }

@@ -3,23 +3,21 @@
 //  Licensed under the MIT License (MIT). See License.txt in the repo root for license information.
 // ------------------------------------------------------------
 
+using System;
+using System.Fabric;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+
 namespace OcelotApplicationApiGateway
 {
-    using System;
-    using System.Fabric;
-    using System.Fabric.Description;
-    using System.Globalization;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.ServiceFabric.Services.Communication.Runtime;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.Extensions.DependencyInjection;
-    using Ocelot.DependencyInjection;
-    using Ocelot.Middleware;
-
     public class WebCommunicationListener : ICommunicationListener
     {
         private readonly string appRoot;
@@ -40,7 +38,7 @@ namespace OcelotApplicationApiGateway
         {
             ServiceEventSource.Current.Message("Initialize");
 
-            EndpointResourceDescription serviceEndpoint = this.serviceInitializationParameters.CodePackageActivationContext.GetEndpoint("WebEndpoint");
+            var serviceEndpoint = this.serviceInitializationParameters.CodePackageActivationContext.GetEndpoint("WebEndpoint");
             int port = serviceEndpoint.Port;
 
             this.listeningAddress = string.Format(
@@ -74,12 +72,8 @@ namespace OcelotApplicationApiGateway
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddConsole();
                 })
-                .ConfigureServices(s => {
-                    s.AddOcelot();
-                })
-                .Configure(a => {
-                    a.UseOcelot().Wait();
-                })
+                .ConfigureServices(s => s.AddOcelot())
+                .Configure(a => a.UseOcelot().Wait())
                .Build();
 
                 this.webHost.Start();

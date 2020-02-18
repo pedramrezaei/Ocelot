@@ -7,9 +7,9 @@ namespace Ocelot.Cache
     {
         public static string GenerateMd5(byte[] contentBytes)
         {
-            MD5 md5 = MD5.Create();
+            var md5 = MD5.Create();
             byte[] hash = md5.ComputeHash(contentBytes);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < hash.Length; i++)
             {
                 sb.Append(hash[i].ToString("X2"));

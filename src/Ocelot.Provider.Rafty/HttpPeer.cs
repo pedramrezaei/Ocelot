@@ -1,18 +1,18 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Administration;
-    using Configuration;
-    using global::Rafty.Concensus.Messages;
-    using global::Rafty.Concensus.Peers;
-    using global::Rafty.FiniteStateMachine;
-    using global::Rafty.Infrastructure;
-    using Middleware;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
+﻿using Ocelot.Administration;
+using Ocelot.Configuration;
+using Rafty.Concensus.Messages;
+using Rafty.Concensus.Peers;
+using Rafty.FiniteStateMachine;
+using Rafty.Infrastructure;
+using Ocelot.Middleware;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     public class HttpPeer : IPeer
     {
         private readonly string _hostAndPort;
@@ -32,7 +32,7 @@
             _httpClient = httpClient;
             _jsonSerializerSettings = new JsonSerializerSettings()
             {
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = TypeNameHandling.All,
             };
             _baseSchemeUrlAndPort = finder.Find();
         }
@@ -117,7 +117,7 @@
                 new KeyValuePair<string, string>("client_id", _identityServerConfiguration.ApiName),
                 new KeyValuePair<string, string>("client_secret", _identityServerConfiguration.ApiSecret),
                 new KeyValuePair<string, string>("scope", _identityServerConfiguration.ApiName),
-                new KeyValuePair<string, string>("grant_type", "client_credentials")
+                new KeyValuePair<string, string>("grant_type", "client_credentials"),
             };
             var content = new FormUrlEncodedContent(formData);
             var response = await _httpClient.PostAsync(tokenUrl, content);

@@ -1,8 +1,8 @@
-﻿namespace Ocelot.Requester
-{
-    using Configuration;
-    using System;
+﻿using Ocelot.Configuration;
+using System;
 
+namespace Ocelot.Requester
+{
     public interface IHttpClientCache
     {
         IHttpClient Get(DownstreamReRoute key);

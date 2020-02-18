@@ -33,7 +33,7 @@ namespace Ocelot.Configuration.Repository
             _options = options;
             _logger = factory.CreateLogger<FileConfigurationPoller>();
             _repo = repo;
-            _previousAsJson = "";
+            _previousAsJson = string.Empty;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -94,9 +94,9 @@ namespace Ocelot.Configuration.Repository
         }
 
         /// <summary>
-        /// We could do object comparison here but performance isnt really a problem. This might be an issue one day!
+        /// We could do object comparison here but performance isnt really a problem. This might be an issue one day!.
         /// </summary>
-        /// <returns>hash of the config</returns>
+        /// <returns>hash of the config.</returns>
         private string ToJson(FileConfiguration config)
         {
             var currentHash = JsonConvert.SerializeObject(config);

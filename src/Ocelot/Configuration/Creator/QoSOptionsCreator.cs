@@ -1,10 +1,10 @@
+using Ocelot.Configuration.Builder;
+using Ocelot.Configuration.File;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Ocelot.Configuration.Creator
 {
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Configuration.File;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class QoSOptionsCreator : IQoSOptionsCreator
     {
         public QoSOptions Create(FileQoSOptions options)

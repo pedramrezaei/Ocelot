@@ -1,17 +1,17 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Configuration.File;
-    using Consul;
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using Consul;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ServiceDiscoveryTests : IDisposable
     {
         private readonly Steps _steps;
@@ -46,7 +46,7 @@
                     Address = "localhost",
                     Port = 50881,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
             var serviceEntryTwo = new ServiceEntry()
@@ -57,7 +57,7 @@
                     Address = "localhost",
                     Port = 50882,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
 
@@ -73,16 +73,16 @@
                             UpstreamHttpMethod = new List<string> { "Get" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, 200))
@@ -112,7 +112,7 @@
                     Address = "localhost",
                     Port = 8080,
                     ID = "web_90_0_2_224_8080",
-                    Tags = new[] { "version-v1" }
+                    Tags = new[] { "version-v1" },
                 },
             };
 
@@ -128,16 +128,16 @@
                             UpstreamHttpMethod = new List<string> { "Get", "Options" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn(downstreamServiceOneUrl, "/api/home", 200, "Hello from Laura"))
@@ -167,7 +167,7 @@
                     Address = "localhost",
                     Port = downstreamServicePort,
                     ID = "web_90_0_2_224_8080",
-                    Tags = new[] { "version-v1" }
+                    Tags = new[] { "version-v1" },
                 },
             };
 
@@ -178,16 +178,16 @@
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider
                     {
                         Host = "localhost",
-                        Port = consulPort
+                        Port = consulPort,
                     },
                     DownstreamScheme = "http",
                     HttpHandlerOptions = new FileHttpHandlerOptions
                     {
                         AllowAutoRedirect = true,
                         UseCookieContainer = true,
-                        UseTracing = false
-                    }
-                }
+                        UseTracing = false,
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn(downstreamServiceOneUrl, "/something", 200, "Hello from Laura"))
@@ -219,7 +219,7 @@
                     Address = "localhost",
                     Port = serviceOnePort,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
             var serviceEntryTwo = new ServiceEntry()
@@ -230,7 +230,7 @@
                     Address = "localhost",
                     Port = serviceTwoPort,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
 
@@ -241,11 +241,11 @@
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
+                        Port = consulPort,
                     },
                     LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                    DownstreamScheme = "http"
-                }
+                    DownstreamScheme = "http",
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, 200))
@@ -276,7 +276,7 @@
                     Address = "localhost",
                     Port = 8081,
                     ID = "web_90_0_2_224_8080",
-                    Tags = new[] { "version-v1" }
+                    Tags = new[] { "version-v1" },
                 },
             };
 
@@ -292,7 +292,7 @@
                             UpstreamHttpMethod = new List<string> { "Get", "Options" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
@@ -300,9 +300,9 @@
                     {
                         Host = "localhost",
                         Port = consulPort,
-                        Token = token
-                    }
-                }
+                        Token = token,
+                    },
+                },
             };
 
             this.Given(_ => GivenThereIsAServiceRunningOn(downstreamServiceOneUrl, "/api/home", 200, "Hello from Laura"))
@@ -333,7 +333,7 @@
                     Address = "localhost",
                     Port = 50879,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
             var serviceEntryTwo = new ServiceEntry()
@@ -344,7 +344,7 @@
                     Address = "localhost",
                     Port = 50880,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
 
@@ -360,16 +360,16 @@
                             UpstreamHttpMethod = new List<string> { "Get" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, 200))
@@ -409,7 +409,7 @@
                     Address = "localhost",
                     Port = downstreamServicePort,
                     ID = $"web_90_0_2_224_{downstreamServicePort}",
-                    Tags = new[] { "version-v1" }
+                    Tags = new[] { "version-v1" },
                 },
             };
 
@@ -425,7 +425,7 @@
                             UpstreamHttpMethod = new List<string> { "Get", "Options" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
@@ -435,9 +435,9 @@
                         Port = consulPort,
                         Type = "PollConsul",
                         PollingInterval = 0,
-                        Namespace = string.Empty
-                    }
-                }
+                        Namespace = string.Empty,
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn(downstreamServiceOneUrl, "/api/home", 200, "Hello from Laura"))
@@ -503,6 +503,7 @@
                     {
                         _receivedToken = values.First();
                     }
+
                     var json = JsonConvert.SerializeObject(_consulServices);
                     context.Response.Headers.Add("Content-Type", "application/json");
                     await context.Response.WriteAsync(json);

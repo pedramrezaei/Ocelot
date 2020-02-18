@@ -1,14 +1,14 @@
-﻿namespace Ocelot.Cache.Middleware
-{
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿using Ocelot.Logging;
+using Ocelot.Middleware;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace Ocelot.Cache.Middleware
+{
     public class OutputCacheMiddleware : OcelotMiddleware
     {
         private readonly OcelotRequestDelegate _next;
@@ -80,7 +80,7 @@
         private string GenerateRequestCacheKey(DownstreamContext context)
         {
             string hashedContent = null;
-            StringBuilder downStreamUrlKeyBuilder = new StringBuilder($"{context.DownstreamRequest.Method}-{context.DownstreamRequest.OriginalString}");
+            var downStreamUrlKeyBuilder = new StringBuilder($"{context.DownstreamRequest.Method}-{context.DownstreamRequest.OriginalString}");
             if (context.DownstreamRequest.Content != null)
             {
                 string requestContentString = Task.Run(async () => await context.DownstreamRequest.Content?.ReadAsStringAsync()).Result;

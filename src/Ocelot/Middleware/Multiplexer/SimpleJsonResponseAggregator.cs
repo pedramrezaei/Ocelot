@@ -78,7 +78,7 @@ namespace Ocelot.Middleware.Multiplexer
 
             var stringContent = new StringContent(contentBuilder.ToString())
             {
-                Headers = { ContentType = new MediaTypeHeaderValue("application/json") }
+                Headers = { ContentType = new MediaTypeHeaderValue("application/json") },
             };
 
             originalContext.DownstreamResponse = new DownstreamResponse(stringContent, HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "cannot return from aggregate..which reason phrase would you use?");

@@ -1,31 +1,30 @@
 ﻿using Ocelot.Middleware;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Authorisation;
+using Ocelot.Authorisation.Middleware;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.Logging;
+using Ocelot.Responses;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.Authorization
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Authorisation;
-    using Ocelot.Authorisation.Middleware;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.Logging;
-    using Ocelot.Responses;
-    using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class AuthorisationMiddlewareTests
     {
         private readonly Mock<IClaimsAuthoriser> _authService;
         private readonly Mock<IScopesAuthoriser> _authScopesService;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly AuthorisationMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
 
         public AuthorisationMiddlewareTests()
         {
@@ -81,8 +80,8 @@ namespace Ocelot.UnitTests.Authorization
                 .Verify(x => x.Authorise(
                     It.IsAny<ClaimsPrincipal>(),
                     It.IsAny<Dictionary<string, string>>(),
-                    It.IsAny<List<PlaceholderNameAndValue>>())
-                        , Times.Once);
+                    It.IsAny<List<PlaceholderNameAndValue>>()),
+                        Times.Once);
         }
     }
 }

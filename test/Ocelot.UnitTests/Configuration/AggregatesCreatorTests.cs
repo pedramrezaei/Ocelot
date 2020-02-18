@@ -1,17 +1,17 @@
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Configuration.Creator;
+using Ocelot.Configuration.File;
+using Shouldly;
+using System.Collections.Generic;
+using System.Net.Http;
+using TestStack.BDDfy;
+using Ocelot.Values;
+using Xunit;
+
 namespace Ocelot.UnitTests.Configuration
 {
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Configuration.Creator;
-    using Ocelot.Configuration.File;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using TestStack.BDDfy;
-    using Values;
-    using Xunit;
-
     public class AggregatesCreatorTests
     {
         private readonly AggregatesCreator _creator;
@@ -37,9 +37,9 @@ namespace Ocelot.UnitTests.Configuration
                 {
                     new FileAggregateReRoute
                     {
-                        ReRouteKeys = new List<string>{"key1"}
-                    }
-                }
+                        ReRouteKeys = new List<string>{"key1"},
+                    },
+                },
             };
             var reRoutes = new List<ReRoute>();
 
@@ -65,7 +65,7 @@ namespace Ocelot.UnitTests.Configuration
                         UpstreamHost = "hosty",
                         UpstreamPathTemplate = "templatey",
                         Aggregator = "aggregatory",
-                        ReRouteIsCaseSensitive = true
+                        ReRouteIsCaseSensitive = true,
                     },
                     new FileAggregateReRoute
                     {
@@ -73,9 +73,9 @@ namespace Ocelot.UnitTests.Configuration
                         UpstreamHost = "hosty",
                         UpstreamPathTemplate = "templatey",
                         Aggregator = "aggregatory",
-                        ReRouteIsCaseSensitive = true
-                    }
-                }
+                        ReRouteIsCaseSensitive = true,
+                    },
+                },
             };
 
             var reRoutes = new List<ReRoute>
@@ -83,7 +83,7 @@ namespace Ocelot.UnitTests.Configuration
                 new ReRouteBuilder().WithDownstreamReRoute(new DownstreamReRouteBuilder().WithKey("key1").Build()).Build(),
                 new ReRouteBuilder().WithDownstreamReRoute(new DownstreamReRouteBuilder().WithKey("key2").Build()).Build(),
                 new ReRouteBuilder().WithDownstreamReRoute(new DownstreamReRouteBuilder().WithKey("key3").Build()).Build(),
-                new ReRouteBuilder().WithDownstreamReRoute(new DownstreamReRouteBuilder().WithKey("key4").Build()).Build()
+                new ReRouteBuilder().WithDownstreamReRoute(new DownstreamReRouteBuilder().WithKey("key4").Build()).Build(),
             };
 
             this.Given(_ => GivenThe(fileConfig))

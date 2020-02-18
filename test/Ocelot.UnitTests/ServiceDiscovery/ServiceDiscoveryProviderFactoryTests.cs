@@ -1,21 +1,21 @@
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Logging;
+using Ocelot.Responses;
+using Ocelot.ServiceDiscovery;
+using Ocelot.ServiceDiscovery.Providers;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Ocelot.Values;
+using Xunit;
+
 namespace Ocelot.UnitTests.ServiceDiscovery
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Logging;
-    using Ocelot.Responses;
-    using Ocelot.ServiceDiscovery;
-    using Ocelot.ServiceDiscovery.Providers;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Values;
-    using Xunit;
-
     public class ServiceDiscoveryProviderFactoryTests
     {
         private ServiceProviderConfiguration _serviceConfig;
@@ -23,7 +23,7 @@ namespace Ocelot.UnitTests.ServiceDiscovery
         private ServiceDiscoveryProviderFactory _factory;
         private DownstreamReRoute _reRoute;
         private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLogger> _logger;
         private IServiceProvider _provider;
         private readonly IServiceCollection _collection;
 
@@ -59,7 +59,7 @@ namespace Ocelot.UnitTests.ServiceDiscovery
             var downstreamAddresses = new List<DownstreamHostAndPort>()
             {
                 new DownstreamHostAndPort("asdf.com", 80),
-                new DownstreamHostAndPort("abc.com", 80)
+                new DownstreamHostAndPort("abc.com", 80),
             };
 
             var reRoute = new DownstreamReRouteBuilder().WithDownstreamAddresses(downstreamAddresses).Build();

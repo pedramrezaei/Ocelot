@@ -1,33 +1,32 @@
 ﻿using Ocelot.Middleware;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.Headers;
+using Ocelot.Headers.Middleware;
+using Ocelot.Logging;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.Headers
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.Headers;
-    using Ocelot.Headers.Middleware;
-    using Ocelot.Logging;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Responses;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ClaimsToHeadersMiddlewareTests
     {
         private readonly Mock<IAddHeadersToRequest> _addHeaders;
         private Response<DownstreamRoute> _downstreamRoute;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
-        private ClaimsToHeadersMiddleware _middleware;
-        private DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
+        private readonly ClaimsToHeadersMiddleware _middleware;
+        private readonly DownstreamContext _downstreamContext;
+        private readonly OcelotRequestDelegate _next;
 
         public ClaimsToHeadersMiddlewareTests()
         {
@@ -50,7 +49,7 @@ namespace Ocelot.UnitTests.Headers
                             .WithDownstreamPathTemplate("any old string")
                             .WithClaimsToHeaders(new List<ClaimToThing>
                             {
-                                new ClaimToThing("UserId", "Subject", "", 0)
+                                new ClaimToThing("UserId", "Subject", string.Empty, 0),
                             })
                             .WithUpstreamHttpMethod(new List<string> { "Get" })
                             .Build())

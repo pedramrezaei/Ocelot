@@ -11,9 +11,9 @@ namespace Ocelot.Provider.Kubernetes
 {
     public class Kube : IServiceDiscoveryProvider
     {
-        private KubeRegistryConfiguration kubeRegistryConfiguration;
-        private IOcelotLogger logger;
-        private IKubeApiClient kubeApi;
+        private readonly KubeRegistryConfiguration kubeRegistryConfiguration;
+        private readonly IOcelotLogger logger;
+        private readonly IKubeApiClient kubeApi;
 
         public Kube(KubeRegistryConfiguration kubeRegistryConfiguration, IOcelotLoggerFactory factory, IKubeApiClient kubeApi)
         {

@@ -1,11 +1,11 @@
-﻿namespace Ocelot.Authorisation.Middleware
-{
-    using Configuration;
-    using Logging;
-    using Ocelot.Middleware;
-    using Responses;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Responses;
+using System.Threading.Tasks;
 
+namespace Ocelot.Authorisation.Middleware
+{
     public class AuthorisationMiddleware : OcelotMiddleware
     {
         private readonly OcelotRequestDelegate _next;

@@ -15,7 +15,7 @@ namespace Ocelot.Provider.Kubernetes
             return GetkubeProvider(provider, config, reRoute, factory);
         };
 
-        private static ServiceDiscovery.Providers.IServiceDiscoveryProvider GetkubeProvider(IServiceProvider provider, Configuration.ServiceProviderConfiguration config, DownstreamReRoute reRoute, IOcelotLoggerFactory factory)
+        private static ServiceDiscovery.Providers.IServiceDiscoveryProvider GetkubeProvider(IServiceProvider provider, ServiceProviderConfiguration config, DownstreamReRoute reRoute, IOcelotLoggerFactory factory)
         {
             var kubeClient = provider.GetService<IKubeApiClient>();
             var k8sRegistryConfiguration = new KubeRegistryConfiguration()

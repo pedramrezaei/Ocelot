@@ -1,15 +1,15 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Configuration.File;
-    using Consul;
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using Consul;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class TwoDownstreamServicesTests : IDisposable
     {
         private readonly Steps _steps;
@@ -47,7 +47,7 @@
                                 {
                                     Host = "localhost",
                                     Port = 8362,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api/user/{user}",
                             UpstreamHttpMethod = new List<string> { "Get" },
@@ -62,20 +62,20 @@
                                 {
                                     Host = "localhost",
                                     Port = 8330,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api/product/{product}",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, "/api/user/info", 200, "user"))

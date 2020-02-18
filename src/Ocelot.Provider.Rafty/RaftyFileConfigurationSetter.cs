@@ -1,11 +1,11 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Configuration.File;
-    using Configuration.Setter;
-    using global::Rafty.Concensus.Node;
-    using global::Rafty.Infrastructure;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration.File;
+using Ocelot.Configuration.Setter;
+using Rafty.Concensus.Node;
+using Rafty.Infrastructure;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     public class RaftyFileConfigurationSetter : IFileConfigurationSetter
     {
         private readonly INode _node;

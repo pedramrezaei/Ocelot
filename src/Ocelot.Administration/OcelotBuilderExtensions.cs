@@ -18,7 +18,7 @@ namespace Ocelot.Administration
         public static IOcelotAdministrationBuilder AddAdministration(this IOcelotBuilder builder, string path, string secret)
         {
             var administrationPath = new AdministrationPath(path);
-            builder.Services.AddSingleton<OcelotMiddlewareConfigurationDelegate>(IdentityServerMiddlewareConfigurationProvider.Get);
+            builder.Services.AddSingleton(IdentityServerMiddlewareConfigurationProvider.Get);
 
             //add identity server for admin area
             var identityServerConfiguration = IdentityServerConfigurationCreator.GetIdentityServerConfiguration(secret);
@@ -35,7 +35,7 @@ namespace Ocelot.Administration
         public static IOcelotAdministrationBuilder AddAdministration(this IOcelotBuilder builder, string path, Action<IdentityServerAuthenticationOptions> configureOptions)
         {
             var administrationPath = new AdministrationPath(path);
-            builder.Services.AddSingleton<OcelotMiddlewareConfigurationDelegate>(IdentityServerMiddlewareConfigurationProvider.Get);
+            builder.Services.AddSingleton(IdentityServerMiddlewareConfigurationProvider.Get);
 
             if (configureOptions != null)
             {
@@ -55,12 +55,9 @@ namespace Ocelot.Administration
 
         private static void AddIdentityServer(IIdentityServerConfiguration identityServerConfiguration, IAdministrationPath adminPath, IOcelotBuilder builder, IConfiguration configuration)
         {
-            builder.Services.TryAddSingleton<IIdentityServerConfiguration>(identityServerConfiguration);
+            builder.Services.TryAddSingleton(identityServerConfiguration);
             var identityServerBuilder = builder.Services
-                .AddIdentityServer(o =>
-                {
-                    o.IssuerUri = "Ocelot";
-                })
+                .AddIdentityServer(o => o.IssuerUri = "Ocelot")
                 .AddInMemoryApiResources(Resources(identityServerConfiguration))
                 .AddInMemoryClients(Client(identityServerConfiguration));
 
@@ -101,9 +98,9 @@ namespace Ocelot.Administration
                     {
                         new Secret
                         {
-                            Value = identityServerConfiguration.ApiSecret.Sha256()
-                        }
-                    }
+                            Value = identityServerConfiguration.ApiSecret.Sha256(),
+                        },
+                    },
                 },
             };
         }
@@ -117,8 +114,8 @@ namespace Ocelot.Administration
                     ClientId = identityServerConfiguration.ApiName,
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = new List<Secret> {new Secret(identityServerConfiguration.ApiSecret.Sha256())},
-                    AllowedScopes = { identityServerConfiguration.ApiName }
-                }
+                    AllowedScopes = { identityServerConfiguration.ApiName },
+                },
             };
         }
     }

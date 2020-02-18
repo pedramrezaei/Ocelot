@@ -1,21 +1,20 @@
-﻿namespace Ocelot.UnitTests.Request
-{
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Infrastructure;
-    using Ocelot.Logging;
-    using Ocelot.Request.Creator;
-    using Ocelot.Request.Mapper;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Middleware;
-    using Ocelot.Responses;
-    using Shouldly;
-    using System.Net.Http;
-    using Ocelot.Configuration;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Infrastructure;
+using Ocelot.Logging;
+using Ocelot.Request.Creator;
+using Ocelot.Request.Mapper;
+using Ocelot.Request.Middleware;
+using Ocelot.Middleware;
+using Ocelot.Responses;
+using Shouldly;
+using System.Net.Http;
+using Ocelot.Configuration;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.Request
+{
     public class DownstreamRequestInitialiserMiddlewareTests
     {
         private readonly DownstreamRequestInitialiserMiddleware _middleware;
@@ -33,7 +32,7 @@
         private readonly Mock<IOcelotLogger> _logger;
 
         private Response<HttpRequestMessage> _mappedRequest;
-        private DownstreamContext _downstreamContext;
+        private readonly DownstreamContext _downstreamContext;
 
         public DownstreamRequestInitialiserMiddlewareTests()
         {

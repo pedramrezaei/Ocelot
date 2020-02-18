@@ -106,7 +106,7 @@ namespace Ocelot.UnitTests.Configuration
                         new ReRouteBuilder()
                             .WithDownstreamReRoute(downstreamReRoute)
                             .WithUpstreamHttpMethod(new List<string> {"Get"})
-                            .Build()
+                            .Build(),
                     };
                 }
             }

@@ -1,21 +1,21 @@
+using Ocelot.Configuration.File;
+using Consul;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Configuration.File;
-    using Consul;
-    using IdentityServer4.Extensions;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Hosting;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Text;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ConfigurationInConsulTests : IDisposable
     {
         private IHost _builder;
@@ -47,26 +47,26 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51779,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = 9502
-                    }
-                }
+                        Port = 9502,
+                    },
+                },
             };
 
             var fakeConsulServiceDiscoveryUrl = "http://localhost:9502";
 
-            this.Given(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, ""))
-                .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51779", "", 200, "Hello from Laura"))
+            this.Given(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, string.Empty))
+                .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51779", string.Empty, 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunningUsingConsulToStoreConfigAndJsonSerializedCache())
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))

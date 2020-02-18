@@ -25,9 +25,9 @@ namespace Ocelot.UnitTests.Requester
         private Response<HttpResponseMessage> _response;
         private readonly HttpClientHttpRequester _httpClientRequester;
         private DownstreamContext _request;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
-        private Mock<IExceptionToErrorMapper> _mapper;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
+        private readonly Mock<IExceptionToErrorMapper> _mapper;
 
         public HttpClientHttpRequesterTest()
         {
@@ -164,7 +164,7 @@ namespace Ocelot.UnitTests.Requester
         {
             var handlers = new List<Func<DelegatingHandler>>
             {
-                () => new OkDelegatingHandler()
+                () => new OkDelegatingHandler(),
             };
 
             _factory.Setup(x => x.Get(It.IsAny<DownstreamReRoute>())).Returns(new OkResponse<List<Func<DelegatingHandler>>>(handlers));
@@ -174,7 +174,7 @@ namespace Ocelot.UnitTests.Requester
         {
             var handlers = new List<Func<DelegatingHandler>>
             {
-                () => new TimeoutDelegatingHandler()
+                () => new TimeoutDelegatingHandler(),
             };
 
             _factory.Setup(x => x.Get(It.IsAny<DownstreamReRoute>())).Returns(new OkResponse<List<Func<DelegatingHandler>>>(handlers));

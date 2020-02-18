@@ -13,8 +13,8 @@ namespace Ocelot.UnitTests.Request.Creator
 {
     public class DownstreamRequestCreatorTests
     {
-        private Mock<IFrameworkDescription> _framework;
-        private DownstreamRequestCreator _downstreamRequestCreator;
+        private readonly Mock<IFrameworkDescription> _framework;
+        private readonly DownstreamRequestCreator _downstreamRequestCreator;
         private HttpRequestMessage _request;
         private DownstreamRequest _result;
 

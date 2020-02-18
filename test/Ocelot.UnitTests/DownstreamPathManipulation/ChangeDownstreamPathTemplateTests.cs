@@ -45,7 +45,7 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
             this.Given(
                 x => x.GivenAClaimToThing(new List<ClaimToThing>
                 {
-                    new ClaimToThing("path-key", "", "", 0),
+                    new ClaimToThing("path-key", string.Empty, string.Empty, 0),
                 }))
                 .And(x => x.GivenClaims(claims))
                 .And(x => x.GivenDownstreamPathTemplate("/api/test/{path-key}"))
@@ -71,7 +71,7 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
             this.Given(
                 x => x.GivenAClaimToThing(new List<ClaimToThing>
                 {
-                    new ClaimToThing("path-key", "", "", 0),
+                    new ClaimToThing("path-key", string.Empty, string.Empty, 0),
                 }))
                 .And(x => x.GivenClaims(claims))
                 .And(x => x.GivenDownstreamPathTemplate("/api/test/{path-key}"))
@@ -94,7 +94,7 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
             this.Given(
                 x => x.GivenAClaimToThing(new List<ClaimToThing>
                 {
-                    new ClaimToThing("path-key", "", "", 0),
+                    new ClaimToThing("path-key", string.Empty, string.Empty, 0),
                 }))
                 .And(x => x.GivenClaims(claims))
                 .And(x => x.GivenDownstreamPathTemplate("/api/test"))
@@ -116,7 +116,7 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
             this.Given(
                 x => x.GivenAClaimToThing(new List<ClaimToThing>
                 {
-                    new ClaimToThing("path-key", "", "", 0),
+                    new ClaimToThing("path-key", string.Empty, string.Empty, 0),
                 }))
                 .And(x => x.GivenClaims(claims))
                 .And(x => x.GivenDownstreamPathTemplate("/api/test/{path-key}"))

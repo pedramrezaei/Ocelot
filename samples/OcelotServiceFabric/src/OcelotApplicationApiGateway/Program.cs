@@ -3,16 +3,14 @@
 //  Licensed under the MIT License (MIT). See License.txt in the repo root for license information.
 // ------------------------------------------------------------
 
+using System;
+using System.Threading;
+using Microsoft.ServiceFabric.Services.Runtime;
+using System.Diagnostics.Tracing;
+
 namespace OcelotApplicationApiGateway
 
 {
-    using System;
-    using System.Fabric;
-    using System.Threading;
-    using Microsoft.ServiceFabric.Services.Runtime;
-    using System.Diagnostics.Tracing;
-
-
     /// <summary>
     /// The service host is the executable that hosts the Service instances.
     /// </summary>
@@ -25,7 +23,7 @@ namespace OcelotApplicationApiGateway
             {
 
                 //Creating a new event listener to redirect the traces to a file
-                ServiceEventListener listener = new ServiceEventListener("OcelotApplicationApiGateway");
+                var listener = new ServiceEventListener("OcelotApplicationApiGateway");
                 listener.EnableEvents(ServiceEventSource.Current, EventLevel.LogAlways, EventKeywords.All);
 
                 // The ServiceManifest.XML file defines one or more service type names.

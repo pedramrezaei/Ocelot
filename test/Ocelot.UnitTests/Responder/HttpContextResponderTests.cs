@@ -15,7 +15,7 @@ namespace Ocelot.UnitTests.Responder
     public class HttpContextResponderTests
     {
         private readonly HttpContextResponder _responder;
-        private RemoveOutputHeaders _removeOutputHeaders;
+        private readonly RemoveOutputHeaders _removeOutputHeaders;
 
         public HttpContextResponderTests()
         {
@@ -30,7 +30,7 @@ namespace Ocelot.UnitTests.Responder
             var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
-                    new KeyValuePair<string, IEnumerable<string>>("Transfer-Encoding", new List<string> {"woop"})
+                    new KeyValuePair<string, IEnumerable<string>>("Transfer-Encoding", new List<string> {"woop"}),
                 }, "some reason");
 
             _responder.SetResponseOnHttpContext(httpContext, response).GetAwaiter().GetResult();
@@ -74,7 +74,7 @@ namespace Ocelot.UnitTests.Responder
             var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
-                    new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"})
+                    new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"}),
                 }, "some reason");
 
             _responder.SetResponseOnHttpContext(httpContext, response).GetAwaiter().GetResult();
@@ -89,7 +89,7 @@ namespace Ocelot.UnitTests.Responder
             var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
-                    new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"})
+                    new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"}),
                 }, "some reason");
 
             _responder.SetResponseOnHttpContext(httpContext, response).GetAwaiter().GetResult();

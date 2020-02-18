@@ -1,6 +1,5 @@
 using Ocelot.Configuration.File;
 using Ocelot.Infrastructure;
-using Ocelot.Infrastructure.Extensions;
 using Ocelot.Logging;
 using Ocelot.Responses;
 using System.Collections.Generic;

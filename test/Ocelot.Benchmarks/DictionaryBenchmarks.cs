@@ -4,14 +4,13 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Validators;
 using System.Net.Http;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Requester;
+using System.Collections.Concurrent;
 
 namespace Ocelot.Benchmarks
 {
-    using Configuration;
-    using Configuration.Builder;
-    using Requester;
-    using System.Collections.Concurrent;
-
     [Config(typeof(DictionaryBenchmarks))]
     public class DictionaryBenchmarks : ManualConfig
     {

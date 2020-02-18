@@ -1,10 +1,10 @@
+using Ocelot.Configuration.Builder;
+using Ocelot.Configuration.File;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Ocelot.Configuration.Creator
 {
-    using Builder;
-    using File;
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class AggregatesCreator : IAggregatesCreator
     {
         private readonly IUpstreamTemplatePatternCreator _creator;

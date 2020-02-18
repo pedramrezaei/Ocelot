@@ -19,13 +19,12 @@ namespace Ocelot.UnitTests.Configuration
     public class FileConfigurationPollerTests : IDisposable
     {
         private readonly FileConfigurationPoller _poller;
-        private Mock<IOcelotLoggerFactory> _factory;
+        private readonly Mock<IOcelotLoggerFactory> _factory;
         private readonly Mock<IFileConfigurationRepository> _repo;
         private readonly FileConfiguration _fileConfig;
-        private Mock<IFileConfigurationPollerOptions> _config;
+        private readonly Mock<IFileConfigurationPollerOptions> _config;
         private readonly Mock<IInternalConfigurationRepository> _internalConfigRepo;
         private readonly Mock<IInternalConfigurationCreator> _internalConfigCreator;
-        private IInternalConfiguration _internalConfig;
 
         public FileConfigurationPollerTests()
         {
@@ -39,7 +38,7 @@ namespace Ocelot.UnitTests.Configuration
             _config.Setup(x => x.Delay).Returns(100);
             _internalConfigRepo = new Mock<IInternalConfigurationRepository>();
             _internalConfigCreator = new Mock<IInternalConfigurationCreator>();
-            _internalConfigCreator.Setup(x => x.Create(It.IsAny<FileConfiguration>())).ReturnsAsync(new OkResponse<IInternalConfiguration>(_internalConfig));
+            _internalConfigCreator.Setup(x => x.Create(It.IsAny<FileConfiguration>())).ReturnsAsync(new OkResponse<IInternalConfiguration>(null));
             _poller = new FileConfigurationPoller(_factory.Object, _repo.Object, _config.Object, _internalConfigRepo.Object, _internalConfigCreator.Object);
         }
 
@@ -64,11 +63,11 @@ namespace Ocelot.UnitTests.Configuration
                         {
                             new FileHostAndPort
                             {
-                                Host = "test"
-                            }
+                                Host = "test",
+                            },
                         },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => GivenPollerHasStarted())
@@ -90,11 +89,11 @@ namespace Ocelot.UnitTests.Configuration
                         {
                             new FileHostAndPort
                             {
-                                Host = "test"
-                            }
+                                Host = "test",
+                            },
                         },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => GivenPollerHasStarted())
@@ -116,11 +115,11 @@ namespace Ocelot.UnitTests.Configuration
                         {
                             new FileHostAndPort
                             {
-                                Host = "test"
-                            }
+                                Host = "test",
+                            },
                         },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => GivenPollerHasStarted())
@@ -167,7 +166,7 @@ namespace Ocelot.UnitTests.Configuration
             {
                 try
                 {
-                    _internalConfigRepo.Verify(x => x.AddOrReplace(_internalConfig), Times.Exactly(times));
+                    _internalConfigRepo.Verify(x => x.AddOrReplace(null), Times.Exactly(times));
                     _internalConfigCreator.Verify(x => x.Create(fileConfig), Times.Exactly(times));
                     return true;
                 }
@@ -185,7 +184,7 @@ namespace Ocelot.UnitTests.Configuration
             {
                 try
                 {
-                    _internalConfigRepo.Verify(x => x.AddOrReplace(_internalConfig), Times.AtLeast(times));
+                    _internalConfigRepo.Verify(x => x.AddOrReplace(null), Times.AtLeast(times));
                     _internalConfigCreator.Verify(x => x.Create(fileConfig), Times.AtLeast(times));
                     return true;
                 }

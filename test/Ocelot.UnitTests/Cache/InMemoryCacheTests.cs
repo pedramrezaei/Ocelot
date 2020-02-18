@@ -1,11 +1,11 @@
-﻿namespace Ocelot.UnitTests.Cache
-{
-    using Ocelot.Cache;
-    using Shouldly;
-    using System;
-    using System.Threading;
-    using Xunit;
+﻿using Ocelot.Cache;
+using Shouldly;
+using System;
+using System.Threading;
+using Xunit;
 
+namespace Ocelot.UnitTests.Cache
+{
     public class InMemoryCacheTests
     {
         private readonly InMemoryCache<Fake> _cache;

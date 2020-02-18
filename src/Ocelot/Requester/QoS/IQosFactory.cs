@@ -1,9 +1,9 @@
+using Ocelot.Configuration;
+using Ocelot.Responses;
+using System.Net.Http;
+
 namespace Ocelot.Requester.QoS
 {
-    using Configuration;
-    using Responses;
-    using System.Net.Http;
-
     public interface IQoSFactory
     {
         Response<DelegatingHandler> Get(DownstreamReRoute request);

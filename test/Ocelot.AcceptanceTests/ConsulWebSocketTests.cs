@@ -1,19 +1,19 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Configuration.File;
-    using Consul;
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Net.WebSockets;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using Consul;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ConsulWebSocketTests : IDisposable
     {
         private readonly List<string> _secondRecieved;
@@ -51,7 +51,7 @@
                     Address = downstreamHost,
                     Port = downstreamPort,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
             var serviceEntryTwo = new ServiceEntry()
@@ -62,7 +62,7 @@
                     Address = secondDownstreamHost,
                     Port = secondDownstreamPort,
                     ID = Guid.NewGuid().ToString(),
-                    Tags = new string[0]
+                    Tags = new string[0],
                 },
             };
 
@@ -77,7 +77,7 @@
                         DownstreamScheme = "ws",
                         LoadBalancerOptions = new FileLoadBalancerOptions { Type = "RoundRobin" },
                         ServiceName = serviceName,
-                    }
+                    },
                 },
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
@@ -85,9 +85,9 @@
                     {
                         Host = "localhost",
                         Port = consulPort,
-                        Type = "consul"
-                    }
-                }
+                        Type = "consul",
+                    },
+                },
             };
 
             this.Given(_ => _steps.GivenThereIsAConfiguration(config))
@@ -104,16 +104,10 @@
         private void ThenBothDownstreamServicesAreCalled()
         {
             _firstRecieved.Count.ShouldBe(10);
-            _firstRecieved.ForEach(x =>
-            {
-                x.ShouldBe("test");
-            });
+            _firstRecieved.ForEach(x => x.ShouldBe("test"));
 
             _secondRecieved.Count.ShouldBe(10);
-            _secondRecieved.ForEach(x =>
-            {
-                x.ShouldBe("chocolate");
-            });
+            _secondRecieved.ForEach(x => x.ShouldBe("chocolate"));
         }
 
         private void GivenTheServicesAreRegisteredWithConsul(params ServiceEntry[] serviceEntries)
@@ -164,7 +158,7 @@
                     await Task.Delay(10);
                 }
 
-                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             });
 
             var receiving = Task.Run(async () =>
@@ -185,7 +179,7 @@
                         {
                             // Last version, the client state is CloseReceived
                             // Valid states are: Open, CloseReceived, CloseSent
-                            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                         }
 
                         break;
@@ -216,7 +210,7 @@
                     await Task.Delay(10);
                 }
 
-                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
             });
 
             var receiving = Task.Run(async () =>
@@ -237,7 +231,7 @@
                         {
                             // Last version, the client state is CloseReceived
                             // Valid states are: Open, CloseReceived, CloseSent
-                            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                         }
 
                         break;
@@ -279,7 +273,7 @@
                 {
                     if (context.WebSockets.IsWebSocketRequest)
                     {
-                        WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
                         await Message(webSocket);
                     }
                     else

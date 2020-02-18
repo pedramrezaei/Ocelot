@@ -9,8 +9,8 @@ namespace Ocelot.UnitTests.Repository
 {
     public class ScopedRequestDataRepositoryTests
     {
-        private IRequestScopedDataRepository _requestScopedDataRepository;
-        private IHttpContextAccessor _httpContextAccesor;
+        private readonly IRequestScopedDataRepository _requestScopedDataRepository;
+        private readonly IHttpContextAccessor _httpContextAccesor;
         private string _key;
         private object _toAdd;
         private Response<int[]> _result;

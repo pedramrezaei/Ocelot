@@ -1,10 +1,10 @@
-﻿namespace Ocelot.QueryStrings.Middleware
-{
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using Ocelot.Logging;
+using Ocelot.Middleware;
+using System.Linq;
+using System.Threading.Tasks;
 
+namespace Ocelot.QueryStrings.Middleware
+{
     public class ClaimsToQueryStringMiddleware : OcelotMiddleware
     {
         private readonly OcelotRequestDelegate _next;

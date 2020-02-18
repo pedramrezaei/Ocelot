@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class RoutingWithQueryStringTests : IDisposable
     {
         private readonly Steps _steps;
@@ -39,12 +39,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 61879,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api/units/{subscriptionId}/{unitId}/updates",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:61879", $"/api/subscriptions/{subscriptionId}/updates", $"?unitId={unitId}", 200, "Hello from Laura"))
@@ -77,12 +77,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = port,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/{everything}",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn($"http://localhost:{port}", $"/odata/customers", "?$filter=Name%20eq%20'Sam'", 200, "Hello from Laura"))
@@ -114,15 +114,15 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 64879,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", "", 200, "Hello from Laura"))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", string.Empty, 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunning())
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway($"/api/subscriptions/{subscriptionId}/updates?unitId={unitId}"))
@@ -151,15 +151,15 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 64879,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", "", 200, "Hello from Laura"))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", string.Empty, 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunning())
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway($"/api/subscriptions/{subscriptionId}/updates"))
@@ -187,15 +187,15 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 64879,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
-            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", "", 200, "Hello from Laura"))
+            this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", string.Empty, 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunning())
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway($"/api/subscriptions/{subscriptionId}/updates?test=1"))
@@ -223,12 +223,12 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 64879,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:64879", $"/api/units/{subscriptionId}/{unitId}/updates", "?productId=1", 200, "Hello from Laura"))

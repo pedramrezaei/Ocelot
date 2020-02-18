@@ -45,7 +45,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_not_store_load_balancer_on_second_request()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", string.Empty, 0))
                 .WithLoadBalancerKey("test")
                 .Build();
 
@@ -59,12 +59,12 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_store_load_balancers_by_key()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", string.Empty, 0))
                 .WithLoadBalancerKey("test")
                 .Build();
 
             var reRouteTwo = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeRoundRobinLoadBalancer", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeRoundRobinLoadBalancer", string.Empty, 0))
                 .WithLoadBalancerKey("testtwo")
                 .Build();
 
@@ -91,12 +91,12 @@ namespace Ocelot.UnitTests.LoadBalancer
         public void should_get_new_load_balancer_if_reroute_load_balancer_has_changed()
         {
             var reRoute = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("FakeLoadBalancer", string.Empty, 0))
                 .WithLoadBalancerKey("test")
                 .Build();
 
             var reRouteTwo = new DownstreamReRouteBuilder()
-                .WithLoadBalancerOptions(new LoadBalancerOptions("LeastConnection", "", 0))
+                .WithLoadBalancerOptions(new LoadBalancerOptions("LeastConnection", string.Empty, 0))
                 .WithLoadBalancerKey("test")
                 .Build();
 

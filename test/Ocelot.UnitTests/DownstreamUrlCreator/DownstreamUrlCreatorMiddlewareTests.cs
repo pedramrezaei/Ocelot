@@ -1,32 +1,32 @@
-﻿namespace Ocelot.UnitTests.DownstreamUrlCreator
-{
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.DownstreamUrlCreator.Middleware;
-    using Ocelot.DownstreamUrlCreator.UrlTemplateReplacer;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Request.Middleware;
-    using Ocelot.Responses;
-    using Ocelot.Values;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.DownstreamUrlCreator.Middleware;
+using Ocelot.DownstreamUrlCreator.UrlTemplateReplacer;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+using Ocelot.Values;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.DownstreamUrlCreator
+{
     public class DownstreamUrlCreatorMiddlewareTests
     {
         private readonly Mock<IDownstreamPathPlaceholderReplacer> _downstreamUrlTemplateVariableReplacer;
         private OkResponse<DownstreamPath> _downstreamPath;
         private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLogger> _logger;
         private DownstreamUrlCreatorMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
         private readonly OcelotRequestDelegate _next;
@@ -89,7 +89,7 @@
                         new List<PlaceholderNameAndValue>
                         {
                             new PlaceholderNameAndValue("{subscriptionId}", "1"),
-                            new PlaceholderNameAndValue("{unitId}", "2")
+                            new PlaceholderNameAndValue("{unitId}", "2"),
                         },
                         new ReRouteBuilder()
                             .WithDownstreamReRoute(downstreamReRoute)
@@ -121,7 +121,7 @@
                         new List<PlaceholderNameAndValue>
                         {
                             new PlaceholderNameAndValue("{subscriptionId}", "1"),
-                            new PlaceholderNameAndValue("{unitId}", "2")
+                            new PlaceholderNameAndValue("{unitId}", "2"),
                         },
                         new ReRouteBuilder()
                             .WithDownstreamReRoute(downstreamReRoute)
@@ -154,7 +154,7 @@
                         {
                             new PlaceholderNameAndValue("{subscriptionId}", "1"),
                             new PlaceholderNameAndValue("{unitId}", "2"),
-                            new PlaceholderNameAndValue("{unitIdIty}", "3")
+                            new PlaceholderNameAndValue("{unitIdIty}", "3"),
                         },
                         new ReRouteBuilder()
                             .WithDownstreamReRoute(downstreamReRoute)
@@ -335,7 +335,7 @@
                         new List<PlaceholderNameAndValue>
                         {
                             new PlaceholderNameAndValue("{action}", "1"),
-                            new PlaceholderNameAndValue("{server}", "2")
+                            new PlaceholderNameAndValue("{server}", "2"),
                         },
                         new ReRouteBuilder()
                             .WithDownstreamReRoute(downstreamReRoute)

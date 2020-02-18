@@ -1,7 +1,7 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Ocelot.Provider.Rafty
+{
     public class FilePeers
     {
         public FilePeers()

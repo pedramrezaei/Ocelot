@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Ocelot.DependencyInjection;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Middleware.Pipeline;
+using Shouldly;
+using System.Collections.Generic;
+using System.Reflection;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.Middleware
 {
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Moq;
-    using Ocelot.DependencyInjection;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Middleware.Pipeline;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class OcelotPiplineBuilderTests
     {
         private readonly IServiceCollection _services;
@@ -29,11 +28,10 @@ namespace Ocelot.UnitTests.Middleware
         {
             _configRoot = new ConfigurationRoot(new List<IConfigurationProvider>());
             _services = new ServiceCollection();
-            _services.AddSingleton<IWebHostEnvironment>(GetHostingEnvironment());
-            _services.AddSingleton<IConfiguration>(_configRoot);
+            _services.AddSingleton(GetHostingEnvironment());
+            _services.AddSingleton(_configRoot);
             _services.AddOcelot();
         }
-
 
         private IWebHostEnvironment GetHostingEnvironment()
         {

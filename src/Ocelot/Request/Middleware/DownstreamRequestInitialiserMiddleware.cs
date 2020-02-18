@@ -1,10 +1,10 @@
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Request.Creator;
+using System.Threading.Tasks;
+
 namespace Ocelot.Request.Middleware
 {
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Request.Creator;
-    using System.Threading.Tasks;
-
     public class DownstreamRequestInitialiserMiddleware : OcelotMiddleware
     {
         private readonly OcelotRequestDelegate _next;

@@ -1,15 +1,15 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Configuration.File;
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class PollyQoSTests : IDisposable
     {
         private readonly Steps _steps;
@@ -38,7 +38,7 @@
                             {
                                 Host = "localhost",
                                 Port = 51569,
-                            }
+                            },
                         },
                         DownstreamScheme = "http",
                         UpstreamPathTemplate = "/",
@@ -46,10 +46,10 @@
                         QoSOptions = new FileQoSOptions
                         {
                             TimeoutValue = 1000,
-                            ExceptionsAllowedBeforeBreaking = 10
-                        }
-                    }
-                }
+                            ExceptionsAllowedBeforeBreaking = 10,
+                        },
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51569", 200, string.Empty, 10))
@@ -77,7 +77,7 @@
                             {
                                 Host = "localhost",
                                 Port = 51579,
-                            }
+                            },
                         },
                         DownstreamScheme = "http",
                         UpstreamPathTemplate = "/",
@@ -85,10 +85,10 @@
                         QoSOptions = new FileQoSOptions
                         {
                             TimeoutValue = 10,
-                            ExceptionsAllowedBeforeBreaking = 10
-                        }
-                    }
-                }
+                            ExceptionsAllowedBeforeBreaking = 10,
+                        },
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51579", 201, string.Empty, 1000))
@@ -117,7 +117,7 @@
                             {
                                 Host = "localhost",
                                 Port = 51892,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
@@ -125,10 +125,10 @@
                         {
                             ExceptionsAllowedBeforeBreaking = 1,
                             TimeoutValue = 500,
-                            DurationOfBreak = 1000
+                            DurationOfBreak = 1000,
                         },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAPossiblyBrokenServiceRunningOn("http://localhost:51892", "Hello from Laura"))
@@ -167,7 +167,7 @@
                             {
                                 Host = "localhost",
                                 Port = 51870,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
@@ -175,8 +175,8 @@
                         {
                             ExceptionsAllowedBeforeBreaking = 1,
                             TimeoutValue = 500,
-                            DurationOfBreak = 1000
-                        }
+                            DurationOfBreak = 1000,
+                        },
                     },
                     new FileReRoute
                     {
@@ -188,12 +188,12 @@
                             {
                                 Host = "localhost",
                                 Port = 51880,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/working",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAPossiblyBrokenServiceRunningOn("http://localhost:51870", "Hello from Laura"))

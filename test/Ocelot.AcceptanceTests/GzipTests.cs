@@ -1,17 +1,17 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class GzipTests : IDisposable
     {
         private readonly Steps _steps;
@@ -40,12 +40,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51179,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Post" },
-                        }
-                    }
+                        },
+                    },
             };
 
             var input = "people";

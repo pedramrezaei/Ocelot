@@ -1,14 +1,14 @@
+using Ocelot.Configuration.File;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Configuration.File;
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Threading;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class CachingTests : IDisposable
     {
         private readonly Steps _steps;
@@ -36,17 +36,17 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 57899,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             FileCacheOptions = new FileCacheOptions
                             {
-                                TtlSeconds = 100
-                            }
-                        }
-                    }
+                                TtlSeconds = 100,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:57899", 200, "Hello from Laura", null, null))
@@ -79,17 +79,17 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 52839,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             FileCacheOptions = new FileCacheOptions
                             {
-                                TtlSeconds = 100
-                            }
-                        }
-                    }
+                                TtlSeconds = 100,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:52839", 200, "Hello from Laura", "Expires", "-1"))
@@ -123,17 +123,17 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 57879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             FileCacheOptions = new FileCacheOptions
                             {
-                                TtlSeconds = 100
-                            }
-                        }
-                    }
+                                TtlSeconds = 100,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:57879", 200, "Hello from Laura", null, null))
@@ -165,17 +165,17 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 57873,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             FileCacheOptions = new FileCacheOptions
                             {
-                                TtlSeconds = 1
-                            }
-                        }
-                    }
+                                TtlSeconds = 1,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:57873", 200, "Hello from Laura", null, null))
@@ -211,6 +211,7 @@ namespace Ocelot.AcceptanceTests
                 {
                     context.Response.Headers.Add(key, value);
                 }
+
                 context.Response.StatusCode = statusCode;
                 await context.Response.WriteAsync(responseBody);
             });

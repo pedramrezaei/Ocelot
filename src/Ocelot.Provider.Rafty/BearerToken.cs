@@ -1,7 +1,7 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
+namespace Ocelot.Provider.Rafty
+{
     internal class BearerToken
     {
         [JsonProperty("access_token")]

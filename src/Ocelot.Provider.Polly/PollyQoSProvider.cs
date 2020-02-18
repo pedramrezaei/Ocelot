@@ -1,13 +1,13 @@
+using Polly;
+using Polly.CircuitBreaker;
+using Polly.Timeout;
+using Ocelot.Configuration;
+using Ocelot.Logging;
+using System;
+using System.Net.Http;
+
 namespace Ocelot.Provider.Polly
 {
-    using global::Polly;
-    using global::Polly.CircuitBreaker;
-    using global::Polly.Timeout;
-    using Ocelot.Configuration;
-    using Ocelot.Logging;
-    using System;
-    using System.Net.Http;
-
     public class PollyQoSProvider
     {
         private readonly AsyncCircuitBreakerPolicy _circuitBreakerPolicy;
@@ -36,15 +36,8 @@ namespace Ocelot.Provider.Polly
                             _logger.LogError(
                                 ".Breaker logging: Breaking the circuit for " + breakDelay.TotalMilliseconds + "ms!", ex);
                         },
-                        onReset: () =>
-                        {
-                            _logger.LogDebug(".Breaker logging: Call ok! Closed the circuit again.");
-                        },
-                        onHalfOpen: () =>
-                        {
-                            _logger.LogDebug(".Breaker logging: Half-open; next call is a trial.");
-                        }
-                    );
+                        onReset: () => _logger.LogDebug(".Breaker logging: Call ok! Closed the circuit again."),
+                        onHalfOpen: () => _logger.LogDebug(".Breaker logging: Half-open; next call is a trial."));
             }
             else
             {

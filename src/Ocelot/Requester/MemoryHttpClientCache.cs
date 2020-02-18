@@ -1,9 +1,9 @@
-﻿namespace Ocelot.Requester
-{
-    using Configuration;
-    using System;
-    using System.Collections.Concurrent;
+﻿using Ocelot.Configuration;
+using System;
+using System.Collections.Concurrent;
 
+namespace Ocelot.Requester
+{
     public class MemoryHttpClientCache : IHttpClientCache
     {
         private readonly ConcurrentDictionary<DownstreamReRoute, IHttpClient> _httpClientsCache;

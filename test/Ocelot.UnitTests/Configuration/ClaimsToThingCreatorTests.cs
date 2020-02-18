@@ -17,10 +17,10 @@ namespace Ocelot.UnitTests.Configuration
     {
         private readonly Mock<IClaimToThingConfigurationParser> _configParser;
         private Dictionary<string, string> _claimsToThings;
-        private ClaimsToThingCreator _claimsToThingsCreator;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly ClaimsToThingCreator _claimsToThingsCreator;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
         private List<ClaimToThing> _result;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLogger> _logger;
 
         public ClaimsToThingCreatorTests()
         {
@@ -38,10 +38,10 @@ namespace Ocelot.UnitTests.Configuration
         {
             var userInput = new Dictionary<string, string>()
             {
-                {"CustomerId", "Claims[CustomerId] > value"}
+                {"CustomerId", "Claims[CustomerId] > value"},
             };
 
-            var claimsToThing = new OkResponse<ClaimToThing>(new ClaimToThing("CustomerId", "CustomerId", "", 0));
+            var claimsToThing = new OkResponse<ClaimToThing>(new ClaimToThing("CustomerId", "CustomerId", string.Empty, 0));
 
             this.Given(x => x.GivenTheFollowingDictionary(userInput))
                 .And(x => x.GivenTheConfigHeaderExtractorReturns(claimsToThing))
@@ -56,7 +56,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var userInput = new Dictionary<string, string>()
             {
-                {"CustomerId", "Claims[CustomerId] > value"}
+                {"CustomerId", "Claims[CustomerId] > value"},
             };
 
             var claimsToThing = new ErrorResponse<ClaimToThing>(It.IsAny<Error>());

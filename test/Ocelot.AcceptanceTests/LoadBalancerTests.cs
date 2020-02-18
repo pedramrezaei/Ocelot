@@ -1,14 +1,14 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class LoadBalancerTests : IDisposable
     {
         private readonly Steps _steps;
@@ -48,19 +48,19 @@ namespace Ocelot.AcceptanceTests
                                 new FileHostAndPort
                                 {
                                     Host = "localhost",
-                                    Port = portOne
+                                    Port = portOne,
                                 },
                                 new FileHostAndPort
                                 {
                                     Host = "localhost",
-                                    Port = portTwo
-                                }
-                            }
-                        }
+                                    Port = portTwo,
+                                },
+                            },
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
-                }
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, 200))
@@ -97,19 +97,19 @@ namespace Ocelot.AcceptanceTests
                                 new FileHostAndPort
                                 {
                                     Host = "localhost",
-                                    Port = downstreamPortOne
+                                    Port = downstreamPortOne,
                                 },
                                 new FileHostAndPort
                                 {
                                     Host = "localhost",
-                                    Port = downstreamPortTwo
-                                }
-                            }
-                        }
+                                    Port = downstreamPortTwo,
+                                },
+                            },
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
-                }
+                },
             };
 
             this.Given(x => x.GivenProductServiceOneIsRunning(downstreamServiceOneUrl, 200))

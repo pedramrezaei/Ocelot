@@ -24,7 +24,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/api/v{apiVersion}/cards",
-                Priority = 0
+                Priority = 0,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -40,7 +40,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/orders/{catchAll}",
-                Priority = 0
+                Priority = 0,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -56,7 +56,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/{catchAll}",
-                Priority = 1
+                Priority = 1,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -72,7 +72,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/PRODUCTS/{productId}",
-                ReRouteIsCaseSensitive = false
+                ReRouteIsCaseSensitive = false,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -88,7 +88,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/PRODUCTS/",
-                ReRouteIsCaseSensitive = false
+                ReRouteIsCaseSensitive = false,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -104,7 +104,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/PRODUCTS/{productId}",
-                ReRouteIsCaseSensitive = true
+                ReRouteIsCaseSensitive = true,
             };
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
                 .When(x => x.WhenICreateTheTemplatePattern())
@@ -119,7 +119,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/api/products/{productId}",
-                ReRouteIsCaseSensitive = true
+                ReRouteIsCaseSensitive = true,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -135,7 +135,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/api/products/{productId}/variants/{variantId}",
-                ReRouteIsCaseSensitive = true
+                ReRouteIsCaseSensitive = true,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -151,7 +151,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/api/products/{productId}/variants/{variantId}/",
-                ReRouteIsCaseSensitive = true
+                ReRouteIsCaseSensitive = true,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -166,7 +166,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var fileReRoute = new FileReRoute
             {
-                UpstreamPathTemplate = "/"
+                UpstreamPathTemplate = "/",
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -181,7 +181,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var fileReRoute = new FileReRoute
             {
-                UpstreamPathTemplate = "/{url}"
+                UpstreamPathTemplate = "/{url}",
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -197,7 +197,7 @@ namespace Ocelot.UnitTests.Configuration
             var fileReRoute = new FileReRoute
             {
                 UpstreamPathTemplate = "/{productId}/products/variants/{variantId}/",
-                ReRouteIsCaseSensitive = true
+                ReRouteIsCaseSensitive = true,
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -212,7 +212,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var fileReRoute = new FileReRoute
             {
-                UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}"
+                UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}",
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))
@@ -227,7 +227,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var fileReRoute = new FileReRoute
             {
-                UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}&productId={productId}"
+                UpstreamPathTemplate = "/api/subscriptions/{subscriptionId}/updates?unitId={unitId}&productId={productId}",
             };
 
             this.Given(x => x.GivenTheFollowingFileReRoute(fileReRoute))

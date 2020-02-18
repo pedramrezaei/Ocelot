@@ -23,11 +23,11 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
     public class ClaimsToDownstreamPathMiddlewareTests
     {
         private readonly Mock<IChangeDownstreamPathTemplate> _changePath;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
-        private ClaimsToDownstreamPathMiddleware _middleware;
-        private DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
+        private readonly ClaimsToDownstreamPathMiddleware _middleware;
+        private readonly DownstreamContext _downstreamContext;
+        private readonly OcelotRequestDelegate _next;
 
         public ClaimsToDownstreamPathMiddlewareTests()
         {
@@ -50,7 +50,7 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
                         .WithDownstreamPathTemplate("any old string")
                         .WithClaimsToDownstreamPath(new List<ClaimToThing>
                         {
-                            new ClaimToThing("UserId", "Subject", "", 0),
+                            new ClaimToThing("UserId", "Subject", string.Empty, 0),
                         })
                         .WithUpstreamHttpMethod(new List<string> { "Get" })
                         .Build())
@@ -62,7 +62,6 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
                .When(x => x.WhenICallTheMiddleware())
                .Then(x => x.ThenChangeDownstreamPathIsCalledCorrectly())
                .BDDfy();
-
         }
 
         private void WhenICallTheMiddleware()
@@ -96,6 +95,5 @@ namespace Ocelot.UnitTests.DownstreamPathManipulation
             _downstreamContext.TemplatePlaceholderNameAndValues = downstreamRoute.TemplatePlaceholderNameAndValues;
             _downstreamContext.DownstreamReRoute = downstreamRoute.ReRoute.DownstreamReRoute[0];
         }
-
     }
 }

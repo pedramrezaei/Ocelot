@@ -8,9 +8,9 @@ namespace Ocelot.AcceptanceTests
 {
     public class ConfigurationReloadTests : IDisposable
     {
-        private FileConfiguration _initialConfig;
-        private FileConfiguration _anotherConfig;
-        private Steps _steps;
+        private readonly FileConfiguration _initialConfig;
+        private readonly FileConfiguration _anotherConfig;
+        private readonly Steps _steps;
 
         public ConfigurationReloadTests()
         {
@@ -20,16 +20,16 @@ namespace Ocelot.AcceptanceTests
             {
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                    RequestIdKey = "initialKey"
-                }
+                    RequestIdKey = "initialKey",
+                },
             };
 
             _anotherConfig = new FileConfiguration
             {
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                    RequestIdKey = "someOtherKey"
-                }
+                    RequestIdKey = "someOtherKey",
+                },
             };
         }
 

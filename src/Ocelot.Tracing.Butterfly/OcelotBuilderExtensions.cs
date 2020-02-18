@@ -1,11 +1,11 @@
-﻿namespace Ocelot.Tracing.Butterfly
-{
-    using DependencyInjection;
-    using global::Butterfly.Client.AspNetCore;
-    using Logging;
-    using Microsoft.Extensions.DependencyInjection;
-    using System;
+﻿using Ocelot.DependencyInjection;
+using Butterfly.Client.AspNetCore;
+using Ocelot.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
+namespace Ocelot.Tracing.Butterfly
+{
     public static class OcelotBuilderExtensions
     {
         public static IOcelotBuilder AddButterfly(this IOcelotBuilder builder, Action<ButterflyOptions> settings)

@@ -1,12 +1,12 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ReturnsErrorTests : IDisposable
     {
         private readonly Steps _steps;
@@ -21,7 +21,6 @@
         [Fact]
         public void should_return_internal_server_error_if_downstream_service_returns_internal_server_error()
         {
-
             var configuration = new FileConfiguration
             {
                 ReRoutes = new List<FileReRoute>
@@ -37,11 +36,11 @@
                                 {
                                     Host = "localhost",
                                     Port = 53876,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:53876"))

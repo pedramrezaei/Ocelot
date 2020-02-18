@@ -12,9 +12,9 @@ namespace Ocelot.UnitTests.Middleware
 {
     public class OcelotMiddlewareTests
     {
-        private Mock<IOcelotLogger> _logger;
-        private FakeMiddleware _middleware;
-        private List<Error> _errors;
+        private readonly Mock<IOcelotLogger> _logger;
+        private readonly FakeMiddleware _middleware;
+        private readonly List<Error> _errors;
 
         public OcelotMiddlewareTests()
         {

@@ -4,11 +4,10 @@ using Ocelot.Configuration.File;
 using Ocelot.Configuration.Setter;
 using System;
 using System.Threading.Tasks;
+using Ocelot.Configuration.Repository;
 
 namespace Ocelot.Configuration
 {
-    using Repository;
-
     [Authorize]
     [Route("configuration")]
     public class FileConfigurationController : Controller

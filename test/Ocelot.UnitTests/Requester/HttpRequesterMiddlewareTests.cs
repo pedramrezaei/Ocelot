@@ -1,31 +1,31 @@
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration.Builder;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Requester;
+using Ocelot.Requester.Middleware;
+using Ocelot.Responses;
+using Ocelot.UnitTests.Responder;
+using Shouldly;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.Requester
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Requester;
-    using Ocelot.Requester.Middleware;
-    using Ocelot.Responses;
-    using Ocelot.UnitTests.Responder;
-    using Shouldly;
-    using System;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class HttpRequesterMiddlewareTests
     {
         private readonly Mock<IHttpRequester> _requester;
         private Response<HttpResponseMessage> _response;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly HttpRequesterMiddleware _middleware;
         private DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
 
         public HttpRequesterMiddlewareTests()
         {
@@ -84,7 +84,7 @@ namespace Ocelot.UnitTests.Requester
             _downstreamContext =
                 new DownstreamContext(new DefaultHttpContext())
                 {
-                    DownstreamReRoute = new DownstreamReRouteBuilder().Build()
+                    DownstreamReRoute = new DownstreamReRouteBuilder().Build(),
                 };
         }
 

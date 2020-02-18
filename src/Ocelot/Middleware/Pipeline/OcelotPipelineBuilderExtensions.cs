@@ -9,11 +9,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Predicate = System.Func<Ocelot.Middleware.DownstreamContext, bool>;
 
 namespace Ocelot.Middleware.Pipeline
 {
-    using Predicate = Func<DownstreamContext, bool>;
-
     public static class OcelotPipelineBuilderExtensions
     {
         internal const string InvokeMethodName = "Invoke";
@@ -179,7 +178,7 @@ namespace Ocelot.Middleware.Pipeline
             var options = new MapWhenOptions
             {
                 Predicate = predicate,
-                Branch = branch
+                Branch = branch,
             };
             return app.Use(next => new MapWhenMiddleware(next, options).Invoke);
         }
@@ -204,7 +203,7 @@ namespace Ocelot.Middleware.Pipeline
                 var parameterTypeExpression = new Expression[]
                 {
                     providerArg,
-                    Expression.Constant(parameterType, typeof(Type))
+                    Expression.Constant(parameterType, typeof(Type)),
                 };
 
                 var getServiceCall = Expression.Call(GetServiceInfo, parameterTypeExpression);

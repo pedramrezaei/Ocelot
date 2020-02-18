@@ -1,10 +1,10 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Configuration.Setter;
-    using global::Rafty.FiniteStateMachine;
-    using global::Rafty.Log;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration.Setter;
+using Rafty.FiniteStateMachine;
+using Rafty.Log;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     public class OcelotFiniteStateMachine : IFiniteStateMachine
     {
         private readonly IFileConfigurationSetter _setter;

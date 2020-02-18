@@ -1,21 +1,21 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Administration;
-    using Configuration.Repository;
-    using global::Rafty.Concensus.Peers;
-    using global::Rafty.Infrastructure;
-    using Microsoft.Extensions.Options;
-    using Middleware;
-    using System.Collections.Generic;
-    using System.Net.Http;
+﻿using Ocelot.Administration;
+using Ocelot.Configuration.Repository;
+using Rafty.Concensus.Peers;
+using Rafty.Infrastructure;
+using Microsoft.Extensions.Options;
+using Ocelot.Middleware;
+using System.Collections.Generic;
+using System.Net.Http;
 
+namespace Ocelot.Provider.Rafty
+{
     public class FilePeersProvider : IPeersProvider
     {
         private readonly IOptions<FilePeers> _options;
         private readonly List<IPeer> _peers;
-        private IBaseUrlFinder _finder;
-        private IInternalConfigurationRepository _repo;
-        private IIdentityServerConfiguration _identityServerConfig;
+        private readonly IBaseUrlFinder _finder;
+        private readonly IInternalConfigurationRepository _repo;
+        private readonly IIdentityServerConfiguration _identityServerConfig;
 
         public FilePeersProvider(IOptions<FilePeers> options, IBaseUrlFinder finder, IInternalConfigurationRepository repo, IIdentityServerConfiguration identityServerConfig)
         {

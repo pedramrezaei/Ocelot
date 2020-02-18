@@ -49,7 +49,7 @@ namespace Ocelot.UnitTests.Kubernetes
                 ApiEndPoint = new Uri(_fakekubeServiceDiscoveryUrl),
                 AccessToken = "txpc696iUhbVoudg164r93CxDTrKRVWG",
                 AuthStrategy = KubeClient.KubeAuthStrategy.BearerToken,
-                AllowInsecure = true
+                AllowInsecure = true,
             };
 
             _clientFactory = KubeApiClient.Create(option);
@@ -58,7 +58,7 @@ namespace Ocelot.UnitTests.Kubernetes
             var config = new KubeRegistryConfiguration()
             {
                 KeyOfServiceInK8s = _serviceName,
-                KubeNamespace = _namespaces
+                KubeNamespace = _namespaces,
             };
             _provider = new Kube(config, _factory.Object, _clientFactory);
         }
@@ -73,22 +73,22 @@ namespace Ocelot.UnitTests.Kubernetes
                 ApiVersion = "1.0",
                 Metadata = new ObjectMetaV1()
                 {
-                    Namespace = "dev"
+                    Namespace = "dev",
                 },
                 Spec = new ServiceSpecV1()
                 {
-                    ClusterIP = "localhost"
+                    ClusterIP = "localhost",
                 },
                 Status = new ServiceStatusV1()
                 {
-                    LoadBalancer = new LoadBalancerStatusV1()
-                }
+                    LoadBalancer = new LoadBalancerStatusV1(),
+                },
             };
 
             serviceEntryOne.Spec.Ports.Add(
                 new ServicePortV1()
                 {
-                    Port = 80
+                    Port = 80,
                 }
             );
 

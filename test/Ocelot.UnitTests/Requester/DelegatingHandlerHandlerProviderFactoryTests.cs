@@ -1,21 +1,21 @@
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Logging;
+using Ocelot.Requester;
+using Ocelot.Requester.QoS;
+using Ocelot.Responses;
+using Ocelot.UnitTests.Responder;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.Requester
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Logging;
-    using Ocelot.Requester;
-    using Ocelot.Requester.QoS;
-    using Ocelot.Responses;
-    using Responder;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class DelegatingHandlerHandlerProviderFactoryTests
     {
         private DelegatingHandlerHandlerFactory _factory;
@@ -56,7 +56,7 @@ namespace Ocelot.UnitTests.Requester
                 .WithDelegatingHandlers(new List<string>
                 {
                     "FakeDelegatingHandler",
-                    "FakeDelegatingHandlerTwo"
+                    "FakeDelegatingHandlerTwo",
                 })
                 .WithLoadBalancerKey("")
                 .Build();
@@ -93,7 +93,7 @@ namespace Ocelot.UnitTests.Requester
                 {
                     "FakeDelegatingHandlerTwo",
                     "FakeDelegatingHandler",
-                    "FakeDelegatingHandlerFour"
+                    "FakeDelegatingHandlerFour",
                 })
                 .WithLoadBalancerKey("")
                 .Build();
@@ -129,7 +129,7 @@ namespace Ocelot.UnitTests.Requester
                 .WithDelegatingHandlers(new List<string>
                 {
                     "FakeDelegatingHandlerTwo",
-                    "FakeDelegatingHandler"
+                    "FakeDelegatingHandler",
                 })
                 .WithLoadBalancerKey("")
                 .Build();
@@ -225,7 +225,7 @@ namespace Ocelot.UnitTests.Requester
                 .WithDelegatingHandlers(new List<string>
                 {
                     "FakeDelegatingHandler",
-                    "FakeDelegatingHandlerTwo"
+                    "FakeDelegatingHandlerTwo",
                 })
                 .WithLoadBalancerKey("")
                 .Build();
@@ -405,13 +405,13 @@ namespace Ocelot.UnitTests.Requester
             where TTwo : DelegatingHandler
         {
             _services.AddTransient<TOne>();
-            _services.AddTransient<GlobalDelegatingHandler>(s =>
+            _services.AddTransient(s =>
             {
                 var service = s.GetService<TOne>();
                 return new GlobalDelegatingHandler(service);
             });
             _services.AddTransient<TTwo>();
-            _services.AddTransient<GlobalDelegatingHandler>(s =>
+            _services.AddTransient(s =>
             {
                 var service = s.GetService<TTwo>();
                 return new GlobalDelegatingHandler(service);

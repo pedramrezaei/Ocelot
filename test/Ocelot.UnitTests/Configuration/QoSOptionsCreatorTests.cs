@@ -10,7 +10,7 @@ namespace Ocelot.UnitTests.Configuration
 {
     public class QoSOptionsCreatorTests
     {
-        private QoSOptionsCreator _creator;
+        private readonly QoSOptionsCreator _creator;
         private FileReRoute _fileReRoute;
         private QoSOptions _result;
 
@@ -28,8 +28,8 @@ namespace Ocelot.UnitTests.Configuration
                 {
                     ExceptionsAllowedBeforeBreaking = 1,
                     DurationOfBreak = 1,
-                    TimeoutValue = 1
-                }
+                    TimeoutValue = 1,
+                },
             };
             var expected = new QoSOptionsBuilder()
                 .WithDurationOfBreak(1)

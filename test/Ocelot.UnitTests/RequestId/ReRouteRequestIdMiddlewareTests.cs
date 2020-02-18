@@ -1,35 +1,35 @@
-﻿namespace Ocelot.UnitTests.RequestId
-{
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.Infrastructure.RequestData;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Request.Middleware;
-    using Ocelot.RequestId.Middleware;
-    using Ocelot.Responses;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.Infrastructure.RequestData;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Request.Middleware;
+using Ocelot.RequestId.Middleware;
+using Ocelot.Responses;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.RequestId
+{
     public class ReRouteRequestIdMiddlewareTests
     {
         private readonly HttpRequestMessage _downstreamRequest;
         private string _value;
         private string _key;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly ReRouteRequestIdMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
         private readonly Mock<IRequestScopedDataRepository> _repo;
 
         public ReRouteRequestIdMiddlewareTests()

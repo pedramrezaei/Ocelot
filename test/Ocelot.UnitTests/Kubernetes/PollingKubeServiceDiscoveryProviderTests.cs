@@ -35,7 +35,7 @@ namespace Ocelot.UnitTests.Kubernetes
         [Fact]
         public void should_return_service_from_kube()
         {
-            var service = new Service("", new ServiceHostAndPort("", 0), "", "", new List<string>());
+            var service = new Service(string.Empty, new ServiceHostAndPort(string.Empty, 0), string.Empty, string.Empty, new List<string>());
 
             this.Given(x => GivenKubeReturns(service))
                 .When(x => WhenIGetTheServices(1))

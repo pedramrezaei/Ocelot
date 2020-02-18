@@ -1,27 +1,26 @@
 using Xunit;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Ocelot.Configuration.File;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace Ocelot.IntegrationTests
 {
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
-    using Ocelot.Configuration.File;
-    using Ocelot.DependencyInjection;
-    using Ocelot.Middleware;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-
     public class HeaderTests : IDisposable
     {
         private readonly HttpClient _httpClient;
@@ -55,20 +54,20 @@ namespace Ocelot.IntegrationTests
                             {
                                 Host = "localhost",
                                 Port = 6773,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
                         UpstreamHeaderTransform = new Dictionary<string,string>
                         {
-                            {"X-Forwarded-For", "{RemoteIpAddress}"}
+                            {"X-Forwarded-For", "{RemoteIpAddress}"},
                         },
                         HttpHandlerOptions = new FileHttpHandlerOptions
                         {
-                            AllowAutoRedirect = false
-                        }
-                    }
-                }
+                            AllowAutoRedirect = false,
+                        },
+                    },
+                },
             };
 
             this.Given(x => GivenThereIsAServiceRunningOn("http://localhost:6773", 200, "X-Forwarded-For"))
@@ -120,14 +119,8 @@ namespace Ocelot.IntegrationTests
                     config.AddJsonFile("ocelot.json", false, false);
                     config.AddEnvironmentVariables();
                 })
-                .ConfigureServices(x =>
-                {
-                    x.AddOcelot();
-                })
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                });
+                .ConfigureServices(x => x.AddOcelot())
+                .Configure(app => app.UseOcelot().Wait());
 
             _builder = _webHostBuilder.Build();
 
@@ -147,7 +140,7 @@ namespace Ocelot.IntegrationTests
 
             File.WriteAllText(configurationPath, jsonConfiguration);
 
-            var text = File.ReadAllText(configurationPath);
+            _ = File.ReadAllText(configurationPath);
 
             configurationPath = $"{AppContext.BaseDirectory}/ocelot.json";
 
@@ -158,7 +151,7 @@ namespace Ocelot.IntegrationTests
 
             File.WriteAllText(configurationPath, jsonConfiguration);
 
-            text = File.ReadAllText(configurationPath);
+            _ = File.ReadAllText(configurationPath);
         }
 
         private async Task WhenIGetUrlOnTheApiGateway(string url)

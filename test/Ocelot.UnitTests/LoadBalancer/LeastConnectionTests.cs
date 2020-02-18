@@ -18,8 +18,8 @@ namespace Ocelot.UnitTests.LoadBalancer
         private Response<ServiceHostAndPort> _result;
         private LeastConnection _leastConnection;
         private List<Service> _services;
-        private Random _random;
-        private DownstreamContext _context;
+        private readonly Random _random;
+        private readonly DownstreamContext _context;
 
         public LeastConnectionTests()
         {
@@ -113,7 +113,7 @@ namespace Ocelot.UnitTests.LoadBalancer
 
             var availableServices = new List<Service>
             {
-                new Service(serviceName, hostAndPort, string.Empty, string.Empty, new string[0])
+                new Service(serviceName, hostAndPort, string.Empty, string.Empty, new string[0]),
             };
 
             this.Given(x => x.GivenAHostAndPort(hostAndPort))
@@ -132,7 +132,7 @@ namespace Ocelot.UnitTests.LoadBalancer
             {
                 new Service(serviceName, new ServiceHostAndPort("127.0.0.1", 80), string.Empty, string.Empty, new string[0]),
                 new Service(serviceName, new ServiceHostAndPort("127.0.0.2", 80), string.Empty, string.Empty, new string[0]),
-                new Service(serviceName, new ServiceHostAndPort("127.0.0.3", 80), string.Empty, string.Empty, new string[0])
+                new Service(serviceName, new ServiceHostAndPort("127.0.0.3", 80), string.Empty, string.Empty, new string[0]),
             };
 
             _services = availableServices;

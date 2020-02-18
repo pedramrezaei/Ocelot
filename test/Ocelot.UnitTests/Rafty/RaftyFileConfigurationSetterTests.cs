@@ -1,14 +1,14 @@
-﻿namespace Ocelot.UnitTests.Rafty
-{
-    using global::Rafty.Concensus.Node;
-    using global::Rafty.Infrastructure;
-    using Moq;
-    using Ocelot.Configuration.File;
-    using Provider.Rafty;
-    using Shouldly;
-    using System.Threading.Tasks;
-    using Xunit;
+﻿using Rafty.Concensus.Node;
+using Rafty.Infrastructure;
+using Moq;
+using Ocelot.Configuration.File;
+using Ocelot.Provider.Rafty;
+using Shouldly;
+using System.Threading.Tasks;
+using Xunit;
 
+namespace Ocelot.UnitTests.Rafty
+{
     public class RaftyFileConfigurationSetterTests
     {
         private readonly RaftyFileConfigurationSetter _setter;

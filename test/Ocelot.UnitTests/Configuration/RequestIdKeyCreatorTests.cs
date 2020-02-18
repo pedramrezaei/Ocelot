@@ -11,7 +11,7 @@ namespace Ocelot.UnitTests.Configuration
         private FileReRoute _fileReRoute;
         private FileGlobalConfiguration _fileGlobalConfig;
         private string _result;
-        private RequestIdKeyCreator _creator;
+        private readonly RequestIdKeyCreator _creator;
 
         public RequestIdKeyCreatorTests()
         {
@@ -24,7 +24,7 @@ namespace Ocelot.UnitTests.Configuration
             var reRoute = new FileReRoute();
             var globalConfig = new FileGlobalConfiguration
             {
-                RequestIdKey = "cheese"
+                RequestIdKey = "cheese",
             };
 
             this.Given(x => x.GivenTheFollowingReRoute(reRoute))
@@ -39,7 +39,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             var reRoute = new FileReRoute
             {
-                RequestIdKey = "cheese"
+                RequestIdKey = "cheese",
             };
             var globalConfig = new FileGlobalConfiguration();
 
@@ -55,11 +55,11 @@ namespace Ocelot.UnitTests.Configuration
         {
             var reRoute = new FileReRoute
             {
-                RequestIdKey = "cheese"
+                RequestIdKey = "cheese",
             };
             var globalConfig = new FileGlobalConfiguration
             {
-                RequestIdKey = "test"
+                RequestIdKey = "test",
             };
 
             this.Given(x => x.GivenTheFollowingReRoute(reRoute))

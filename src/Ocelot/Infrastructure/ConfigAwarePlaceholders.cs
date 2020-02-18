@@ -1,11 +1,11 @@
+using System;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
+using Ocelot.Request.Middleware;
+using Ocelot.Responses;
+
 namespace Ocelot.Infrastructure
 {
-    using System;
-    using System.Text.RegularExpressions;
-    using Microsoft.Extensions.Configuration;
-    using Request.Middleware;
-    using Responses;
-
     public class ConfigAwarePlaceholders : IPlaceholders
     {
         private readonly IConfiguration _configuration;

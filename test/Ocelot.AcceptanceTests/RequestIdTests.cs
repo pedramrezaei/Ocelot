@@ -1,13 +1,13 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class RequestIdTests : IDisposable
     {
         private readonly Steps _steps;
@@ -35,14 +35,14 @@
                                 {
                                     Host = "localhost",
                                     Port = 51873,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             RequestIdKey = _steps.RequestIdKey,
-                         }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51873"))
@@ -69,13 +69,13 @@
                                 {
                                     Host = "localhost",
                                     Port = 51873,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             var requestId = Guid.NewGuid().ToString();
@@ -104,17 +104,17 @@
                                 {
                                     Host = "localhost",
                                     Port = 51873,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                    RequestIdKey = _steps.RequestIdKey
-                }
+                    RequestIdKey = _steps.RequestIdKey,
+                },
             };
 
             var requestId = Guid.NewGuid().ToString();
@@ -143,17 +143,17 @@
                                 {
                                     Host = "localhost",
                                     Port = 51873,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                    RequestIdKey = _steps.RequestIdKey
-                }
+                    RequestIdKey = _steps.RequestIdKey,
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51873"))

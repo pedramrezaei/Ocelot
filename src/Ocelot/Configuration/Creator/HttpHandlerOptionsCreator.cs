@@ -1,10 +1,10 @@
-﻿namespace Ocelot.Configuration.Creator
-{
-    using Logging;
-    using Microsoft.Extensions.DependencyInjection;
-    using Ocelot.Configuration.File;
-    using System;
+﻿using Ocelot.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.Configuration.File;
+using System;
 
+namespace Ocelot.Configuration.Creator
+{
     public class HttpHandlerOptionsCreator : IHttpHandlerOptionsCreator
     {
         private readonly ITracer _tracer;

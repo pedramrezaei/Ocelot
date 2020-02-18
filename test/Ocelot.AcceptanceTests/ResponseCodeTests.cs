@@ -1,12 +1,13 @@
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ResponseCodeTests : IDisposable
     {
         private readonly Steps _steps;
@@ -35,12 +36,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51092,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/{everything}",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51092", "/inline.132.bundle.js", 304))
@@ -53,10 +54,14 @@ namespace Ocelot.AcceptanceTests
 
         private void GivenThereIsAServiceRunningOn(string baseUrl, string basePath, int statusCode)
         {
-            _serviceHandler.GivenThereIsAServiceRunningOn(baseUrl, basePath, async context =>
-            {
-                context.Response.StatusCode = statusCode;
-            });
+            _serviceHandler.GivenThereIsAServiceRunningOn(
+                baseUrl,
+                basePath,
+                context =>
+                {
+                    context.Response.StatusCode = statusCode;
+                    return Task.CompletedTask;
+                });
         }
 
         public void Dispose()

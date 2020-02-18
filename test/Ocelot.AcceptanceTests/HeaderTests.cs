@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class HeaderTests : IDisposable
     {
         private int _count;
@@ -39,16 +39,16 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51871,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             UpstreamHeaderTransform = new Dictionary<string,string>
                             {
-                                {"Laz", "D, GP"}
-                            }
-                        }
-                    }
+                                {"Laz", "D, GP"},
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51871", "/", 200, "Laz"))
@@ -78,16 +78,16 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51871,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             DownstreamHeaderTransform = new Dictionary<string,string>
                             {
-                                {"Location", "http://www.bbc.co.uk/, http://ocelot.com/"}
-                            }
-                        }
-                    }
+                                {"Location", "http://www.bbc.co.uk/, http://ocelot.com/"},
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51871", "/", 200, "Location", "http://www.bbc.co.uk/"))
@@ -116,20 +116,20 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 6773,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             DownstreamHeaderTransform = new Dictionary<string,string>
                             {
-                                {"Location", "http://localhost:6773, {BaseUrl}"}
+                                {"Location", "http://localhost:6773, {BaseUrl}"},
                             },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                AllowAutoRedirect = false
-                            }
-                        }
-                    }
+                                AllowAutoRedirect = false,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:6773", "/", 302, "Location", "http://localhost:6773/pay/Receive"))
@@ -158,20 +158,20 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 6773,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             DownstreamHeaderTransform = new Dictionary<string,string>
                             {
-                                {"Location", "{DownstreamBaseUrl}, {BaseUrl}"}
+                                {"Location", "{DownstreamBaseUrl}, {BaseUrl}"},
                             },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                AllowAutoRedirect = false
-                            }
-                        }
-                    }
+                                AllowAutoRedirect = false,
+                            },
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:6773", "/", 302, "Location", "http://localhost:6773/pay/Receive"))
@@ -200,24 +200,24 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 6773,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             DownstreamHeaderTransform = new Dictionary<string,string>
                             {
-                                {"Location", "{DownstreamBaseUrl}, {BaseUrl}"}
+                                {"Location", "{DownstreamBaseUrl}, {BaseUrl}"},
                             },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                AllowAutoRedirect = false
-                            }
-                        }
+                                AllowAutoRedirect = false,
+                            },
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
-                    BaseUrl = "http://anotherapp.azurewebsites.net"
-                }
+                    BaseUrl = "http://anotherapp.azurewebsites.net",
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:6773", "/", 302, "Location", "http://localhost:6773/pay/Receive"))
@@ -246,16 +246,16 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 6774,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/sso/{everything}",
                         UpstreamHttpMethod = new List<string> { "Get", "Post", "Options" },
                         HttpHandlerOptions = new FileHttpHandlerOptions
                         {
-                            UseCookieContainer = true
-                        }
-                    }
-                }
+                            UseCookieContainer = true,
+                        },
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:6774", "/sso/test", 200))
@@ -287,16 +287,16 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 6775,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/sso/{everything}",
                         UpstreamHttpMethod = new List<string> { "Get", "Post", "Options" },
                         HttpHandlerOptions = new FileHttpHandlerOptions
                         {
-                            UseCookieContainer = false
-                        }
-                    }
-                }
+                            UseCookieContainer = false,
+                        },
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:6775", "/sso/test", 200))
@@ -328,12 +328,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 52866,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:52866", "/", 200, "Accept"))
@@ -363,12 +363,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51874,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51874", "/", 200, "Accept"))

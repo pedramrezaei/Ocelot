@@ -1,11 +1,11 @@
+using Ocelot.DependencyInjection;
+using Ocelot.Configuration.File;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+
 namespace Ocelot.Configuration.Creator
 {
-    using DependencyInjection;
-    using File;
-    using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Collections.Generic;
-
     public class ConfigurationCreator : IConfigurationCreator
     {
         private readonly IServiceProviderConfigurationCreator _serviceProviderConfigCreator;

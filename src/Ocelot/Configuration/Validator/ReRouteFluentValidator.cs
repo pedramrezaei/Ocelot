@@ -1,13 +1,13 @@
-﻿namespace Ocelot.Configuration.Validator
-{
-    using File;
-    using FluentValidation;
-    using Microsoft.AspNetCore.Authentication;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration.File;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
+namespace Ocelot.Configuration.Validator
+{
     public class ReRouteFluentValidator : AbstractValidator<FileReRoute>
     {
         private readonly IAuthenticationSchemeProvider _authenticationSchemeProvider;

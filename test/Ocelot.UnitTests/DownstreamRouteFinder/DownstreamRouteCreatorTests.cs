@@ -1,19 +1,19 @@
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Configuration.Creator;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.Finder;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Ocelot.Responses;
+using Shouldly;
+using System.Collections.Generic;
+using System.Net.Http;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.DownstreamRouteFinder
 {
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Configuration.Creator;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.Finder;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Responses;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class DownstreamRouteCreatorTests
     {
         private readonly DownstreamRouteCreator _creator;
@@ -25,9 +25,8 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
         private string _upstreamUrlPath;
         private string _upstreamHttpMethod;
         private IInternalConfiguration _configuration;
-        private Mock<IQoSOptionsCreator> _qosOptionsCreator;
+        private readonly Mock<IQoSOptionsCreator> _qosOptionsCreator;
         private Response<DownstreamRoute> _resultTwo;
-        private string _upstreamQuery;
 
         public DownstreamRouteCreatorTests()
         {
@@ -284,12 +283,12 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
 
         private void WhenICreate()
         {
-            _result = _creator.Get(_upstreamUrlPath, _upstreamQuery, _upstreamHttpMethod, _configuration, _upstreamHost);
+            _result = _creator.Get(_upstreamUrlPath, null, _upstreamHttpMethod, _configuration, _upstreamHost);
         }
 
         private void WhenICreateAgain()
         {
-            _resultTwo = _creator.Get(_upstreamUrlPath, _upstreamQuery, _upstreamHttpMethod, _configuration, _upstreamHost);
+            _resultTwo = _creator.Get(_upstreamUrlPath, null, _upstreamHttpMethod, _configuration, _upstreamHost);
         }
 
         private void ThenTheDownstreamRoutesAreTheSameReference()

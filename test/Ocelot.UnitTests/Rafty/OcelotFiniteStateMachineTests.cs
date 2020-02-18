@@ -1,11 +1,11 @@
-﻿namespace Ocelot.UnitTests.Rafty
-{
-    using Moq;
-    using Ocelot.Configuration.Setter;
-    using Provider.Rafty;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Moq;
+using Ocelot.Configuration.Setter;
+using Ocelot.Provider.Rafty;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.Rafty
+{
     public class OcelotFiniteStateMachineTests
     {
         private UpdateFileConfiguration _command;

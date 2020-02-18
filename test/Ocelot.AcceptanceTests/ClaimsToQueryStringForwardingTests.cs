@@ -13,19 +13,18 @@ using System.Net;
 using System.Security.Claims;
 using TestStack.BDDfy;
 using Xunit;
+using IdentityServer4.Test;
+using Shouldly;
 
 namespace Ocelot.AcceptanceTests
 {
-    using IdentityServer4.Test;
-    using Shouldly;
-
     public class ClaimsToQueryStringForwardingTests : IDisposable
     {
         private IWebHost _servicebuilder;
         private IWebHost _identityServerBuilder;
         private readonly Steps _steps;
-        private Action<IdentityServerAuthenticationOptions> _options;
-        private string _identityServerRootUrl = "http://localhost:57888";
+        private readonly Action<IdentityServerAuthenticationOptions> _options;
+        private readonly string _identityServerRootUrl = "http://localhost:57888";
         private string _downstreamQueryString;
 
         public ClaimsToQueryStringForwardingTests()
@@ -52,8 +51,8 @@ namespace Ocelot.AcceptanceTests
                 Claims = new List<Claim>
                {
                    new Claim("CustomerId", "123"),
-                   new Claim("LocationId", "1")
-               }
+                   new Claim("LocationId", "1"),
+               },
             };
 
             var configuration = new FileConfiguration
@@ -69,7 +68,7 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = 57876,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
@@ -79,7 +78,7 @@ namespace Ocelot.AcceptanceTests
                                AuthenticationProviderKey = "Test",
                                AllowedScopes = new List<string>
                                {
-                                   "openid", "offline_access", "api"
+                                   "openid", "offline_access", "api",
                                },
                            },
                            AddQueriesToRequest =
@@ -87,10 +86,10 @@ namespace Ocelot.AcceptanceTests
                                {"CustomerId", "Claims[CustomerId] > value"},
                                {"LocationId", "Claims[LocationId] > value"},
                                {"UserType", "Claims[sub] > value[0] > |"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
-                           }
-                       }
-                   }
+                               {"UserId", "Claims[sub] > value[1] > |"},
+                           },
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:57888", "api", AccessTokenType.Jwt, user))
@@ -116,8 +115,8 @@ namespace Ocelot.AcceptanceTests
                 Claims = new List<Claim>
                {
                    new Claim("CustomerId", "123"),
-                   new Claim("LocationId", "1")
-               }
+                   new Claim("LocationId", "1"),
+               },
             };
 
             var configuration = new FileConfiguration
@@ -133,7 +132,7 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = 57876,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
@@ -143,7 +142,7 @@ namespace Ocelot.AcceptanceTests
                                AuthenticationProviderKey = "Test",
                                AllowedScopes = new List<string>
                                {
-                                   "openid", "offline_access", "api"
+                                   "openid", "offline_access", "api",
                                },
                            },
                            AddQueriesToRequest =
@@ -151,10 +150,10 @@ namespace Ocelot.AcceptanceTests
                                {"CustomerId", "Claims[CustomerId] > value"},
                                {"LocationId", "Claims[LocationId] > value"},
                                {"UserType", "Claims[sub] > value[0] > |"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
-                           }
-                       }
-                   }
+                               {"UserId", "Claims[sub] > value[1] > |"},
+                           },
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:57888", "api", AccessTokenType.Jwt, user))
@@ -231,20 +230,20 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     new Scope("api"),
                                     new Scope("openid"),
-                                    new Scope("offline_access")
+                                    new Scope("offline_access"),
                                 },
                                 ApiSecrets = new List<Secret>()
                                 {
                                     new Secret
                                     {
-                                        Value = "secret".Sha256()
-                                    }
+                                        Value = "secret".Sha256(),
+                                    },
                                 },
                                 UserClaims = new List<string>()
                                 {
-                                    "CustomerId", "LocationId", "UserType", "UserId"
-                                }
-                            }
+                                    "CustomerId", "LocationId", "UserType", "UserId",
+                                },
+                            },
                         })
                         .AddInMemoryClients(new List<Client>
                         {
@@ -256,18 +255,15 @@ namespace Ocelot.AcceptanceTests
                                 AllowedScopes = new List<string> { apiName, "openid", "offline_access" },
                                 AccessTokenType = tokenType,
                                 Enabled = true,
-                                RequireClientSecret = false
-                            }
+                                RequireClientSecret = false,
+                            },
                         })
                         .AddTestUsers(new List<TestUser>
                         {
-                            user
+                            user,
                         });
                 })
-                .Configure(app =>
-                {
-                    app.UseIdentityServer();
-                })
+                .Configure(app => app.UseIdentityServer())
                 .Build();
 
             _identityServerBuilder.Start();

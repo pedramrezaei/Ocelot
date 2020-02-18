@@ -11,7 +11,7 @@ namespace Ocelot.UnitTests.Configuration
 {
     public class ReRouteKeyCreatorTests
     {
-        private ReRouteKeyCreator _creator;
+        private readonly ReRouteKeyCreator _creator;
         private FileReRoute _reRoute;
         private string _result;
 
@@ -28,8 +28,8 @@ namespace Ocelot.UnitTests.Configuration
                 LoadBalancerOptions = new FileLoadBalancerOptions
                 {
                     Key = "testy",
-                    Type = nameof(CookieStickySessions)
-                }
+                    Type = nameof(CookieStickySessions),
+                },
             };
 
             this.Given(_ => GivenThe(reRoute))
@@ -50,14 +50,14 @@ namespace Ocelot.UnitTests.Configuration
                     new FileHostAndPort
                     {
                         Host = "localhost",
-                        Port = 123
+                        Port = 123,
                     },
                     new FileHostAndPort
                     {
                         Host = "localhost",
-                        Port = 123
-                    }
-                }
+                        Port = 123,
+                    },
+                },
             };
 
             this.Given(_ => GivenThe(reRoute))

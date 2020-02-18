@@ -19,8 +19,9 @@
     <Authors>Tom Pallister</Authors>
     <CodeAnalysisRuleSet>..\..\codeanalysis.ruleset</CodeAnalysisRuleSet>
     <RootNamespace>Ocelot.Tracing.Butterfly</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
- <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+ <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>

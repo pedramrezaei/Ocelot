@@ -1,34 +1,33 @@
 ﻿using Ocelot.Middleware;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.Logging;
+using Ocelot.RateLimit;
+using Ocelot.RateLimit.Middleware;
+using Ocelot.Request.Middleware;
+using Shouldly;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
 namespace Ocelot.UnitTests.RateLimit
 {
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Caching.Memory;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.Logging;
-    using Ocelot.RateLimit;
-    using Ocelot.RateLimit.Middleware;
-    using Ocelot.Request.Middleware;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ClientRateLimitMiddlewareTests
     {
         private int _responseStatusCode;
-        private IRateLimitCounterHandler _rateLimitCounterHandler;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly IRateLimitCounterHandler _rateLimitCounterHandler;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly ClientRateLimitMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
         private readonly string _url;
 
         public ClientRateLimitMiddlewareTests()
@@ -54,7 +53,7 @@ namespace Ocelot.UnitTests.RateLimit
 
             var downstreamReRoute = new DownstreamReRouteBuilder()
                 .WithEnableRateLimiting(true)
-                .WithRateLimitOptions(new RateLimitOptions(true, "ClientId", () => new List<string>(), false, "", "", new RateLimitRule("1s", 100, 3), 429))
+                .WithRateLimitOptions(new RateLimitOptions(true, "ClientId", () => new List<string>(), false, string.Empty, string.Empty, new RateLimitRule("1s", 100, 3), 429))
                 .WithUpstreamHttpMethod(new List<string> { "Get" })
                 .WithUpstreamPathTemplate(upstreamTemplate)
                 .Build();
@@ -82,7 +81,7 @@ namespace Ocelot.UnitTests.RateLimit
                      .WithDownstreamReRoute(new DownstreamReRouteBuilder()
                          .WithEnableRateLimiting(true)
                          .WithRateLimitOptions(
-                             new Ocelot.Configuration.RateLimitOptions(true, "ClientId", () => new List<string>() { "ocelotclient2" }, false, "", "", new RateLimitRule("1s", 100, 3), 429))
+                             new RateLimitOptions(true, "ClientId", () => new List<string>() { "ocelotclient2" }, false, string.Empty, string.Empty, new RateLimitRule("1s", 100, 3), 429))
                          .WithUpstreamHttpMethod(new List<string> { "Get" })
                          .Build())
                      .WithUpstreamHttpMethod(new List<string> { "Get" })

@@ -1,22 +1,22 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Cache;
-    using Configuration.File;
-    using Consul;
-    using Infrastructure;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Text;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Cache;
+using Ocelot.Configuration.File;
+using Consul;
+using Ocelot.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ConsulConfigurationInConsulTests : IDisposable
     {
         private IWebHost _builder;
@@ -48,26 +48,26 @@
                                 {
                                     Host = "localhost",
                                     Port = 51779,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = 9500
-                    }
-                }
+                        Port = 9500,
+                    },
+                },
             };
 
             var fakeConsulServiceDiscoveryUrl = "http://localhost:9500";
 
-            this.Given(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, ""))
-                .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51779", "", 200, "Hello from Laura"))
+            this.Given(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, string.Empty))
+                .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51779", string.Empty, 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunningUsingConsulToStoreConfig())
                 .When(x => _steps.WhenIGetUrlOnTheApiGateway("/"))
@@ -88,9 +88,9 @@
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             var fakeConsulServiceDiscoveryUrl = $"http://localhost:{consulPort}";
@@ -109,24 +109,24 @@
                             {
                                 Host = "localhost",
                                 Port = 51779,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/cs/status",
-                        UpstreamHttpMethod = new List<string> {"Get"}
-                    }
+                        UpstreamHttpMethod = new List<string> {"Get"},
+                    },
                 },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => GivenTheConsulConfigurationIs(consulConfig))
-                .And(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, ""))
+                .And(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, string.Empty))
                 .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51779", "/status", 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunningUsingConsulToStoreConfig())
@@ -147,9 +147,9 @@
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             var fakeConsulServiceDiscoveryUrl = $"http://localhost:{consulPort}";
@@ -168,20 +168,20 @@
                             {
                                 Host = "localhost",
                                 Port = 51780,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/cs/status",
-                        UpstreamHttpMethod = new List<string> {"Get"}
-                    }
+                        UpstreamHttpMethod = new List<string> {"Get"},
+                    },
                 },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             var secondConsulConfig = new FileConfiguration
@@ -198,24 +198,24 @@
                             {
                                 Host = "localhost",
                                 Port = 51780,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/cs/status/awesome",
-                        UpstreamHttpMethod = new List<string> {"Get"}
-                    }
+                        UpstreamHttpMethod = new List<string> {"Get"},
+                    },
                 },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => GivenTheConsulConfigurationIs(consulConfig))
-                .And(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, ""))
+                .And(x => GivenThereIsAFakeConsulServiceDiscoveryProvider(fakeConsulServiceDiscoveryUrl, string.Empty))
                 .And(x => x.GivenThereIsAServiceRunningOn("http://localhost:51780", "/status", 200, "Hello from Laura"))
                 .And(x => _steps.GivenThereIsAConfiguration(configuration))
                 .And(x => _steps.GivenOcelotIsRunningUsingConsulToStoreConfig())
@@ -243,7 +243,7 @@
                     Address = "localhost",
                     Port = downstreamServicePort,
                     ID = "web_90_0_2_224_8080",
-                    Tags = new[] { "version-v1" }
+                    Tags = new[] { "version-v1" },
                 },
             };
 
@@ -260,27 +260,27 @@
                             ClientWhitelist = new List<string>(),
                             Limit = 3,
                             Period = "1s",
-                            PeriodTimespan = 1000
-                        }
-                    }
+                            PeriodTimespan = 1000,
+                        },
+                    },
                 },
                 GlobalConfiguration = new FileGlobalConfiguration
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider
                     {
                         Host = "localhost",
-                        Port = consulPort
+                        Port = consulPort,
                     },
                     RateLimitOptions = new FileRateLimitOptions()
                     {
                         ClientIdHeader = "ClientId",
                         DisableRateLimitHeaders = false,
-                        QuotaExceededMessage = "",
-                        RateLimitCounterPrefix = "",
-                        HttpStatusCode = 428
+                        QuotaExceededMessage = string.Empty,
+                        RateLimitCounterPrefix = string.Empty,
+                        HttpStatusCode = 428,
                     },
                     DownstreamScheme = "http",
-                }
+                },
             };
 
             var configuration = new FileConfiguration
@@ -290,9 +290,9 @@
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider
                     {
                         Host = "localhost",
-                        Port = consulPort
-                    }
-                }
+                        Port = consulPort,
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn(downstreamServiceOneUrl, "/something", 200, "Hello from Laura"))

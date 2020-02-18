@@ -19,7 +19,7 @@ namespace Ocelot.RateLimit
 
         public RateLimitCounter ProcessRequest(ClientRequestIdentity requestIdentity, RateLimitOptions option)
         {
-            RateLimitCounter counter = new RateLimitCounter(DateTime.UtcNow, 1);
+            var counter = new RateLimitCounter(DateTime.UtcNow, 1);
             var rule = option.RateLimitRule;
 
             var counterId = ComputeCounterKey(requestIdentity, option);

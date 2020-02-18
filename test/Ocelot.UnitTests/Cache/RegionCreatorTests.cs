@@ -18,7 +18,7 @@ namespace Ocelot.UnitTests.Cache
             var reRoute = new FileReRoute
             {
                 UpstreamHttpMethod = new List<string> { "Get" },
-                UpstreamPathTemplate = "/testdummy"
+                UpstreamPathTemplate = "/testdummy",
             };
 
             this.Given(_ => GivenTheReRoute(reRoute))
@@ -34,8 +34,8 @@ namespace Ocelot.UnitTests.Cache
             {
                 FileCacheOptions = new FileCacheOptions
                 {
-                    Region = "region"
-                }
+                    Region = "region",
+                },
             };
 
             this.Given(_ => GivenTheReRoute(reRoute))
@@ -51,7 +51,7 @@ namespace Ocelot.UnitTests.Cache
 
         private void WhenICreateTheRegion()
         {
-            RegionCreator regionCreator = new RegionCreator();
+            var regionCreator = new RegionCreator();
             _result = regionCreator.Create(_reRoute);
         }
 

@@ -1,31 +1,31 @@
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Repository;
+using Ocelot.Errors;
+using Ocelot.Errors.Middleware;
+using Ocelot.Infrastructure.RequestData;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Shouldly;
+using System;
+using System.Net;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.Errors
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Repository;
-    using Ocelot.Errors;
-    using Ocelot.Errors.Middleware;
-    using Ocelot.Infrastructure.RequestData;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Shouldly;
-    using System;
-    using System.Net;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ExceptionHandlerMiddlewareTests
     {
         private bool _shouldThrowAnException;
         private readonly Mock<IInternalConfigurationRepository> _configRepo;
         private readonly Mock<IRequestScopedDataRepository> _repo;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly ExceptionHandlerMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
 
         public ExceptionHandlerMiddlewareTests()
         {

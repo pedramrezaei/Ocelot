@@ -1,20 +1,20 @@
+using Butterfly.Client.AspNetCore;
+using Ocelot.Configuration.File;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Rafty.Infrastructure;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
+using Xunit.Abstractions;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Butterfly.Client.AspNetCore;
-    using Configuration.File;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Rafty.Infrastructure;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
-    using Xunit.Abstractions;
-
     public class ButterflyTracingTests : IDisposable
     {
         private IWebHost _serviceOneBuilder;
@@ -49,14 +49,14 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51887,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api001/values",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                UseTracing = true
-                            }
+                                UseTracing = true,
+                            },
                         },
                         new FileReRoute
                         {
@@ -68,16 +68,16 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51388,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api002/values",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                UseTracing = true
-                            }
-                        }
-                    }
+                                UseTracing = true,
+                            },
+                        },
+                    },
             };
 
             var butterflyUrl = "http://localhost:9618";
@@ -119,21 +119,21 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 51387,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/api001/values",
                             UpstreamHttpMethod = new List<string> { "Get" },
                             HttpHandlerOptions = new FileHttpHandlerOptions
                             {
-                                UseTracing = true
+                                UseTracing = true,
                             },
                             DownstreamHeaderTransform = new Dictionary<string, string>()
                             {
                                 {"Trace-Id", "{TraceId}"},
-                                {"Tom", "Laura"}
-                            }
-                        }
-                    }
+                                {"Tom", "Laura"},
+                            },
+                        },
+                    },
             };
 
             var butterflyUrl = "http://localhost:9618";

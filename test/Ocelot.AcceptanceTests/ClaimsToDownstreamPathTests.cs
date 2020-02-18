@@ -1,29 +1,28 @@
 ﻿using Xunit;
+using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.Configuration.File;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using TestStack.BDDfy;
 
 namespace Ocelot.AcceptanceTests
 {
-    using IdentityServer4.AccessTokenValidation;
-    using IdentityServer4.Models;
-    using IdentityServer4.Test;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.DependencyInjection;
-    using Ocelot.Configuration.File;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using TestStack.BDDfy;
-
     public class ClaimsToDownstreamPathTests : IDisposable
     {
         private IWebHost _servicebuilder;
         private IWebHost _identityServerBuilder;
         private readonly Steps _steps;
-        private Action<IdentityServerAuthenticationOptions> _options;
-        private string _identityServerRootUrl = "http://localhost:57888";
+        private readonly Action<IdentityServerAuthenticationOptions> _options;
+        private readonly string _identityServerRootUrl = "http://localhost:57888";
         private string _downstreamFinalPath;
 
         public ClaimsToDownstreamPathTests()
@@ -147,20 +146,20 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     new Scope("api"),
                                     new Scope("openid"),
-                                    new Scope("offline_access")
+                                    new Scope("offline_access"),
                                 },
                                 ApiSecrets = new List<Secret>()
                                 {
                                     new Secret
                                     {
-                                        Value = "secret".Sha256()
-                                    }
+                                        Value = "secret".Sha256(),
+                                    },
                                 },
                                 UserClaims = new List<string>()
                                 {
-                                    "CustomerId", "LocationId", "UserType", "UserId"
-                                }
-                            }
+                                    "CustomerId", "LocationId", "UserType", "UserId",
+                                },
+                            },
                         })
                         .AddInMemoryClients(new List<Client>
                         {
@@ -172,18 +171,15 @@ namespace Ocelot.AcceptanceTests
                                 AllowedScopes = new List<string> { apiName, "openid", "offline_access" },
                                 AccessTokenType = tokenType,
                                 Enabled = true,
-                                RequireClientSecret = false
-                            }
+                                RequireClientSecret = false,
+                            },
                         })
                         .AddTestUsers(new List<TestUser>
                         {
-                            user
+                            user,
                         });
                 })
-                .Configure(app =>
-                {
-                    app.UseIdentityServer();
-                })
+                .Configure(app => app.UseIdentityServer())
                 .Build();
 
             _identityServerBuilder.Start();

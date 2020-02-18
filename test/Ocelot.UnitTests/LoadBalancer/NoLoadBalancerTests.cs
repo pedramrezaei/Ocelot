@@ -13,7 +13,7 @@ namespace Ocelot.UnitTests.LoadBalancer
 {
     public class NoLoadBalancerTests
     {
-        private List<Service> _services;
+        private readonly List<Service> _services;
         private NoLoadBalancer _loadBalancer;
         private Response<ServiceHostAndPort> _result;
 
@@ -30,7 +30,7 @@ namespace Ocelot.UnitTests.LoadBalancer
 
             var services = new List<Service>
             {
-                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0])
+                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0]),
             };
 
             this.Given(x => x.GivenServices(services))
@@ -54,7 +54,7 @@ namespace Ocelot.UnitTests.LoadBalancer
 
             var services = new List<Service>
             {
-                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0])
+                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0]),
             };
 
             this.Given(_ => WhenIGetTheNextHostAndPort())

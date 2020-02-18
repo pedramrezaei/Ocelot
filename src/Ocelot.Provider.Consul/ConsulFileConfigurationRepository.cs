@@ -1,16 +1,16 @@
-﻿namespace Ocelot.Provider.Consul
-{
-    using Configuration.File;
-    using Configuration.Repository;
-    using global::Consul;
-    using Logging;
-    using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
-    using Responses;
-    using System;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration.File;
+using Ocelot.Configuration.Repository;
+using Consul;
+using Ocelot.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Ocelot.Responses;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Consul
+{
     public class ConsulFileConfigurationRepository : IFileConfigurationRepository
     {
         private readonly IConsulClient _consul;
@@ -70,7 +70,7 @@
 
             var kvPair = new KVPair(_configurationKey)
             {
-                Value = bytes
+                Value = bytes,
             };
 
             var result = await _consul.KV.Put(kvPair);

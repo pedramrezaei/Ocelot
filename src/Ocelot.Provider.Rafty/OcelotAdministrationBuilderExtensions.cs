@@ -1,14 +1,14 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using Configuration.Setter;
-    using DependencyInjection;
-    using global::Rafty.Concensus.Node;
-    using global::Rafty.FiniteStateMachine;
-    using global::Rafty.Infrastructure;
-    using global::Rafty.Log;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Ocelot.Configuration.Setter;
+using Ocelot.DependencyInjection;
+using Rafty.Concensus.Node;
+using Rafty.FiniteStateMachine;
+using Rafty.Infrastructure;
+using Rafty.Log;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
+namespace Ocelot.Provider.Rafty
+{
     public static class OcelotAdministrationBuilderExtensions
     {
         public static IOcelotAdministrationBuilder AddRafty(this IOcelotAdministrationBuilder builder)

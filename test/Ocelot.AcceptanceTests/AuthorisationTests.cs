@@ -1,27 +1,27 @@
+using IdentityServer4.AccessTokenValidation;
+using IdentityServer4.Models;
+using IdentityServer4.Test;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Security.Claims;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using IdentityServer4.AccessTokenValidation;
-    using IdentityServer4.Models;
-    using IdentityServer4.Test;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.DependencyInjection;
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Security.Claims;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class AuthorisationTests : IDisposable
     {
         private IWebHost _identityServerBuilder;
         private readonly Steps _steps;
         private readonly Action<IdentityServerAuthenticationOptions> _options;
-        private string _identityServerRootUrl = "http://localhost:51888";
+        private readonly string _identityServerRootUrl = "http://localhost:51888";
         private readonly ServiceHandler _serviceHandler;
 
         public AuthorisationTests()
@@ -56,34 +56,34 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = port,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
                            UpstreamHttpMethod = new List<string> { "Get" },
                            AuthenticationOptions = new FileAuthenticationOptions
                            {
-                               AuthenticationProviderKey = "Test"
+                               AuthenticationProviderKey = "Test",
                            },
                            AddHeadersToRequest =
                            {
                                {"CustomerId", "Claims[CustomerId] > value"},
                                {"LocationId", "Claims[LocationId] > value"},
                                {"UserType", "Claims[sub] > value[0] > |"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
+                               {"UserId", "Claims[sub] > value[1] > |"},
                            },
                            AddClaimsToRequest =
                            {
                                {"CustomerId", "Claims[CustomerId] > value"},
                                {"UserType", "Claims[sub] > value[0] > |"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
+                               {"UserId", "Claims[sub] > value[1] > |"},
                            },
                            RouteClaimsRequirement =
                            {
-                               {"UserType", "registered"}
-                           }
-                       }
-                   }
+                               {"UserType", "registered"},
+                           },
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:51888", "api", AccessTokenType.Jwt))
@@ -116,33 +116,33 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = port,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
                            UpstreamHttpMethod = new List<string> { "Get" },
                            AuthenticationOptions = new FileAuthenticationOptions
                            {
-                               AuthenticationProviderKey = "Test"
+                               AuthenticationProviderKey = "Test",
                            },
                            AddHeadersToRequest =
                            {
                                {"CustomerId", "Claims[CustomerId] > value"},
                                {"LocationId", "Claims[LocationId] > value"},
                                {"UserType", "Claims[sub] > value[0] > |"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
+                               {"UserId", "Claims[sub] > value[1] > |"},
                            },
                            AddClaimsToRequest =
                            {
                                {"CustomerId", "Claims[CustomerId] > value"},
-                               {"UserId", "Claims[sub] > value[1] > |"}
+                               {"UserId", "Claims[sub] > value[1] > |"},
                            },
                            RouteClaimsRequirement =
                            {
-                               {"UserType", "registered"}
-                           }
-                       }
-                   }
+                               {"UserType", "registered"},
+                           },
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:51888", "api", AccessTokenType.Jwt))
@@ -174,7 +174,7 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = port,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
@@ -184,8 +184,8 @@ namespace Ocelot.AcceptanceTests
                                AuthenticationProviderKey = "Test",
                                AllowedScopes = new List<string>{ "api", "api.readOnly", "openid", "offline_access" },
                            },
-                       }
-                   }
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:51888", "api", AccessTokenType.Jwt))
@@ -217,7 +217,7 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = port,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
@@ -227,8 +227,8 @@ namespace Ocelot.AcceptanceTests
                                AuthenticationProviderKey = "Test",
                                AllowedScopes = new List<string>{ "api", "openid", "offline_access" },
                            },
-                       }
-                   }
+                       },
+                   },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:51888", "api", AccessTokenType.Jwt))
@@ -260,21 +260,21 @@ namespace Ocelot.AcceptanceTests
                                {
                                    Host = "localhost",
                                    Port = port,
-                               }
+                               },
                            },
                            DownstreamScheme = "http",
                            UpstreamPathTemplate = "/",
                            UpstreamHttpMethod = new List<string> { "Get" },
                            AuthenticationOptions = new FileAuthenticationOptions
                            {
-                               AuthenticationProviderKey = "Test"
+                               AuthenticationProviderKey = "Test",
                            },
                            RouteClaimsRequirement =
                            {
-                               {"Role", "User"}
-                           }
-                       }
-                   }
+                               {"Role", "User"},
+                           },
+                       },
+                   },
             };
 
             var users = new List<TestUser>
@@ -287,9 +287,9 @@ namespace Ocelot.AcceptanceTests
                     Claims = new List<Claim>
                     {
                         new Claim("Role", "AdminUser"),
-                        new Claim("Role", "User")
+                        new Claim("Role", "User"),
                     },
-                }
+                },
             };
 
             this.Given(x => x.GivenThereIsAnIdentityServerOn("http://localhost:51888", "api", AccessTokenType.Jwt, users))
@@ -339,19 +339,19 @@ namespace Ocelot.AcceptanceTests
                                     new Scope("api"),
                                     new Scope("api.readOnly"),
                                     new Scope("openid"),
-                                    new Scope("offline_access")
+                                    new Scope("offline_access"),
                                 },
                                 ApiSecrets = new List<Secret>()
                                 {
                                     new Secret
                                     {
-                                        Value = "secret".Sha256()
-                                    }
+                                        Value = "secret".Sha256(),
+                                    },
                                 },
                                 UserClaims = new List<string>()
                                 {
-                                    "CustomerId", "LocationId", "UserType", "UserId"
-                                }
+                                    "CustomerId", "LocationId", "UserType", "UserId",
+                                },
                             },
                         })
                         .AddInMemoryClients(new List<Client>
@@ -364,8 +364,8 @@ namespace Ocelot.AcceptanceTests
                                 AllowedScopes = new List<string> { apiName, "api.readOnly", "openid", "offline_access" },
                                 AccessTokenType = tokenType,
                                 Enabled = true,
-                                RequireClientSecret = false
-                            }
+                                RequireClientSecret = false,
+                            },
                         })
                         .AddTestUsers(new List<TestUser>
                         {
@@ -377,15 +377,12 @@ namespace Ocelot.AcceptanceTests
                                 Claims = new List<Claim>
                                 {
                                    new Claim("CustomerId", "123"),
-                                   new Claim("LocationId", "321")
-                                }
-                            }
+                                   new Claim("LocationId", "321"),
+                                },
+                            },
                         });
                 })
-                .Configure(app =>
-                {
-                    app.UseIdentityServer();
-                })
+                .Configure(app => app.UseIdentityServer())
                 .Build();
 
             _identityServerBuilder.Start();
@@ -425,13 +422,13 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     new Secret
                                     {
-                                        Value = "secret".Sha256()
-                                    }
+                                        Value = "secret".Sha256(),
+                                    },
                                 },
                                 UserClaims = new List<string>()
                                 {
-                                    "CustomerId", "LocationId", "UserType", "UserId", "Role"
-                                }
+                                    "CustomerId", "LocationId", "UserType", "UserId", "Role",
+                                },
                             },
                         })
                         .AddInMemoryClients(new List<Client>
@@ -445,14 +442,11 @@ namespace Ocelot.AcceptanceTests
                                 AccessTokenType = tokenType,
                                 Enabled = true,
                                 RequireClientSecret = false,
-                            }
+                            },
                         })
                         .AddTestUsers(users);
                 })
-                .Configure(app =>
-                {
-                    app.UseIdentityServer();
-                })
+                .Configure(app => app.UseIdentityServer())
                 .Build();
 
             _identityServerBuilder.Start();

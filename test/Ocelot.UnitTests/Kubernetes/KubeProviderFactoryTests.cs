@@ -28,7 +28,7 @@ namespace Ocelot.UnitTests.Kubernetes
         [Fact]
         public void should_return_KubeServiceDiscoveryProvider()
         {
-            var provider = KubernetesProviderFactory.Get(_provider, new ServiceProviderConfiguration("kube", "localhost", 443, "", "", 1,"dev"), "");
+            var provider = KubernetesProviderFactory.Get(_provider, new ServiceProviderConfiguration("kube", "localhost", 443, string.Empty, string.Empty, 1,"dev"), string.Empty);
             provider.ShouldBeOfType<Kube>();
         }
     }

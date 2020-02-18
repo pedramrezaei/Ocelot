@@ -1,22 +1,21 @@
 ﻿using Ocelot.Requester;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ocelot.ManualTest
 {
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Ocelot.DependencyInjection;
-    using Ocelot.Middleware;
-    using System;
-    using System.IO;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             new WebHostBuilder()
                 .UseKestrel()
@@ -33,25 +32,25 @@ namespace Ocelot.ManualTest
                 .ConfigureServices(s =>
                 {
                     s.AddAuthentication();
-                       //.AddJwtBearer("TestKey", x =>
-                       //{
-                       //    x.Authority = "test";
-                       //    x.Audience = "test";
-                       //});
+                    ////.AddJwtBearer("TestKey", x =>
+                    ////{
+                    ////    x.Authority = "test";
+                    ////    x.Audience = "test";
+                    ////});
 
                     s.AddSingleton<QosDelegatingHandlerDelegate>((x, t) => new FakeHandler());
                     s.AddOcelot()
                        .AddDelegatingHandler<FakeHandler>(true);
-                    // .AddCacheManager(x =>
-                    // {
-                    //     x.WithDictionaryHandle();
-                    // })
-                    // .AddOpenTracing(option =>
-                    // {
-                    //     option.CollectorUrl = "http://localhost:9618";
-                    //     option.Service = "Ocelot.ManualTest";
-                    // })
-                    // .AddAdministration("/administration", "secret");
+                    //// .AddCacheManager(x =>
+                    //// {
+                    ////     x.WithDictionaryHandle();
+                    //// })
+                    //// .AddOpenTracing(option =>
+                    //// {
+                    ////     option.CollectorUrl = "http://localhost:9618";
+                    ////     option.Service = "Ocelot.ManualTest";
+                    //// })
+                    //// .AddAdministration("/administration", "secret");
                 })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -59,10 +58,7 @@ namespace Ocelot.ManualTest
                     logging.AddConsole();
                 })
                 .UseIISIntegration()
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                })
+                .Configure(app => app.UseOcelot().Wait())
                 .Build()
                 .Run();
         }

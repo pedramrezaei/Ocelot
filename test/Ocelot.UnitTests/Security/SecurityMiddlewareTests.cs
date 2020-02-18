@@ -18,9 +18,9 @@ namespace Ocelot.UnitTests.Security
 {
     public class SecurityMiddlewareTests
     {
-        private List<Mock<ISecurityPolicy>> _securityPolicyList;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly List<Mock<ISecurityPolicy>> _securityPolicyList;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly SecurityMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
         private readonly OcelotRequestDelegate _next;
@@ -33,10 +33,7 @@ namespace Ocelot.UnitTests.Security
             _securityPolicyList = new List<Mock<ISecurityPolicy>>();
             _securityPolicyList.Add(new Mock<ISecurityPolicy>());
             _securityPolicyList.Add(new Mock<ISecurityPolicy>());
-            _next = context =>
-            {
-                return Task.CompletedTask;
-            };
+            _next = context => Task.CompletedTask;
             _middleware = new SecurityMiddleware(_loggerFactory.Object, _securityPolicyList.Select(f => f.Object).ToList(), _next);
             _downstreamContext = new DownstreamContext(new DefaultHttpContext());
             _downstreamContext.DownstreamRequest = new DownstreamRequest(new HttpRequestMessage(HttpMethod.Get, "http://test.com"));
@@ -73,7 +70,7 @@ namespace Ocelot.UnitTests.Security
         {
             for (int i = 0; i < _securityPolicyList.Count; i++)
             {
-                Mock<ISecurityPolicy> item = _securityPolicyList[i];
+                var item = _securityPolicyList[i];
                 if (i == 0)
                 {
                     Error error = new UnauthenticatedError($"Not passing security verification");

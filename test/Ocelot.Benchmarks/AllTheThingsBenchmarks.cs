@@ -50,13 +50,13 @@ namespace Ocelot.Benchmarks
                                 {
                                     Host = "localhost",
                                     Port = 51879,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             GivenThereIsAServiceRunningOn("http://localhost:51879", "/", 201, string.Empty);
@@ -100,19 +100,10 @@ namespace Ocelot.Benchmarks
                         .AddJsonFile("ocelot.json", false, false)
                         .AddEnvironmentVariables();
                 })
-                .ConfigureServices(s =>
-                {
-                    s.AddOcelot();
-                })
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                })
+                .ConfigureServices(s => s.AddOcelot())
+                .ConfigureLogging((hostingContext, logging) => logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging")))
                 .UseIISIntegration()
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                })
+                .Configure(app => app.UseOcelot().Wait())
                 .Build();
 
             _ocelot.Start();

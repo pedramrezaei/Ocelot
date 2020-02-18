@@ -1,16 +1,16 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using global::Rafty.Infrastructure;
-    using global::Rafty.Log;
-    using Microsoft.Data.Sqlite;
-    using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Threading;
-    using System.Threading.Tasks;
+﻿using Rafty.Infrastructure;
+using Rafty.Log;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     public class SqlLiteLog : ILog
     {
         private readonly string _path;
@@ -22,7 +22,7 @@
         {
             _logger = loggerFactory.CreateLogger<SqlLiteLog>();
             _nodeId = nodeId;
-            _path = $"{nodeId.Id.Replace("/", "").Replace(":", "")}.db";
+            _path = $"{nodeId.Id.Replace("/", string.Empty).Replace(":", string.Empty)}.db";
             _sempaphore.Wait();
 
             if (!File.Exists(_path))
@@ -89,7 +89,7 @@
                     var data = Convert.ToString(await command.ExecuteScalarAsync());
                     var jsonSerializerSettings = new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     };
                     var log = JsonConvert.DeserializeObject<LogEntry>(data, jsonSerializerSettings);
                     if (log != null && log.Term > result)
@@ -133,7 +133,7 @@
                 connection.Open();
                 var jsonSerializerSettings = new JsonSerializerSettings()
                 {
-                    TypeNameHandling = TypeNameHandling.All
+                    TypeNameHandling = TypeNameHandling.All,
                 };
                 var data = JsonConvert.SerializeObject(log, jsonSerializerSettings);
 
@@ -173,7 +173,7 @@
                     var data = Convert.ToString(await command.ExecuteScalarAsync());
                     var jsonSerializerSettings = new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     };
 
                     _logger.LogInformation($"id {_nodeId.Id} got log for index: {index}, data is {data} and new log term is {logEntry.Term}");
@@ -209,7 +209,7 @@
                     var data = Convert.ToString(await command.ExecuteScalarAsync());
                     var jsonSerializerSettings = new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     };
 
                     var log = JsonConvert.DeserializeObject<LogEntry>(data, jsonSerializerSettings);
@@ -240,7 +240,7 @@
                     var data = Convert.ToString(await command.ExecuteScalarAsync());
                     var jsonSerializerSettings = new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     };
                     var log = JsonConvert.DeserializeObject<LogEntry>(data, jsonSerializerSettings);
                     _sempaphore.Release();
@@ -270,7 +270,7 @@
                             var data = (string)reader[1];
                             var jsonSerializerSettings = new JsonSerializerSettings()
                             {
-                                TypeNameHandling = TypeNameHandling.All
+                                TypeNameHandling = TypeNameHandling.All,
                             };
                             var log = JsonConvert.DeserializeObject<LogEntry>(data, jsonSerializerSettings);
                             logsToReturn.Add((id, log));
@@ -298,7 +298,7 @@
                     var data = Convert.ToString(await command.ExecuteScalarAsync());
                     var jsonSerializerSettings = new JsonSerializerSettings()
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.All,
                     };
                     var log = JsonConvert.DeserializeObject<LogEntry>(data, jsonSerializerSettings);
                     if (log != null && log.Term > result)

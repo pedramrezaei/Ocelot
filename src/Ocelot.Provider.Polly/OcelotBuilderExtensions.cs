@@ -1,18 +1,18 @@
-﻿namespace Ocelot.Provider.Polly
-{
-    using Configuration;
-    using DependencyInjection;
-    using Errors;
-    using global::Polly.CircuitBreaker;
-    using global::Polly.Timeout;
-    using Logging;
-    using Microsoft.Extensions.DependencyInjection;
-    using Requester;
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading.Tasks;
+﻿using Ocelot.Configuration;
+using Ocelot.DependencyInjection;
+using Ocelot.Errors;
+using Polly.CircuitBreaker;
+using Polly.Timeout;
+using Ocelot.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.Requester;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Polly
+{
     public static class OcelotBuilderExtensions
     {
         public static IOcelotBuilder AddPolly(this IOcelotBuilder builder)
@@ -21,7 +21,7 @@
             {
                 {typeof(TaskCanceledException), e => new RequestTimedOutError(e)},
                 {typeof(TimeoutRejectedException), e => new RequestTimedOutError(e)},
-                {typeof(BrokenCircuitException), e => new RequestTimedOutError(e)}
+                {typeof(BrokenCircuitException), e => new RequestTimedOutError(e)},
             };
 
             builder.Services.AddSingleton(errorMapping);

@@ -18,8 +18,8 @@ namespace Ocelot.UnitTests.Middleware
         private ReRoute _reRoute;
         private readonly OcelotRequestDelegate _pipeline;
         private int _count;
-        private Mock<IResponseAggregator> _aggregator;
-        private Mock<IResponseAggregatorFactory> _factory;
+        private readonly Mock<IResponseAggregator> _aggregator;
+        private readonly Mock<IResponseAggregatorFactory> _factory;
 
         public MultiplexerTests()
         {

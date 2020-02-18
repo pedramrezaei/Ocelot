@@ -46,8 +46,8 @@ namespace Ocelot.UnitTests.Configuration
                     new FileHostAndPort
                     {
                         Host = "test",
-                        Port = 80
-                    }
+                        Port = 80,
+                    },
                 },
             };
 
@@ -72,20 +72,20 @@ namespace Ocelot.UnitTests.Configuration
                     new FileHostAndPort
                     {
                         Host = "test",
-                        Port = 80
+                        Port = 80,
                     },
                     new FileHostAndPort
                     {
                         Host = "west",
-                        Port = 443
-                    }
-                }
+                        Port = 443,
+                    },
+                },
             };
 
             var expected = new List<DownstreamHostAndPort>
             {
                 new DownstreamHostAndPort("test", 80),
-                new DownstreamHostAndPort("west", 443)
+                new DownstreamHostAndPort("west", 443),
             };
 
             this.Given(x => GivenTheFollowingReRoute(reRoute))

@@ -21,7 +21,7 @@ namespace Ocelot.UnitTests.Headers
         private readonly Mock<IPlaceholders> _placeholders;
         private DownstreamResponse _response;
         private List<AddHeader> _addHeaders;
-        private Mock<IOcelotLoggerFactory> _factory;
+        private readonly Mock<IOcelotLoggerFactory> _factory;
         private readonly Mock<IOcelotLogger> _logger;
 
         public AddHeadersToResponseTests()
@@ -38,7 +38,7 @@ namespace Ocelot.UnitTests.Headers
         {
             var addHeaders = new List<AddHeader>
             {
-                new AddHeader("Laura", "Tom")
+                new AddHeader("Laura", "Tom"),
             };
 
             this.Given(_ => GivenAResponseMessage())
@@ -53,7 +53,7 @@ namespace Ocelot.UnitTests.Headers
         {
             var addHeaders = new List<AddHeader>
             {
-                new AddHeader("Trace-Id", "{TraceId}")
+                new AddHeader("Trace-Id", "{TraceId}"),
             };
 
             var traceId = "123";
@@ -72,7 +72,7 @@ namespace Ocelot.UnitTests.Headers
             var addHeaders = new List<AddHeader>
             {
                 new AddHeader("Trace-Id", "{TraceId}"),
-                new AddHeader("Tom", "Laura")
+                new AddHeader("Tom", "Laura"),
             };
 
             var traceId = "123";
@@ -91,7 +91,7 @@ namespace Ocelot.UnitTests.Headers
         {
             var addHeaders = new List<AddHeader>
             {
-                new AddHeader("Trace-Id", "{TraceId}")
+                new AddHeader("Trace-Id", "{TraceId}"),
             };
 
             this.Given(_ => GivenAResponseMessage())

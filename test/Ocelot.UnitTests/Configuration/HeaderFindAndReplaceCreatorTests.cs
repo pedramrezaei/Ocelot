@@ -15,12 +15,12 @@ namespace Ocelot.UnitTests.Configuration
 {
     public class HeaderFindAndReplaceCreatorTests
     {
-        private HeaderFindAndReplaceCreator _creator;
+        private readonly HeaderFindAndReplaceCreator _creator;
         private FileReRoute _reRoute;
         private HeaderTransformations _result;
-        private Mock<IPlaceholders> _placeholders;
-        private Mock<IOcelotLoggerFactory> _factory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IPlaceholders> _placeholders;
+        private readonly Mock<IOcelotLoggerFactory> _factory;
+        private readonly Mock<IOcelotLogger> _logger;
 
         public HeaderFindAndReplaceCreatorTests()
         {
@@ -39,25 +39,25 @@ namespace Ocelot.UnitTests.Configuration
                 UpstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Test", "Test, Chicken"},
-                    {"Moop", "o, a"}
+                    {"Moop", "o, a"},
                 },
                 DownstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Pop", "West, East"},
-                    {"Bop", "e, r"}
-                }
+                    {"Bop", "e, r"},
+                },
             };
 
             var upstream = new List<HeaderFindAndReplace>
             {
                 new HeaderFindAndReplace("Test", "Test", "Chicken", 0),
-                new HeaderFindAndReplace("Moop", "o", "a", 0)
+                new HeaderFindAndReplace("Moop", "o", "a", 0),
             };
 
             var downstream = new List<HeaderFindAndReplace>
             {
                 new HeaderFindAndReplace("Pop", "West", "East", 0),
-                new HeaderFindAndReplace("Bop", "e", "r", 0)
+                new HeaderFindAndReplace("Bop", "e", "r", 0),
             };
 
             this.Given(x => GivenTheReRoute(reRoute))
@@ -78,7 +78,7 @@ namespace Ocelot.UnitTests.Configuration
                 UpstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {key, value},
-                }
+                },
             };
 
             var expected = new AddHeader(key, value);
@@ -97,7 +97,7 @@ namespace Ocelot.UnitTests.Configuration
                 DownstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Location", "http://www.bbc.co.uk/, {BaseUrl}"},
-                }
+                },
             };
 
             var downstream = new List<HeaderFindAndReplace>
@@ -124,7 +124,7 @@ namespace Ocelot.UnitTests.Configuration
                 UpstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Location", "http://www.bbc.co.uk/, {BaseUrl}"},
-                }
+                },
             };
 
             var expected = new List<HeaderFindAndReplace>
@@ -154,7 +154,7 @@ namespace Ocelot.UnitTests.Configuration
                 DownstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Location", "http://www.bbc.co.uk/pay, {BaseUrl}pay"},
-                }
+                },
             };
 
             var downstream = new List<HeaderFindAndReplace>
@@ -177,7 +177,7 @@ namespace Ocelot.UnitTests.Configuration
                 DownstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"Trace-Id", "{TraceId}"},
-                }
+                },
             };
 
             var expected = new AddHeader("Trace-Id", "{TraceId}");
@@ -197,7 +197,7 @@ namespace Ocelot.UnitTests.Configuration
                 DownstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"X-Custom-Header", "Value"},
-                }
+                },
             };
 
             var expected = new AddHeader("X-Custom-Header", "Value");
@@ -216,7 +216,7 @@ namespace Ocelot.UnitTests.Configuration
                 UpstreamHeaderTransform = new Dictionary<string, string>
                 {
                     {"X-Custom-Header", "Value"},
-                }
+                },
             };
 
             var expected = new AddHeader("X-Custom-Header", "Value");

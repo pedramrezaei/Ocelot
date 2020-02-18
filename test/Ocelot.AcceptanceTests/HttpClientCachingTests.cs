@@ -1,21 +1,20 @@
+using Ocelot.Configuration;
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using Ocelot.Requester;
+using Shouldly;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Configuration;
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using Requester;
-    using Shouldly;
-    using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class HttpClientCachingTests : IDisposable
     {
         private readonly Steps _steps;
-        private string _downstreamPath;
         private readonly ServiceHandler _serviceHandler;
 
         public HttpClientCachingTests()
@@ -41,12 +40,12 @@ namespace Ocelot.AcceptanceTests
                                 {
                                     Host = "localhost",
                                     Port = 58814,
-                                }
+                                },
                             },
                             UpstreamPathTemplate = "/",
                             UpstreamHttpMethod = new List<string> { "Get" },
-                        }
-                    }
+                        },
+                    },
             };
 
             var cache = new FakeHttpClientCache();
@@ -81,7 +80,7 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 58817,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
@@ -96,12 +95,12 @@ namespace Ocelot.AcceptanceTests
                             {
                                 Host = "localhost",
                                 Port = 58817,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/two",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             var cache = new FakeHttpClientCache();

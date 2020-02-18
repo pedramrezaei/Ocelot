@@ -1,17 +1,17 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class HttpDelegatingHandlersTests : IDisposable
     {
         private readonly Steps _steps;
@@ -41,17 +41,17 @@
                             {
                                 Host = "localhost",
                                 Port = 7197,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
                         DelegatingHandlers = new List<string>
                         {
                             "FakeHandlerTwo",
-                            "FakeHandler"
-                        }
-                    }
-                }
+                            "FakeHandler",
+                        },
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:7197", "/", 200, "Hello from Laura"))
@@ -81,12 +81,12 @@
                             {
                                 Host = "localhost",
                                 Port = 7187,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:7187", "/", 200, "Hello from Laura"))
@@ -116,12 +116,12 @@
                             {
                                 Host = "localhost",
                                 Port = 9187,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:9187", "/", 200, "Hello from Laura"))
@@ -167,12 +167,12 @@
                             {
                                 Host = "localhost",
                                 Port = 7188,
-                            }
+                            },
                         },
                         UpstreamPathTemplate = "/",
                         UpstreamHttpMethod = new List<string> { "Get" },
-                    }
-                }
+                    },
+                },
             };
 
             var dependency = new FakeDependency();

@@ -17,7 +17,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         private readonly RoundRobin _roundRobin;
         private readonly List<Service> _services;
         private Response<ServiceHostAndPort> _hostAndPort;
-        private DownstreamContext _context;
+        private readonly DownstreamContext _context;
 
         public RoundRobinTests()
         {
@@ -27,7 +27,7 @@ namespace Ocelot.UnitTests.LoadBalancer
             {
                 new Service("product", new ServiceHostAndPort("127.0.0.1", 5000), string.Empty, string.Empty, new string[0]),
                 new Service("product", new ServiceHostAndPort("127.0.0.1", 5001), string.Empty, string.Empty, new string[0]),
-                new Service("product", new ServiceHostAndPort("127.0.0.1", 5001), string.Empty, string.Empty, new string[0])
+                new Service("product", new ServiceHostAndPort("127.0.0.1", 5001), string.Empty, string.Empty, new string[0]),
             };
 
             _roundRobin = new RoundRobin(() => Task.FromResult(_services));

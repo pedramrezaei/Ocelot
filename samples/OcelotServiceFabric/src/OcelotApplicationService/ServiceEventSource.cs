@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Fabric;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OcelotApplicationService
@@ -157,13 +154,13 @@ namespace OcelotApplicationService
         #region Private methods
         private static long GetReplicaOrInstanceId(ServiceContext context)
         {
-            StatelessServiceContext stateless = context as StatelessServiceContext;
+            var stateless = context as StatelessServiceContext;
             if (stateless != null)
             {
                 return stateless.InstanceId;
             }
 
-            StatefulServiceContext stateful = context as StatefulServiceContext;
+            var stateful = context as StatefulServiceContext;
             if (stateful != null)
             {
                 return stateful.ReplicaId;

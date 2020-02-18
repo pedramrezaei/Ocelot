@@ -59,7 +59,7 @@ namespace Ocelot.DownstreamRouteFinder.UrlMatcher
 
                     if (NothingAfterFirstForwardSlash(path))
                     {
-                        placeHolderNameAndValues.Add(new PlaceholderNameAndValue(placeholderName, ""));
+                        placeHolderNameAndValues.Add(new PlaceholderNameAndValue(placeholderName, string.Empty));
                     }
                     else
                     {

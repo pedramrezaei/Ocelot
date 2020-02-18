@@ -13,7 +13,7 @@ namespace Ocelot.UnitTests.Infrastructure
 {
     public class ScopesAuthoriserTests
     {
-        private ScopesAuthoriser _authoriser;
+        private readonly ScopesAuthoriser _authoriser;
         public Mock<IClaimsParser> _parser;
         private ClaimsPrincipal _principal;
         private List<string> _allowedScopes;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -11,8 +9,6 @@ using Ocelot.Middleware;
 using Ocelot.DependencyInjection;
 using GraphQL.Types;
 using GraphQL;
-using Ocelot.Requester;
-using Ocelot.Responses;
 using System.Net.Http;
 using System.Net;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,13 +57,10 @@ namespace OcelotGraphQL
             if (query.Length == 0)
             {
                 var decoded = WebUtility.UrlDecode(request.RequestUri.Query);
-                query = decoded.Replace("?query=", "");
+                query = decoded.Replace("?query=", string.Empty);
             }
 
-            var result = _schema.Execute(_ =>
-            {
-                _.Query = query;
-            });
+            var result = _schema.Execute(_ => _.Query = query);
 
             //maybe check for errors and headers etc in real world?
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -93,10 +86,7 @@ namespace OcelotGraphQL
                 type Query {
                     hero(id: Int): Hero
                 }
-            ", _ =>
-            {
-                _.Types.Include<Query>();
-            });
+            ", _ => _.Types.Include<Query>());
 
             new WebHostBuilder()
                 .UseKestrel()
@@ -112,7 +102,7 @@ namespace OcelotGraphQL
                 })
                 .ConfigureServices(s =>
                 {
-                    s.AddSingleton<ISchema>(schema);
+                    s.AddSingleton(schema);
                     s.AddOcelot()
                         .AddDelegatingHandler<GraphQlDelegatingHandler>();
                 })
@@ -122,10 +112,7 @@ namespace OcelotGraphQL
                     logging.AddConsole();
                 })
                 .UseIISIntegration()
-                .Configure(app =>
-                {
-                    app.UseOcelot().Wait();
-                })
+                .Configure(app => app.UseOcelot().Wait())
                 .Build()
                 .Run();
         }

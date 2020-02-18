@@ -31,8 +31,8 @@ namespace Ocelot.UnitTests.Configuration
                     Type = "ServiceFabric",
                     Token = "testtoken",
                     ConfigurationKey = "woo",
-                    Namespace = "default"
-                }
+                    Namespace = "default",
+                },
             };
 
             var expected = new ServiceProviderConfigurationBuilder()

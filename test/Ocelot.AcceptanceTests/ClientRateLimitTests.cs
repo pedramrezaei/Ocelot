@@ -1,13 +1,13 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ClientRateLimitTests : IDisposable
     {
         private readonly Steps _steps;
@@ -36,7 +36,7 @@
                                 {
                                     Host = "localhost",
                                     Port = 51876,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/api/ClientRateLimit",
@@ -48,22 +48,22 @@
                                 ClientWhitelist = new List<string>(),
                                 Limit = 3,
                                 Period = "1s",
-                                PeriodTimespan = 1000
-                            }
-                        }
-                },
+                                PeriodTimespan = 1000,
+                            },
+                        },
+                    },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     RateLimitOptions = new FileRateLimitOptions()
                     {
                         ClientIdHeader = "ClientId",
                         DisableRateLimitHeaders = false,
-                        QuotaExceededMessage = "",
-                        RateLimitCounterPrefix = "",
-                        HttpStatusCode = 428
+                        QuotaExceededMessage = string.Empty,
+                        RateLimitCounterPrefix = string.Empty,
+                        HttpStatusCode = 428,
                     },
-                    RequestIdKey = "oceclientrequest"
-                }
+                    RequestIdKey = "oceclientrequest",
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51876", "/api/ClientRateLimit"))
@@ -94,7 +94,7 @@
                                 {
                                     Host = "localhost",
                                     Port = 51926,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/api/ClientRateLimit",
@@ -107,22 +107,22 @@
                                 ClientWhitelist = new List<string>(),
                                 Limit = 3,
                                 Period = "1s",
-                                PeriodTimespan = 2
-                            }
-                        }
-                },
+                                PeriodTimespan = 2,
+                            },
+                        },
+                    },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     RateLimitOptions = new FileRateLimitOptions()
                     {
                         ClientIdHeader = "ClientId",
                         DisableRateLimitHeaders = false,
-                        QuotaExceededMessage = "",
-                        RateLimitCounterPrefix = "",
-                        HttpStatusCode = 428
+                        QuotaExceededMessage = string.Empty,
+                        RateLimitCounterPrefix = string.Empty,
+                        HttpStatusCode = 428,
                     },
-                    RequestIdKey = "oceclientrequest"
-                }
+                    RequestIdKey = "oceclientrequest",
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn("http://localhost:51926", "/api/ClientRateLimit"))
@@ -161,7 +161,7 @@
                                 {
                                     Host = "localhost",
                                     Port = port,
-                                }
+                                },
                             },
                             DownstreamScheme = "http",
                             UpstreamPathTemplate = "/api/ClientRateLimit",
@@ -174,21 +174,21 @@
                                 ClientWhitelist = new List<string>() { "ocelotclient1"},
                                 Limit = 3,
                                 Period = "1s",
-                                PeriodTimespan = 100
-                            }
-                        }
-                },
+                                PeriodTimespan = 100,
+                            },
+                        },
+                    },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     RateLimitOptions = new FileRateLimitOptions()
                     {
                         ClientIdHeader = "ClientId",
                         DisableRateLimitHeaders = false,
-                        QuotaExceededMessage = "",
-                        RateLimitCounterPrefix = ""
+                        QuotaExceededMessage = string.Empty,
+                        RateLimitCounterPrefix = string.Empty,
                     },
-                    RequestIdKey = "oceclientrequest"
-                }
+                    RequestIdKey = "oceclientrequest",
+                },
             };
 
             this.Given(x => x.GivenThereIsAServiceRunningOn($"http://localhost:{port}", "/api/ClientRateLimit"))

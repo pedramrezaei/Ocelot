@@ -1,44 +1,41 @@
-﻿namespace Ocelot.UnitTests.CacheManager
-{
-    using global::CacheManager.Core;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Cache;
-    using Ocelot.Cache.CacheManager;
-    using Ocelot.Cache.Middleware;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using CacheManager.Core;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Cache;
+using Ocelot.Cache.CacheManager;
+using Ocelot.Cache.Middleware;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Shouldly;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.CacheManager
+{
     public class OutputCacheMiddlewareRealCacheTests
     {
         private readonly IOcelotCache<CachedResponse> _cacheManager;
         private readonly ICacheKeyGenerator _cacheKeyGenerator;
         private readonly OutputCacheMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly OcelotRequestDelegate _next;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
 
         public OutputCacheMiddlewareRealCacheTests()
         {
             _loggerFactory = new Mock<IOcelotLoggerFactory>();
             _logger = new Mock<IOcelotLogger>();            
             _loggerFactory.Setup(x => x.CreateLogger<OutputCacheMiddleware>()).Returns(_logger.Object);
-            var cacheManagerOutputCache = CacheFactory.Build<CachedResponse>("OcelotOutputCache", x =>
-            {
-                x.WithDictionaryHandle();
-            });
+            var cacheManagerOutputCache = CacheFactory.Build<CachedResponse>("OcelotOutputCache", x => x.WithDictionaryHandle());
             _cacheManager = new OcelotCacheManagerCache<CachedResponse>(cacheManagerOutputCache);
             _cacheKeyGenerator = new CacheKeyGenerator();
             _downstreamContext = new DownstreamContext(new DefaultHttpContext());
@@ -52,7 +49,7 @@
         {
             var content = new StringContent("{\"Test\": 1}")
             {
-                Headers = { ContentType = new MediaTypeHeaderValue("application/json") }
+                Headers = { ContentType = new MediaTypeHeaderValue("application/json") },
             };
 
             var response = new DownstreamResponse(content, HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "fooreason");

@@ -35,20 +35,20 @@ namespace Ocelot.UnitTests.Middleware
             var commentsDownstreamReRoute = new DownstreamReRouteBuilder().WithKey("Comments").Build();
 
             var userDetailsDownstreamReRoute = new DownstreamReRouteBuilder().WithKey("UserDetails")
-                .WithUpstreamPathTemplate(new UpstreamPathTemplate("", 0, false, "/v1/users/{userId}"))
+                .WithUpstreamPathTemplate(new UpstreamPathTemplate(string.Empty, 0, false, "/v1/users/{userId}"))
                 .Build();
 
             var downstreamReRoutes = new List<DownstreamReRoute>
             {
                 commentsDownstreamReRoute,
-                userDetailsDownstreamReRoute
+                userDetailsDownstreamReRoute,
             };
 
             var reRoute = new ReRouteBuilder()
                 .WithDownstreamReRoutes(downstreamReRoutes)
                 .WithAggregateReRouteConfig(new List<AggregateReRouteConfig>()
                 {
-                    new AggregateReRouteConfig(){ReRouteKey = "UserDetails",JsonPath = "$[*].writerId",Parameter = "userId"}
+                    new AggregateReRouteConfig(){ReRouteKey = "UserDetails",JsonPath = "$[*].writerId",Parameter = "userId"},
                 })
                 .Build();
 
@@ -56,14 +56,14 @@ namespace Ocelot.UnitTests.Middleware
             var commentsDownstreamContext = new DownstreamContext(new DefaultHttpContext())
             {
                 DownstreamResponse = new DownstreamResponse(new StringContent(commentsResponseContent, Encoding.UTF8, "application/json"), HttpStatusCode.OK, new EditableList<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
-                DownstreamReRoute = commentsDownstreamReRoute
+                DownstreamReRoute = commentsDownstreamReRoute,
             };
 
-            var userDetailsResponseContent = @"[{""id"":1,""firstName"":""abolfazl"",""lastName"":""rajabpour""},{""id"":2,""firstName"":""reza"",""lastName"":""rezaei""}]";
+            var userDetailsResponseContent = @"[{""id"":1,""firstName"":""abolfazlstring.Empty,""lastName"":""rajabpour""},{""id"":2,""firstName"":""rezastring.Empty,""lastName"":""rezaei""}]";
             var userDetailsDownstreamContext = new DownstreamContext(new DefaultHttpContext())
             {
                 DownstreamResponse = new DownstreamResponse(new StringContent(userDetailsResponseContent, Encoding.UTF8, "application/json"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
-                DownstreamReRoute = userDetailsDownstreamReRoute
+                DownstreamReRoute = userDetailsDownstreamReRoute,
             };
 
             var downstreamContexts = new List<DownstreamContext> { commentsDownstreamContext, userDetailsDownstreamContext };
@@ -90,7 +90,7 @@ namespace Ocelot.UnitTests.Middleware
             var downstreamReRoutes = new List<DownstreamReRoute>
             {
                 billDownstreamReRoute,
-                georgeDownstreamReRoute
+                georgeDownstreamReRoute,
             };
 
             var reRoute = new ReRouteBuilder()
@@ -100,13 +100,13 @@ namespace Ocelot.UnitTests.Middleware
             var billDownstreamContext = new DownstreamContext(new DefaultHttpContext())
             {
                 DownstreamResponse = new DownstreamResponse(new StringContent("Bill says hi"), HttpStatusCode.OK, new EditableList<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
-                DownstreamReRoute = billDownstreamReRoute
+                DownstreamReRoute = billDownstreamReRoute,
             };
 
             var georgeDownstreamContext = new DownstreamContext(new DefaultHttpContext())
             {
                 DownstreamResponse = new DownstreamResponse(new StringContent("George says hi"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
-                DownstreamReRoute = georgeDownstreamReRoute
+                DownstreamReRoute = georgeDownstreamReRoute,
             };
 
             var downstreamContexts = new List<DownstreamContext> { billDownstreamContext, georgeDownstreamContext };
@@ -133,7 +133,7 @@ namespace Ocelot.UnitTests.Middleware
             var downstreamReRoutes = new List<DownstreamReRoute>
             {
                 billDownstreamReRoute,
-                georgeDownstreamReRoute
+                georgeDownstreamReRoute,
             };
 
             var reRoute = new ReRouteBuilder()
@@ -143,7 +143,7 @@ namespace Ocelot.UnitTests.Middleware
             var billDownstreamContext = new DownstreamContext(new DefaultHttpContext())
             {
                 DownstreamResponse = new DownstreamResponse(new StringContent("Bill says hi"), HttpStatusCode.OK, new List<KeyValuePair<string, IEnumerable<string>>>(), "some reason"),
-                DownstreamReRoute = billDownstreamReRoute
+                DownstreamReRoute = billDownstreamReRoute,
             };
 
             var georgeDownstreamContext = new DownstreamContext(new DefaultHttpContext())

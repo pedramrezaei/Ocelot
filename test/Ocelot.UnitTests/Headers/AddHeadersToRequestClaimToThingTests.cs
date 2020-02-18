@@ -12,12 +12,11 @@ using System.Net.Http;
 using System.Security.Claims;
 using TestStack.BDDfy;
 using Xunit;
+using Ocelot.Infrastructure;
+using Ocelot.Logging;
 
 namespace Ocelot.UnitTests.Headers
 {
-    using Ocelot.Infrastructure;
-    using Ocelot.Logging;
-
     public class AddHeadersToRequestClaimToThingTests
     {
         private readonly AddHeadersToRequest _addHeadersToRequest;
@@ -27,8 +26,8 @@ namespace Ocelot.UnitTests.Headers
         private List<ClaimToThing> _configuration;
         private Response _result;
         private Response<string> _claimValue;
-        private Mock<IPlaceholders> _placeholders;
-        private Mock<IOcelotLoggerFactory> _factory;
+        private readonly Mock<IPlaceholders> _placeholders;
+        private readonly Mock<IOcelotLoggerFactory> _factory;
 
         public AddHeadersToRequestClaimToThingTests()
         {
@@ -44,13 +43,13 @@ namespace Ocelot.UnitTests.Headers
         {
             var claims = new List<Claim>
             {
-                new Claim("test", "data")
+                new Claim("test", "data"),
             };
 
             this.Given(
                 x => x.GivenConfigurationHeaderExtractorProperties(new List<ClaimToThing>
                 {
-                    new ClaimToThing("header-key", "", "", 0)
+                    new ClaimToThing("header-key", string.Empty, string.Empty, 0),
                 }))
                 .Given(x => x.GivenClaims(claims))
                 .And(x => x.GivenTheClaimParserReturns(new OkResponse<string>("value")))
@@ -66,11 +65,11 @@ namespace Ocelot.UnitTests.Headers
             this.Given(
                 x => x.GivenConfigurationHeaderExtractorProperties(new List<ClaimToThing>
                 {
-                    new ClaimToThing("header-key", "", "", 0)
+                    new ClaimToThing("header-key", string.Empty, string.Empty, 0),
                 }))
                 .Given(x => x.GivenClaims(new List<Claim>
                 {
-                    new Claim("test", "data")
+                    new Claim("test", "data"),
                 }))
                 .And(x => x.GivenTheClaimParserReturns(new OkResponse<string>("value")))
                 .And(x => x.GivenThatTheRequestContainsHeader("header-key", "initial"))
@@ -86,12 +85,12 @@ namespace Ocelot.UnitTests.Headers
             this.Given(
                x => x.GivenConfigurationHeaderExtractorProperties(new List<ClaimToThing>
                {
-                    new ClaimToThing("", "", "", 0)
+                    new ClaimToThing(string.Empty, string.Empty, string.Empty, 0),
                }))
                .Given(x => x.GivenClaims(new List<Claim>()))
                .And(x => x.GivenTheClaimParserReturns(new ErrorResponse<string>(new List<Error>
                {
-                   new AnyError()
+                   new AnyError(),
                })))
                .When(x => x.WhenIAddHeadersToTheRequest())
                .Then(x => x.ThenTheResultIsError())

@@ -1,12 +1,11 @@
 using Xunit;
+using System;
+using Shouldly;
+using Ocelot.Configuration.ChangeTracking;
+using TestStack.BDDfy;
 
 namespace Ocelot.UnitTests.Configuration.ChangeTracking
 {
-    using System;
-    using Shouldly;
-    using Ocelot.Configuration.ChangeTracking;
-    using TestStack.BDDfy;
-
     public class OcelotConfigurationChangeTokenTests
     {
         [Fact]

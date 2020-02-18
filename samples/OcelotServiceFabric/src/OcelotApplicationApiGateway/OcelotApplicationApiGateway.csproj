@@ -6,8 +6,9 @@
     <AssemblyName>OcelotApplicationApiGateway</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>OcelotApplicationApiGateway</PackageId>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-    <ItemGroup>
+  <ItemGroup>
     <None Update="ocelot.json;appsettings.json;">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

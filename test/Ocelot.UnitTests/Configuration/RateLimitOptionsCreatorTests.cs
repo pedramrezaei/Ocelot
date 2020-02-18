@@ -14,8 +14,7 @@ namespace Ocelot.UnitTests.Configuration
     {
         private FileReRoute _fileReRoute;
         private FileGlobalConfiguration _fileGlobalConfig;
-        private bool _enabled;
-        private RateLimitOptionsCreator _creator;
+        private readonly RateLimitOptionsCreator _creator;
         private RateLimitOptions _result;
 
         public RateLimitOptionsCreatorTests()
@@ -34,8 +33,8 @@ namespace Ocelot.UnitTests.Configuration
                     Period = "Period",
                     Limit = 1,
                     PeriodTimespan = 1,
-                    EnableRateLimiting = true
-                }
+                    EnableRateLimiting = true,
+                },
             };
             var fileGlobalConfig = new FileGlobalConfiguration
             {
@@ -45,8 +44,8 @@ namespace Ocelot.UnitTests.Configuration
                     DisableRateLimitHeaders = true,
                     QuotaExceededMessage = "QuotaExceededMessage",
                     RateLimitCounterPrefix = "RateLimitCounterPrefix",
-                    HttpStatusCode = 200
-                }
+                    HttpStatusCode = 200,
+                },
             };
             var expected = new RateLimitOptionsBuilder()
                 .WithClientIdHeader("ClientIdHeader")
@@ -69,6 +68,10 @@ namespace Ocelot.UnitTests.Configuration
                 .BDDfy();
         }
 
+        private void GivenRateLimitingIsEnabled()
+        {
+        }
+
         private void GivenTheFollowingFileReRoute(FileReRoute fileReRoute)
         {
             _fileReRoute = fileReRoute;
@@ -77,11 +80,6 @@ namespace Ocelot.UnitTests.Configuration
         private void GivenTheFollowingFileGlobalConfig(FileGlobalConfiguration fileGlobalConfig)
         {
             _fileGlobalConfig = fileGlobalConfig;
-        }
-
-        private void GivenRateLimitingIsEnabled()
-        {
-            _enabled = true;
         }
 
         private void WhenICreate()

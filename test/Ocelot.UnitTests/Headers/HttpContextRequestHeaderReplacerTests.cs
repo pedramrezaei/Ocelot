@@ -13,7 +13,7 @@ namespace Ocelot.UnitTests.Headers
     {
         private HttpContext _context;
         private List<HeaderFindAndReplace> _fAndRs;
-        private HttpContextRequestHeaderReplacer _replacer;
+        private readonly HttpContextRequestHeaderReplacer _replacer;
         private Response _result;
 
         public HttpContextRequestHeaderReplacerTests()

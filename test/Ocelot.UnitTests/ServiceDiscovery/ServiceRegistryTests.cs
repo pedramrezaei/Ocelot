@@ -11,8 +11,8 @@ namespace Ocelot.UnitTests.ServiceDiscovery
     {
         private Service _service;
         private List<Service> _services;
-        private ServiceRegistry _serviceRegistry;
-        private ServiceRepository _serviceRepository;
+        private readonly ServiceRegistry _serviceRegistry;
+        private readonly ServiceRepository _serviceRepository;
 
         public ServiceRegistryTests()
         {
@@ -111,7 +111,7 @@ namespace Ocelot.UnitTests.ServiceDiscovery
 
     public class ServiceRepository : IServiceRepository
     {
-        private Dictionary<string, List<Service>> _registeredServices;
+        private readonly Dictionary<string, List<Service>> _registeredServices;
 
         public ServiceRepository()
         {

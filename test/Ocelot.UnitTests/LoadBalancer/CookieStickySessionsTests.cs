@@ -1,21 +1,21 @@
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Infrastructure;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Ocelot.Middleware;
+using Ocelot.Responses;
+using Ocelot.UnitTests.Responder;
+using Ocelot.Values;
+using Shouldly;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.LoadBalancer
 {
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Infrastructure;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Ocelot.Middleware;
-    using Ocelot.Responses;
-    using Ocelot.UnitTests.Responder;
-    using Ocelot.Values;
-    using Shouldly;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class CookieStickySessionsTests
     {
         private readonly CookieStickySessions _stickySessions;
@@ -89,7 +89,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         [Fact]
         public void should_release()
         {
-            _stickySessions.Release(new ServiceHostAndPort("", 0));
+            _stickySessions.Release(new ServiceHostAndPort(string.Empty, 0));
         }
 
         private void ThenTheLoadBalancerIsCalled()
@@ -175,7 +175,7 @@ namespace Ocelot.UnitTests.LoadBalancer
         {
             _loadBalancer
                 .Setup(x => x.Lease(It.IsAny<DownstreamContext>()))
-                .ReturnsAsync(new OkResponse<ServiceHostAndPort>(new ServiceHostAndPort("", 80)));
+                .ReturnsAsync(new OkResponse<ServiceHostAndPort>(new ServiceHostAndPort(string.Empty, 80)));
         }
 
         private async Task WhenILease()

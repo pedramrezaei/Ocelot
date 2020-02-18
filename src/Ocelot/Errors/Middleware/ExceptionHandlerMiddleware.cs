@@ -1,17 +1,17 @@
+using Ocelot.Configuration;
+using Ocelot.Configuration.Repository;
+using Ocelot.Infrastructure.Extensions;
+using Ocelot.Infrastructure.RequestData;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Ocelot.Errors.Middleware
 {
-    using Configuration;
-    using Ocelot.Configuration.Repository;
-    using Ocelot.Infrastructure.Extensions;
-    using Ocelot.Infrastructure.RequestData;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     /// <summary>
-    /// Catches all unhandled exceptions thrown by middleware, logs and returns a 500
+    /// Catches all unhandled exceptions thrown by middleware, logs and returns a 500.
     /// </summary>
     public class ExceptionHandlerMiddleware : OcelotMiddleware
     {

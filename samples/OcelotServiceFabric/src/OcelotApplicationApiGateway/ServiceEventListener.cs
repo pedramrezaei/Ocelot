@@ -3,19 +3,15 @@
 //  Licensed under the MIT License (MIT). See License.txt in the repo root for license information.
 // ------------------------------------------------------------
 
+using System;
+using System.IO;
+using System.Linq;
+using System.Diagnostics.Tracing;
+using System.Globalization;
+using System.Text;
+
 namespace OcelotApplicationApiGateway
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Diagnostics.Tracing;
-    using System.Fabric;
-    using System.Fabric.Common;
-    using System.Fabric.Common.Tracing;
-    using Microsoft.ServiceFabric.Services.Runtime;
-    using System.Globalization;
-    using System.Text;
-
     /// <summary>
     /// ServiceEventListener is a class which listens to the eventsources registered and redirects the traces to a file
     /// Note that this class serves as a template to EventListener class and redirects the logs to /tmp/{appnameyyyyMMddHHmmssffff}.
@@ -24,8 +20,8 @@ namespace OcelotApplicationApiGateway
     /// </summary>
     internal class ServiceEventListener : EventListener
     {
-        private string fileName;
-        private string filepath = Path.GetTempPath();
+        private readonly string fileName;
+        private readonly string filepath = Path.GetTempPath();
 
         public ServiceEventListener(string appName)
         {
@@ -38,7 +34,7 @@ namespace OcelotApplicationApiGateway
         /// <param name="eventData">The event arguments that describe the event.</param>
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            using (StreamWriter writer = new StreamWriter( new FileStream(filepath + fileName, FileMode.Append)))
+            using (var writer = new StreamWriter( new FileStream(filepath + fileName, FileMode.Append)))
             {
                 // report all event information
                 writer.Write(" {0} ",  Write(eventData.Task.ToString(),
@@ -55,9 +51,9 @@ namespace OcelotApplicationApiGateway
 
         private static String Write(string taskName, string eventName, string id, EventLevel level)
         {
-            StringBuilder output = new StringBuilder();
+            var output = new StringBuilder();
 
-            DateTime now = DateTime.UtcNow;
+            var now = DateTime.UtcNow;
             output.Append(now.ToString("yyyy/MM/dd-HH:mm:ss.fff", CultureInfo.InvariantCulture));
             output.Append(',');
             output.Append(ConvertLevelToString(level));

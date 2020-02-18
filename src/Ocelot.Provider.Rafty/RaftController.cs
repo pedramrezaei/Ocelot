@@ -1,17 +1,17 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using global::Rafty.Concensus.Messages;
-    using global::Rafty.Concensus.Node;
-    using global::Rafty.FiniteStateMachine;
-    using Logging;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Middleware;
-    using Newtonsoft.Json;
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
+﻿using Rafty.Concensus.Messages;
+using Rafty.Concensus.Node;
+using Rafty.FiniteStateMachine;
+using Ocelot.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Ocelot.Middleware;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
+namespace Ocelot.Provider.Rafty
+{
     [Authorize]
     [Route("raft")]
     public class RaftController : Controller
@@ -25,7 +25,7 @@
         {
             _jsonSerialiserSettings = new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = TypeNameHandling.All,
             };
             _baseSchemeUrlAndPort = finder.Find();
             _logger = loggerFactory.CreateLogger<RaftController>();

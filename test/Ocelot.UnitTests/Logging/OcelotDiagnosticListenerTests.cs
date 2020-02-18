@@ -12,10 +12,10 @@ namespace Ocelot.UnitTests.Logging
     public class OcelotDiagnosticListenerTests
     {
         private readonly OcelotDiagnosticListener _listener;
-        private Mock<IOcelotLoggerFactory> _factory;
+        private readonly Mock<IOcelotLoggerFactory> _factory;
         private readonly Mock<IOcelotLogger> _logger;
-        private IServiceCollection _serviceCollection;
-        private IServiceProvider _serviceProvider;
+        private readonly IServiceCollection _serviceCollection;
+        private readonly IServiceProvider _serviceProvider;
         private DownstreamContext _downstreamContext;
         private string _name;
         private Exception _exception;

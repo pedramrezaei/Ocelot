@@ -1,19 +1,19 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Ocelot.DependencyInjection;
+using Ocelot.DownstreamRouteFinder.Middleware;
+using Ocelot.DownstreamUrlCreator.Middleware;
+using Ocelot.LoadBalancer.Middleware;
+using Ocelot.Middleware;
+using Ocelot.Middleware.Pipeline;
+using Ocelot.Request.Middleware;
+using Ocelot.WebSockets.Middleware;
+using Shouldly;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.Middleware
 {
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Ocelot.DependencyInjection;
-    using Ocelot.DownstreamRouteFinder.Middleware;
-    using Ocelot.DownstreamUrlCreator.Middleware;
-    using Ocelot.LoadBalancer.Middleware;
-    using Ocelot.Middleware;
-    using Ocelot.Middleware.Pipeline;
-    using Ocelot.Request.Middleware;
-    using Ocelot.WebSockets.Middleware;
-    using Shouldly;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class OcelotPipelineExtensionsTests
     {
         private OcelotPipelineBuilder _builder;
@@ -49,7 +49,7 @@ namespace Ocelot.UnitTests.Middleware
 
         private void WhenIExpandBuild()
         {
-            OcelotPipelineConfiguration configuration = new OcelotPipelineConfiguration();
+            var configuration = new OcelotPipelineConfiguration();
             configuration.MapWhenOcelotPipeline.Add((app) =>
             {
                 app.UseDownstreamRouteFinderMiddleware();

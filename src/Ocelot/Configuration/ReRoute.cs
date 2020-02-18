@@ -1,10 +1,10 @@
-﻿namespace Ocelot.Configuration
-{
-    using Ocelot.Configuration.File;
-    using Ocelot.Values;
-    using System.Collections.Generic;
-    using System.Net.Http;
+﻿using Ocelot.Configuration.File;
+using Ocelot.Values;
+using System.Collections.Generic;
+using System.Net.Http;
 
+namespace Ocelot.Configuration
+{
     public class ReRoute
     {
         public ReRoute(List<DownstreamReRoute> downstreamReRoute,

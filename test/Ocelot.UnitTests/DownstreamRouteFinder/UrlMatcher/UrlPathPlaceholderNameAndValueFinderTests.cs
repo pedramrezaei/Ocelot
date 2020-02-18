@@ -36,7 +36,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{url}", "")
+                new PlaceholderNameAndValue("{url}", string.Empty),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath(""))
@@ -51,7 +51,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{url}", "test")
+                new PlaceholderNameAndValue("{url}", "test"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/test"))
@@ -66,7 +66,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{everything}", "test/toot")
+                new PlaceholderNameAndValue("{everything}", "test/toot"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/test/toot"))
@@ -82,7 +82,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{everything}", "test/toot")
+                new PlaceholderNameAndValue("{everything}", "test/toot"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/test/toot"))
@@ -97,7 +97,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{url}", "")
+                new PlaceholderNameAndValue("{url}", string.Empty),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/"))
@@ -126,7 +126,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{url}", "1")
+                new PlaceholderNameAndValue("{url}", "1"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/1/products"))
@@ -151,7 +151,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{productId}", "1")
+                new PlaceholderNameAndValue("{productId}", "1"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/products"))
@@ -167,7 +167,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{productId}", "1")
+                new PlaceholderNameAndValue("{productId}", "1"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/products"))
@@ -184,7 +184,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
-                new PlaceholderNameAndValue("{categoryId}", "2")
+                new PlaceholderNameAndValue("{categoryId}", "2"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/products"))
@@ -202,7 +202,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
                 new PlaceholderNameAndValue("{categoryId}", "2"),
-                new PlaceholderNameAndValue("{account}", "3")
+                new PlaceholderNameAndValue("{account}", "3"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/products/3"))
@@ -220,7 +220,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
                 new PlaceholderNameAndValue("{categoryId}", "2"),
-                new PlaceholderNameAndValue("{account}", "3")
+                new PlaceholderNameAndValue("{account}", "3"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("/products/3/"))
@@ -266,7 +266,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         {
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
-                new PlaceholderNameAndValue("{productId}", "1")
+                new PlaceholderNameAndValue("{productId}", "1"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("api/product/products/1"))
@@ -282,7 +282,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
-                new PlaceholderNameAndValue("{categoryId}", "2")
+                new PlaceholderNameAndValue("{categoryId}", "2"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("api/product/products/1/2"))
@@ -298,7 +298,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
-                new PlaceholderNameAndValue("{categoryId}", "2")
+                new PlaceholderNameAndValue("{categoryId}", "2"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("api/product/products/1/categories/2"))
@@ -315,7 +315,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
                 new PlaceholderNameAndValue("{categoryId}", "2"),
-                new PlaceholderNameAndValue("{variantId}", "123")
+                new PlaceholderNameAndValue("{variantId}", "123"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("api/product/products/1/categories/2/variant/123"))
@@ -331,7 +331,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
             var expectedTemplates = new List<PlaceholderNameAndValue>
             {
                 new PlaceholderNameAndValue("{productId}", "1"),
-                new PlaceholderNameAndValue("{categoryId}", "2")
+                new PlaceholderNameAndValue("{categoryId}", "2"),
             };
 
             this.Given(x => x.GivenIHaveAUpstreamPath("api/product/products/1/categories/2/variant/"))

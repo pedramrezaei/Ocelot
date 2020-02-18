@@ -1,17 +1,17 @@
-﻿namespace Ocelot.Request.Mapper
-{
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Extensions;
-    using Microsoft.Extensions.Primitives;
-    using Ocelot.Configuration;
-    using Ocelot.Responses;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net.Http;
-    using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Primitives;
+using Ocelot.Configuration;
+using Ocelot.Responses;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
+namespace Ocelot.Request.Mapper
+{
     public class RequestMapper : IRequestMapper
     {
         private readonly string[] _unsupportedHeaders = { "host" };
@@ -24,7 +24,7 @@
                 {
                     Content = await MapContent(request),
                     Method = MapMethod(request, downstreamReRoute),
-                    RequestUri = MapUri(request)
+                    RequestUri = MapUri(request),
                 };
 
                 MapHeaders(request, requestMessage);

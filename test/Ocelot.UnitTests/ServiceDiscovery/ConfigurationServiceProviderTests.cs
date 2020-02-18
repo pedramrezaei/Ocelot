@@ -20,7 +20,7 @@ namespace Ocelot.UnitTests.ServiceDiscovery
 
             var services = new List<Service>
             {
-                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0])
+                new Service("product", hostAndPort, string.Empty, string.Empty, new string[0]),
             };
 
             this.Given(x => x.GivenServices(services))

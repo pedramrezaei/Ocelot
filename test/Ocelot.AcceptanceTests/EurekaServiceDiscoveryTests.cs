@@ -1,15 +1,15 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Configuration.File;
-    using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
-    using Steeltoe.Common.Discovery;
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Ocelot.Configuration.File;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Steeltoe.Common.Discovery;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.AcceptanceTests
+{
     public class EurekaServiceDiscoveryTests : IDisposable
     {
         private readonly Steps _steps;
@@ -47,15 +47,15 @@
                             UpstreamHttpMethod = new List<string> { "Get" },
                             ServiceName = serviceName,
                             LoadBalancerOptions = new FileLoadBalancerOptions { Type = "LeastConnection" },
-                        }
+                        },
                     },
                 GlobalConfiguration = new FileGlobalConfiguration()
                 {
                     ServiceDiscoveryProvider = new FileServiceDiscoveryProvider()
                     {
-                        Type = "Eureka"
-                    }
-                }
+                        Type = "Eureka",
+                    },
+                },
             };
 
             this.Given(x => x.GivenEurekaProductServiceOneIsRunning(downstreamServiceOneUrl))
@@ -111,11 +111,11 @@
                                                 registrationTimestamp = 1457714988223,
                                                 lastRenewalTimestamp= 1457716158319,
                                                 evictionTimestamp = 0,
-                                                serviceUpTimestamp = 1457714988223
+                                                serviceUpTimestamp = 1457714988223,
                                             },
                                             metadata = new Metadata
                                             {
-                                                value = "java.util.Collections$EmptyMap"
+                                                value = "java.util.Collections$EmptyMap",
                                             },
                                             homePageUrl = $"{serviceInstance.Host}:{serviceInstance.Port}",
                                             statusPageUrl = $"{serviceInstance.Host}:{serviceInstance.Port}",
@@ -124,9 +124,9 @@
                                             isCoordinatingDiscoveryServer = "false",
                                             lastUpdatedTimestamp = "1457714988223",
                                             lastDirtyTimestamp = "1457714988172",
-                                            actionType = "ADDED"
-                                        }
-                                    }
+                                            actionType = "ADDED",
+                                        },
+                                    },
                         };
 
                         apps.Add(a);
@@ -138,8 +138,8 @@
                         {
                             application = apps,
                             apps__hashcode = "UP_1_",
-                            versions__delta = "1"
-                        }
+                            versions__delta = "1",
+                        },
                     };
 
                     var json = JsonConvert.SerializeObject(applications);

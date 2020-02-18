@@ -16,7 +16,6 @@ namespace Ocelot.UnitTests.Kubernetes
     public class OcelotBuilderExtensionsTests
     {
         private readonly IServiceCollection _services;
-        private IServiceProvider _serviceProvider;
         private readonly IConfiguration _configRoot;
         private IOcelotBuilder _ocelotBuilder;
         private Exception _ex;
@@ -25,7 +24,7 @@ namespace Ocelot.UnitTests.Kubernetes
         {
             _configRoot = new ConfigurationRoot(new List<IConfigurationProvider>());
             _services = new ServiceCollection();
-            _services.AddSingleton<IWebHostEnvironment>(GetHostingEnvironment());
+            _services.AddSingleton(GetHostingEnvironment());
             _services.AddSingleton(_configRoot);
         }
 

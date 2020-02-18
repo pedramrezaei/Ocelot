@@ -23,7 +23,7 @@ namespace Ocelot.UnitTests.Headers
         {
             var headers = new List<Header>()
             {
-                new Header("Transfer-Encoding", new List<string> {"chunked"})
+                new Header("Transfer-Encoding", new List<string> {"chunked"}),
             };
 
             this.Given(x => x.GivenAHttpContext(headers))

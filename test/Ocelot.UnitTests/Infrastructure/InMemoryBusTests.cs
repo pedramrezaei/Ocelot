@@ -18,10 +18,7 @@ namespace Ocelot.UnitTests.Infrastructure
         public async Task should_publish_with_delay()
         {
             var called = false;
-            _bus.Subscribe(x =>
-            {
-                called = true;
-            });
+            _bus.Subscribe(x => called = true);
             _bus.Publish(new object(), 1);
             await Task.Delay(100);
             called.ShouldBeTrue();
@@ -31,10 +28,7 @@ namespace Ocelot.UnitTests.Infrastructure
         public void should_not_be_publish_yet_as_no_delay_in_caller()
         {
             var called = false;
-            _bus.Subscribe(x =>
-            {
-                called = true;
-            });
+            _bus.Subscribe(x => called = true);
             _bus.Publish(new object(), 1);
             called.ShouldBeFalse();
         }

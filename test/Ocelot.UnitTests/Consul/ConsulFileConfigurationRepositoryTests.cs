@@ -1,35 +1,32 @@
-﻿namespace Ocelot.UnitTests.Consul
-{
-    using global::Consul;
-    using Microsoft.Extensions.Options;
-    using Moq;
-    using Newtonsoft.Json;
-    using Ocelot.Cache;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Configuration.File;
-    using Ocelot.Configuration.Repository;
-    using Ocelot.Logging;
-    using Provider.Consul;
-    using Responses;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using Consul;
+using Microsoft.Extensions.Options;
+using Moq;
+using Newtonsoft.Json;
+using Ocelot.Cache;
+using Ocelot.Configuration.File;
+using Ocelot.Logging;
+using Ocelot.Provider.Consul;
+using Ocelot.Responses;
+using Shouldly;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.Consul
+{
     public class ConsulFileConfigurationRepositoryTests
     {
         private ConsulFileConfigurationRepository _repo;
-        private Mock<IOptions<FileConfiguration>> _options;
-        private Mock<IOcelotCache<FileConfiguration>> _cache;
-        private Mock<IConsulClientFactory> _factory;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IConsulClient> _client;
-        private Mock<IKVEndpoint> _kvEndpoint;
+        private readonly Mock<IOptions<FileConfiguration>> _options;
+        private readonly Mock<IOcelotCache<FileConfiguration>> _cache;
+        private readonly Mock<IConsulClientFactory> _factory;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IConsulClient> _client;
+        private readonly Mock<IKVEndpoint> _kvEndpoint;
         private FileConfiguration _fileConfiguration;
         private Response _setResult;
         private Response<FileConfiguration> _getResult;
@@ -175,7 +172,7 @@
 
         private void GivenFetchFromConsulReturnsNull()
         {
-            QueryResult<KVPair> result = new QueryResult<KVPair>();
+            var result = new QueryResult<KVPair>();
 
             _kvEndpoint
                 .Setup(x => x.Get(It.IsAny<string>(), It.IsAny<CancellationToken>()))
@@ -233,11 +230,11 @@
                         {
                             Host = "123.12.12.12",
                             Port = 80,
-                        }
+                        },
                     },
                     DownstreamScheme = "https",
-                    DownstreamPathTemplate = "/asdfs/test/{test}"
-                }
+                    DownstreamPathTemplate = "/asdfs/test/{test}",
+                },
             };
 
             var globalConfiguration = new FileGlobalConfiguration
@@ -245,14 +242,14 @@
                 ServiceDiscoveryProvider = new FileServiceDiscoveryProvider
                 {
                     Port = 198,
-                    Host = "blah"
-                }
+                    Host = "blah",
+                },
             };
 
             return new FileConfiguration
             {
                 GlobalConfiguration = globalConfiguration,
-                ReRoutes = reRoutes
+                ReRoutes = reRoutes,
             };
         }
     }

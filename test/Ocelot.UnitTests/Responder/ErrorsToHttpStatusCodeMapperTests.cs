@@ -101,7 +101,7 @@ namespace Ocelot.UnitTests.Responder
             {
                 OcelotErrorCode.CannotAddDataError,
                 OcelotErrorCode.CannotFindClaimError,
-                OcelotErrorCode.RequestTimedOutError
+                OcelotErrorCode.RequestTimedOutError,
             };
 
             ShouldMapErrorsToStatusCode(errors, HttpStatusCode.Forbidden);
@@ -113,7 +113,7 @@ namespace Ocelot.UnitTests.Responder
             var errors = new List<OcelotErrorCode>
             {
                 OcelotErrorCode.CannotAddDataError,
-                OcelotErrorCode.RequestTimedOutError
+                OcelotErrorCode.RequestTimedOutError,
             };
 
             ShouldMapErrorsToStatusCode(errors, HttpStatusCode.ServiceUnavailable);

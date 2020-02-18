@@ -12,7 +12,7 @@ namespace Ocelot.UnitTests.Middleware
     {
         private BaseUrlFinder _baseUrlFinder;
         private IConfiguration _config;
-        private List<KeyValuePair<string, string>> _data;
+        private readonly List<KeyValuePair<string, string>> _data;
         private string _result;
 
         public BaseUrlFinderTests()
@@ -63,7 +63,7 @@ namespace Ocelot.UnitTests.Middleware
             source.InitialData = _data;
             var provider = new MemoryConfigurationProvider(source);
             _config = new ConfigurationRoot(new List<IConfigurationProvider>() {
-                provider
+                provider,
             });
             _baseUrlFinder = new BaseUrlFinder(_config);
             _result = _baseUrlFinder.Find();

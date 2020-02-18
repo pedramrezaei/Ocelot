@@ -1,15 +1,15 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
-    using System;
-    using System.IO;
-    using System.Net;
-    using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ServiceHandler : IDisposable
     {
         private IWebHost _builder;
@@ -21,10 +21,7 @@
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
-                .Configure(app =>
-                {
-                    app.Run(del);
-                })
+                .Configure(app => app.Run(del))
                 .Build();
 
             _builder.Start();
@@ -53,10 +50,7 @@
                 .UseUrls(baseUrl)
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, port, listenOptions =>
-                    {
-                        listenOptions.UseHttps(fileName, password);
-                    });
+                    options.Listen(IPAddress.Loopback, port, listenOptions => listenOptions.UseHttps(fileName, password));
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .Configure(app =>

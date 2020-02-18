@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Ocelot.Infrastructure.Claims.Parser;
 
 namespace Ocelot.Authorisation
 {
-    using Infrastructure.Claims.Parser;
-
     public class ScopesAuthoriser : IScopesAuthoriser
     {
         private readonly IClaimsParser _claimsParser;

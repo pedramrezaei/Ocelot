@@ -1,7 +1,7 @@
-﻿namespace Ocelot.Provider.Rafty
-{
-    using global::Rafty.FiniteStateMachine;
+﻿using Rafty.FiniteStateMachine;
 
+namespace Ocelot.Provider.Rafty
+{
     public class FakeCommand : ICommand
     {
         public FakeCommand(string value)

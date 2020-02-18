@@ -1,17 +1,17 @@
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Middleware.Multiplexer;
+using Shouldly;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.Middleware
 {
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Middleware.Multiplexer;
-    using Shouldly;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class ResponseAggregatorFactoryTests
     {
         private readonly InMemoryResponseAggregatorFactory _factory;
-        private Mock<IDefinedAggregatorProvider> _provider;
+        private readonly Mock<IDefinedAggregatorProvider> _provider;
         private ReRoute _reRoute;
         private IResponseAggregator _aggregator;
 

@@ -1,8 +1,8 @@
-﻿namespace Ocelot.Cache
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Ocelot.Cache
+{
     public class InMemoryCache<T> : IOcelotCache<T>
     {
         private readonly Dictionary<string, CacheObject<T>> _cache;

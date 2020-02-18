@@ -5,11 +5,10 @@ using Ocelot.Responses;
 using Ocelot.Values;
 using System;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Ocelot.DownstreamUrlCreator.Middleware
 {
-    using System.Text.RegularExpressions;
-
     public class DownstreamUrlCreatorMiddleware : OcelotMiddleware
     {
         private readonly OcelotRequestDelegate _next;
@@ -44,9 +43,9 @@ namespace Ocelot.DownstreamUrlCreator.Middleware
 
             if (ServiceFabricRequest(context))
             {
-                var pathAndQuery = CreateServiceFabricUri(context, response);
-                context.DownstreamRequest.AbsolutePath = pathAndQuery.path;
-                context.DownstreamRequest.Query = pathAndQuery.query;
+                var (path, query) = CreateServiceFabricUri(context, response);
+                context.DownstreamRequest.AbsolutePath = path;
+                context.DownstreamRequest.Query = query;
             }
             else
             {
@@ -82,7 +81,7 @@ namespace Ocelot.DownstreamUrlCreator.Middleware
         {
             foreach (var nAndV in context.TemplatePlaceholderNameAndValues)
             {
-                var name = nAndV.Name.Replace("{", "").Replace("}", "");
+                var name = nAndV.Name.Replace("{", string.Empty).Replace("}", string.Empty);
 
                 if (context.DownstreamRequest.Query.Contains(name) &&
                     context.DownstreamRequest.Query.Contains(nAndV.Value))
@@ -91,7 +90,7 @@ namespace Ocelot.DownstreamUrlCreator.Middleware
                     context.DownstreamRequest.Query = context.DownstreamRequest.Query.Remove(questionMarkOrAmpersand - 1, 1);
 
                     var rgx = new Regex($@"\b{name}={nAndV.Value}\b");
-                    context.DownstreamRequest.Query = rgx.Replace(context.DownstreamRequest.Query, "");
+                    context.DownstreamRequest.Query = rgx.Replace(context.DownstreamRequest.Query, string.Empty);
 
                     if (!string.IsNullOrEmpty(context.DownstreamRequest.Query))
                     {
@@ -116,7 +115,7 @@ namespace Ocelot.DownstreamUrlCreator.Middleware
             return dsPath.Value.Contains("?");
         }
 
-        private (string path, string query) CreateServiceFabricUri(DownstreamContext context, Response<DownstreamPath> dsPath)
+        private (string Path, string Query) CreateServiceFabricUri(DownstreamContext context, Response<DownstreamPath> dsPath)
         {
             var query = context.DownstreamRequest.Query;
             var serviceName = _replacer.Replace(context.DownstreamReRoute.ServiceName, context.TemplatePlaceholderNameAndValues);

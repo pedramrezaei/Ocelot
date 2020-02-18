@@ -26,7 +26,7 @@ namespace Ocelot.UnitTests.Configuration
         {
             this.Given(x => x.GivenTheDictionaryIs(new Dictionary<string, string>()
             {
-                {"CustomerId", ""},
+                {"CustomerId", string.Empty},
             }))
                 .When(x => x.WhenICallTheExtractor())
                 .Then(
@@ -34,7 +34,7 @@ namespace Ocelot.UnitTests.Configuration
                         x.ThenAnErrorIsReturned(new ErrorResponse<ClaimToThing>(
                             new List<Error>
                             {
-                                new NoInstructionsError(">")
+                                new NoInstructionsError(">"),
                             })))
                 .BDDfy();
         }
@@ -52,7 +52,7 @@ namespace Ocelot.UnitTests.Configuration
                         x.ThenAnErrorIsReturned(new ErrorResponse<ClaimToThing>(
                             new List<Error>
                             {
-                                new InstructionNotForClaimsError()
+                                new InstructionNotForClaimsError(),
                             })))
                 .BDDfy();
         }
@@ -69,7 +69,7 @@ namespace Ocelot.UnitTests.Configuration
                     x =>
                         x.ThenTheClaimParserPropertiesAreReturned(
                             new OkResponse<ClaimToThing>(
-                                new ClaimToThing("CustomerId", "CustomerId", "", 0))))
+                                new ClaimToThing("CustomerId", "CustomerId", string.Empty, 0))))
                 .BDDfy();
         }
 
