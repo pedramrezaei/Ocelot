@@ -1,35 +1,35 @@
-﻿namespace Ocelot.UnitTests.DownstreamRouteFinder
-{
-    using System;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.Finder;
-    using Ocelot.DownstreamRouteFinder.Middleware;
-    using Ocelot.DownstreamRouteFinder.UrlMatcher;
-    using Ocelot.Logging;
-    using Ocelot.Middleware;
-    using Ocelot.Middleware.Multiplexer;
-    using Ocelot.Responses;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using TestStack.BDDfy;
-    using Xunit;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.Finder;
+using Ocelot.DownstreamRouteFinder.Middleware;
+using Ocelot.DownstreamRouteFinder.UrlMatcher;
+using Ocelot.Logging;
+using Ocelot.Middleware;
+using Ocelot.Middleware.Multiplexer;
+using Ocelot.Responses;
+using Shouldly;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TestStack.BDDfy;
+using Xunit;
 
+namespace Ocelot.UnitTests.DownstreamRouteFinder
+{
     public class DownstreamRouteFinderMiddlewareTests
     {
         private readonly Mock<IDownstreamRouteProvider> _finder;
         private readonly Mock<IDownstreamRouteProviderFactory> _factory;
         private Response<DownstreamRoute> _downstreamRoute;
         private IInternalConfiguration _config;
-        private Mock<IOcelotLoggerFactory> _loggerFactory;
-        private Mock<IOcelotLogger> _logger;
+        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private readonly Mock<IOcelotLogger> _logger;
         private readonly DownstreamRouteFinderMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private OcelotRequestDelegate _next;
+        private readonly OcelotRequestDelegate _next;
         private readonly Mock<IMultiplexer> _multiplexer;
 
         public DownstreamRouteFinderMiddlewareTests()

@@ -1,20 +1,20 @@
+using System;
+using Moq;
+using Ocelot.Configuration;
+using Ocelot.Configuration.Builder;
+using Ocelot.Configuration.Creator;
+using Ocelot.DownstreamRouteFinder;
+using Ocelot.DownstreamRouteFinder.Finder;
+using Ocelot.LoadBalancer.LoadBalancers;
+using Ocelot.Responses;
+using Shouldly;
+using System.Collections.Generic;
+using System.Net.Http;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.UnitTests.DownstreamRouteFinder
 {
-    using System;
-    using Moq;
-    using Ocelot.Configuration;
-    using Ocelot.Configuration.Builder;
-    using Ocelot.Configuration.Creator;
-    using Ocelot.DownstreamRouteFinder;
-    using Ocelot.DownstreamRouteFinder.Finder;
-    using Ocelot.LoadBalancer.LoadBalancers;
-    using Responses;
-    using Shouldly;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class DownstreamRouteCreatorTests
     {
         private readonly DownstreamRouteCreator _creator;

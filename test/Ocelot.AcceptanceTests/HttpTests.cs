@@ -1,16 +1,16 @@
+using Microsoft.AspNetCore.Http;
+using Ocelot.Configuration.File;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using TestStack.BDDfy;
+using Xunit;
+
 namespace Ocelot.AcceptanceTests
 {
-    using Microsoft.AspNetCore.Http;
-    using Ocelot.Configuration.File;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Net.Http;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
-    using TestStack.BDDfy;
-    using Xunit;
-
     public class HttpTests : IDisposable
     {
         private readonly Steps _steps;
@@ -47,7 +47,7 @@ namespace Ocelot.AcceptanceTests
                         },
                         DownstreamHttpMethod = "POST",
                         DownstreamHttpVersion = "1.0",
-                        DangerousAcceptAnyServerCertificateValidator = true
+                        DangerousAcceptAnyServerCertificateValidator = true,
                     },
                 },
             };
@@ -85,7 +85,7 @@ namespace Ocelot.AcceptanceTests
                             },
                             DownstreamHttpMethod = "POST",
                             DownstreamHttpVersion = "1.1",
-                            DangerousAcceptAnyServerCertificateValidator = true
+                            DangerousAcceptAnyServerCertificateValidator = true,
                         },
                     },
             };
@@ -123,7 +123,7 @@ namespace Ocelot.AcceptanceTests
                         },
                         DownstreamHttpMethod = "POST",
                         DownstreamHttpVersion = "2.0",
-                        DangerousAcceptAnyServerCertificateValidator = true
+                        DangerousAcceptAnyServerCertificateValidator = true,
                     },
                 },
             };
@@ -165,7 +165,7 @@ namespace Ocelot.AcceptanceTests
                         },
                         DownstreamHttpMethod = "POST",
                         DownstreamHttpVersion = "1.1",
-                        DangerousAcceptAnyServerCertificateValidator = true
+                        DangerousAcceptAnyServerCertificateValidator = true,
                     },
                 },
             };
@@ -206,7 +206,7 @@ namespace Ocelot.AcceptanceTests
                         },
                         DownstreamHttpMethod = "POST",
                         DownstreamHttpVersion = "2.0",
-                        DangerousAcceptAnyServerCertificateValidator = true
+                        DangerousAcceptAnyServerCertificateValidator = true,
                     },
                 },
             };

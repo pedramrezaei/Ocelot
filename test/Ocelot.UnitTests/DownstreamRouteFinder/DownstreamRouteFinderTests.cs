@@ -10,11 +10,10 @@ using Shouldly;
 using System.Collections.Generic;
 using TestStack.BDDfy;
 using Xunit;
+using System;
 
 namespace Ocelot.UnitTests.DownstreamRouteFinder
 {
-    using System;
-
     public class DownstreamRouteFinderTests
     {
         private readonly IDownstreamRouteProvider _downstreamRouteFinder;

@@ -1,17 +1,17 @@
-﻿namespace Ocelot.AcceptanceTests
-{
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Logging;
-    using System;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Net;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
+namespace Ocelot.AcceptanceTests
+{
     public class ServiceHandler : IDisposable
     {
         private IWebHost _builder;
