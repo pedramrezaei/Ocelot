@@ -32,15 +32,16 @@ namespace Ocelot.Authorisation
 
             var userScopes = values.Data;
 
-            var matchesScopes = routeAllowedScopes.Intersect(userScopes).ToList();
+            var matchesScopes = routeAllowedScopes.Intersect(userScopes);
 
-            if (matchesScopes.Count == 0)
+            if (matchesScopes.Any())
             {
-                return new ErrorResponse<bool>(
-                    new ScopeNotAuthorisedError($"no one user scope: '{string.Join(",", userScopes)}' match with some allowed scope: '{string.Join(",", routeAllowedScopes)}'"));
+                return new OkResponse<bool>(true);
             }
 
-            return new OkResponse<bool>(true);
+            return new ErrorResponse<bool>(
+                new ScopeNotAuthorisedError(
+                    $"no one user scope: '{string.Join(",", userScopes)}' match with some allowed scope: '{string.Join(",", routeAllowedScopes)}'"));
         }
     }
 }
