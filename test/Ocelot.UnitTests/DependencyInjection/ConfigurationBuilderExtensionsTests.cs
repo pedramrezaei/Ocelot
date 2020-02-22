@@ -322,7 +322,7 @@ namespace Ocelot.UnitTests.DependencyInjection
 
         private void WhenIGet(string key)
         {
-            _result = _configuration.GetValue(key, string.Empty);
+            _result = _configuration.GetValue(key, "");
         }
 
         private void ThenTheResultIs(string expected)
