@@ -16,7 +16,7 @@ namespace Ocelot.Cache
             StatusCode = statusCode;
             Headers = headers ?? new Dictionary<string, IEnumerable<string>>();
             ContentHeaders = contentHeaders ?? new Dictionary<string, IEnumerable<string>>();
-            Body = body ?? "";
+            Body = body ?? string.Empty;
             ReasonPhrase = reasonPhrase;
         }
 
