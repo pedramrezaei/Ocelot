@@ -27,7 +27,7 @@ namespace Ocelot.UnitTests.Responder
         public void should_remove_transfer_encoding_header()
         {
             var httpContext = new DefaultHttpContext();
-            var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
+            var response = new DownstreamResponse(new StringContent(string.Empty), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
                     new KeyValuePair<string, IEnumerable<string>>("Transfer-Encoding", new List<string> {"woop"}),
@@ -71,7 +71,7 @@ namespace Ocelot.UnitTests.Responder
         public void should_add_header()
         {
             var httpContext = new DefaultHttpContext();
-            var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
+            var response = new DownstreamResponse(new StringContent(string.Empty), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
                     new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"}),
@@ -86,7 +86,7 @@ namespace Ocelot.UnitTests.Responder
         public void should_add_reason_phrase()
         {
             var httpContext = new DefaultHttpContext();
-            var response = new DownstreamResponse(new StringContent(""), HttpStatusCode.OK,
+            var response = new DownstreamResponse(new StringContent(string.Empty), HttpStatusCode.OK,
                 new List<KeyValuePair<string, IEnumerable<string>>>
                 {
                     new KeyValuePair<string, IEnumerable<string>>("test", new List<string> {"test"}),

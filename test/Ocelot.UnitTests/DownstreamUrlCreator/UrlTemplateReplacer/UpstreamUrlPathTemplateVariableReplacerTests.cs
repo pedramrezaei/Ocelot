@@ -35,7 +35,7 @@ namespace Ocelot.UnitTests.DownstreamUrlCreator.UrlTemplateReplacer
                         .WithUpstreamHttpMethod(new List<string> { "Get" })
                         .Build())))
                 .When(x => x.WhenIReplaceTheTemplateVariables())
-                .Then(x => x.ThenTheDownstreamUrlPathIsReturned(""))
+                .Then(x => x.ThenTheDownstreamUrlPathIsReturned(string.Empty))
                 .BDDfy();
         }
 

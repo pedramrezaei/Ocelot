@@ -80,9 +80,9 @@ namespace Ocelot.Authorisation
                                    $"claim value: {string.Join(", ", values.Data)} is not the same as required value: {required.Value} for type: {required.Key}"));
                     }
                 }
-
-                return new OkResponse<bool>(true);
             }
+
+            return new OkResponse<bool>(true);
         }
     }
 }

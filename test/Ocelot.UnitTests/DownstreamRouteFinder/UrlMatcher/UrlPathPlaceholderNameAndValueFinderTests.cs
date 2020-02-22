@@ -24,8 +24,8 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         [Fact]
         public void can_match_down_stream_url()
         {
-            this.Given(x => x.GivenIHaveAUpstreamPath(""))
-                .And(x => x.GivenIHaveAnUpstreamUrlTemplate(""))
+            this.Given(x => x.GivenIHaveAUpstreamPath(string.Empty))
+                .And(x => x.GivenIHaveAnUpstreamUrlTemplate(string.Empty))
                 .When(x => x.WhenIFindTheUrlVariableNamesAndValues())
                 .And(x => x.ThenTheTemplatesVariablesAre(new List<PlaceholderNameAndValue>()))
                 .BDDfy();
@@ -39,7 +39,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
                 new PlaceholderNameAndValue("{url}", string.Empty),
             };
 
-            this.Given(x => x.GivenIHaveAUpstreamPath(""))
+            this.Given(x => x.GivenIHaveAUpstreamPath(string.Empty))
                 .And(x => x.GivenIHaveAnUpstreamUrlTemplate("/{url}"))
                 .When(x => x.WhenIFindTheUrlVariableNamesAndValues())
                 .And(x => x.ThenTheTemplatesVariablesAre(expectedTemplates))

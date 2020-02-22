@@ -69,7 +69,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
         [Fact]
         public void should_return_downstream_route_finder_as_no_service_discovery_given_no_host()
         {
-            var spConfig = new ServiceProviderConfigurationBuilder().WithHost("").WithPort(50).Build();
+            var spConfig = new ServiceProviderConfigurationBuilder().WithHost(string.Empty).WithPort(50).Build();
             var reRoutes = new List<ReRoute>();
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
@@ -93,7 +93,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
         [Fact]
         public void should_return_downstream_route_finder_given_no_service_discovery_type()
         {
-            var spConfig = new ServiceProviderConfigurationBuilder().WithHost("localhost").WithPort(50).WithType("").Build();
+            var spConfig = new ServiceProviderConfigurationBuilder().WithHost("localhost").WithPort(50).WithType(string.Empty).Build();
             var reRoutes = new List<ReRoute>();
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))

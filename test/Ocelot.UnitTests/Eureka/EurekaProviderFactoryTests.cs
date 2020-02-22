@@ -28,7 +28,7 @@ namespace Ocelot.UnitTests.Eureka
             services.AddSingleton(client.Object);
             var sp = services.BuildServiceProvider();
             var reRoute = new DownstreamReRouteBuilder()
-                .WithServiceName("")
+                .WithServiceName(string.Empty)
                 .Build();
             var provider = EurekaProviderFactory.Get(sp, config, reRoute);
             provider.ShouldBeOfType<Provider.Eureka.Eureka>();

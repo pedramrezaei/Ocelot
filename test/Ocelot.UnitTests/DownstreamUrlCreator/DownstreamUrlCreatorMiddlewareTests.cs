@@ -100,7 +100,7 @@ namespace Ocelot.UnitTests.DownstreamUrlCreator
                 .And(x => x.GivenTheUrlReplacerWillReturn("api/units/1/2/updates"))
                 .When(x => x.WhenICallTheMiddleware())
                 .Then(x => x.ThenTheDownstreamRequestUriIs("https://localhost:5000/api/units/1/2/updates"))
-                .And(x => ThenTheQueryStringIs(""))
+                .And(x => ThenTheQueryStringIs(string.Empty))
                 .BDDfy();
         }
 
@@ -165,7 +165,7 @@ namespace Ocelot.UnitTests.DownstreamUrlCreator
                 .And(x => x.GivenTheUrlReplacerWillReturn("api/units/1/2/updates/3"))
                 .When(x => x.WhenICallTheMiddleware())
                 .Then(x => x.ThenTheDownstreamRequestUriIs("https://localhost:5000/api/units/1/2/updates/3"))
-                .And(x => ThenTheQueryStringIs(""))
+                .And(x => ThenTheQueryStringIs(string.Empty))
                 .BDDfy();
         }
 
@@ -354,7 +354,7 @@ namespace Ocelot.UnitTests.DownstreamUrlCreator
         public void should_not_replace_by_empty_scheme()
         {
             var downstreamReRoute = new DownstreamReRouteBuilder()
-                .WithDownstreamScheme("")
+                .WithDownstreamScheme(string.Empty)
                 .WithServiceName("Ocelot/OcelotApp")
                 .WithUseServiceDiscovery(true)
                 .Build();

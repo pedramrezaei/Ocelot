@@ -50,7 +50,7 @@ namespace Ocelot.UnitTests.Requester
         [Fact]
         public void should_call_request_correctly()
         {
-            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue("").Build();
+            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue(string.Empty).Build();
 
             var qosOptions = new QoSOptionsBuilder()
                 .Build();
@@ -58,7 +58,7 @@ namespace Ocelot.UnitTests.Requester
             var reRoute = new DownstreamReRouteBuilder()
                 .WithQosOptions(qosOptions)
                 .WithHttpHandlerOptions(new HttpHandlerOptions(false, false, false, true, int.MaxValue))
-                .WithLoadBalancerKey("")
+                .WithLoadBalancerKey(string.Empty)
                 .WithUpstreamPathTemplate(upstreamTemplate)
                 .WithQosOptions(new QoSOptionsBuilder().Build())
                 .Build();
@@ -79,7 +79,7 @@ namespace Ocelot.UnitTests.Requester
         [Fact]
         public void should_call_request_unable_to_complete_request()
         {
-            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue("").Build();
+            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue(string.Empty).Build();
 
             var qosOptions = new QoSOptionsBuilder()
                 .Build();
@@ -87,7 +87,7 @@ namespace Ocelot.UnitTests.Requester
             var reRoute = new DownstreamReRouteBuilder()
                 .WithQosOptions(qosOptions)
                 .WithHttpHandlerOptions(new HttpHandlerOptions(false, false, false, true, int.MaxValue))
-                .WithLoadBalancerKey("")
+                .WithLoadBalancerKey(string.Empty)
                 .WithUpstreamPathTemplate(upstreamTemplate)
                 .WithQosOptions(new QoSOptionsBuilder().Build())
                 .Build();
@@ -107,7 +107,7 @@ namespace Ocelot.UnitTests.Requester
         [Fact]
         public void http_client_request_times_out()
         {
-            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue("").Build();
+            var upstreamTemplate = new UpstreamPathTemplateBuilder().WithOriginalValue(string.Empty).Build();
 
             var qosOptions = new QoSOptionsBuilder()
                 .Build();
@@ -115,7 +115,7 @@ namespace Ocelot.UnitTests.Requester
             var reRoute = new DownstreamReRouteBuilder()
                 .WithQosOptions(qosOptions)
                 .WithHttpHandlerOptions(new HttpHandlerOptions(false, false, false, true, int.MaxValue))
-                .WithLoadBalancerKey("")
+                .WithLoadBalancerKey(string.Empty)
                 .WithUpstreamPathTemplate(upstreamTemplate)
                 .WithQosOptions(new QoSOptionsBuilder().WithTimeoutValue(1).Build())
                 .Build();

@@ -147,7 +147,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder.UrlMatcher
         [Fact]
         public void can_match_down_stream_url()
         {
-            this.Given(x => x.GivenIHaveAUpstreamPath(""))
+            this.Given(x => x.GivenIHaveAUpstreamPath(string.Empty))
                 .And(x => x.GivenIHaveAnUpstreamUrlTemplatePattern("^$"))
                 .When(x => x.WhenIMatchThePaths())
                 .And(x => x.ThenTheResultIsTrue())

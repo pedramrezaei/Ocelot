@@ -31,7 +31,7 @@ namespace Ocelot.UnitTests.Request.Creator
             var content = new StringContent("test");
             request.Content = content;
 
-            this.Given(_ => GivenTheFrameworkIs(""))
+            this.Given(_ => GivenTheFrameworkIs(string.Empty))
                 .And(_ => GivenTheRequestIs(request))
                 .When(_ => WhenICreate())
                 .Then(_ => ThenTheDownstreamRequestHasABody())
