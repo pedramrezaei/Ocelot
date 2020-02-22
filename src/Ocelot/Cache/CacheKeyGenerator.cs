@@ -8,7 +8,7 @@ namespace Ocelot.Cache
     {
         public string GenerateRequestCacheKey(DownstreamContext context)
         {
-            var builder = new StringBuilder("context.DownstreamRequest.Method");
+            var builder = new StringBuilder(context.DownstreamRequest.Method);
             builder.Append('-');
             builder.Append(context.DownstreamRequest.OriginalString);
             if (context.DownstreamRequest.Content != null)
