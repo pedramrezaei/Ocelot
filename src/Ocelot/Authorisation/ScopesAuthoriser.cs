@@ -8,8 +8,8 @@ namespace Ocelot.Authorisation
 {
     public class ScopesAuthoriser : IScopesAuthoriser
     {
+        private const string Scope = "scope";
         private readonly IClaimsParser _claimsParser;
-        private readonly string _scope = "scope";
 
         public ScopesAuthoriser(IClaimsParser claimsParser)
         {
@@ -23,7 +23,7 @@ namespace Ocelot.Authorisation
                 return new OkResponse<bool>(true);
             }
 
-            var values = _claimsParser.GetValuesByClaimType(claimsPrincipal.Claims, _scope);
+            var values = _claimsParser.GetValuesByClaimType(claimsPrincipal.Claims, Scope);
 
             if (values.IsError)
             {
