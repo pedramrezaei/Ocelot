@@ -2,6 +2,7 @@
 using Ocelot.Configuration;
 using Ocelot.Infrastructure.Claims.Parser;
 using Ocelot.Responses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -28,16 +29,17 @@ namespace Ocelot.Claims
                     return new ErrorResponse(value.Errors);
                 }
 
-                var exists = context.User.Claims.FirstOrDefault(x => x.Type == config.ExistingKey);
-
-                var identity = context.User.Identity as ClaimsIdentity;
-
-                if (exists != null)
+                if (context.User.Identity is ClaimsIdentity identity)
                 {
-                    identity?.RemoveClaim(exists);
-                }
+                    var exists = context.User.Claims.FirstOrDefault(x => string.Equals(x.Type, config.ExistingKey, StringComparison.Ordinal));
 
-                identity?.AddClaim(new Claim(config.ExistingKey, value.Data));
+                    if (exists != null)
+                    {
+                        identity.RemoveClaim(exists);
+                    }
+
+                    identity.AddClaim(new Claim(config.ExistingKey, value.Data));
+                }
             }
 
             return new OkResponse();
