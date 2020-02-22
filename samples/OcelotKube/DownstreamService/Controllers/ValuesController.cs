@@ -11,11 +11,12 @@ namespace DownstreamService.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
+#pragma warning disable IDE0060 // Remove unused parameter
         public ActionResult<string> Get(int id)
         {
             return "value";
@@ -36,6 +37,7 @@ namespace DownstreamService.Controllers
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
         }
     }
