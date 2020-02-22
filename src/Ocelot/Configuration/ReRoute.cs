@@ -22,11 +22,11 @@ namespace Ocelot.Configuration
             Aggregator = aggregator;
         }
 
-        public UpstreamPathTemplate UpstreamTemplatePattern { get; private set; }
-        public List<HttpMethod> UpstreamHttpMethod { get; private set; }
-        public string UpstreamHost { get; private set; }
-        public List<DownstreamReRoute> DownstreamReRoute { get; private set; }
-        public List<AggregateReRouteConfig> DownstreamReRouteConfig { get; private set; }
-        public string Aggregator { get; private set; }
+        public UpstreamPathTemplate UpstreamTemplatePattern { get; }
+        public List<HttpMethod> UpstreamHttpMethod { get; }
+        public string UpstreamHost { get; }
+        public List<DownstreamReRoute> DownstreamReRoute { get; }
+        public List<AggregateReRouteConfig> DownstreamReRouteConfig { get; }
+        public string Aggregator { get; }
     }
 }

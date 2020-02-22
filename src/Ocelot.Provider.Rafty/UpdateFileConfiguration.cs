@@ -10,6 +10,6 @@ namespace Ocelot.Provider.Rafty
             Configuration = configuration;
         }
 
-        public FileConfiguration Configuration { get; private set; }
+        public FileConfiguration Configuration { get; }
     }
 }

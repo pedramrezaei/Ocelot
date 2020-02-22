@@ -8,8 +8,8 @@ namespace Ocelot.Errors
             Code = code;
         }
 
-        public string Message { get; private set; }
-        public OcelotErrorCode Code { get; private set; }
+        public string Message { get; }
+        public OcelotErrorCode Code { get; }
 
         public override string ToString()
         {

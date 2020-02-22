@@ -9,6 +9,6 @@ namespace Ocelot.Provider.Rafty
             this.Value = value;
         }
 
-        public string Value { get; private set; }
+        public string Value { get; }
     }
 }

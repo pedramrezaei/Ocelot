@@ -17,6 +17,6 @@ namespace Ocelot.Responses
         {
         }
 
-        public T Data { get; private set; }
+        public T Data { get; }
     }
 }

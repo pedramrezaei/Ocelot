@@ -10,8 +10,8 @@ namespace Ocelot.Configuration
             this.IPBlockedList = blockedList;
         }
 
-        public List<string> IPAllowedList { get; private set; }
+        public List<string> IPAllowedList { get; }
 
-        public List<string> IPBlockedList { get; private set; }
+        public List<string> IPBlockedList { get; }
     }
 }

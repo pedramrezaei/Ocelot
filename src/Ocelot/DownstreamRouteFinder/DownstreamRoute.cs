@@ -12,7 +12,7 @@ namespace Ocelot.DownstreamRouteFinder
             ReRoute = reRoute;
         }
 
-        public List<PlaceholderNameAndValue> TemplatePlaceholderNameAndValues { get; private set; }
-        public ReRoute ReRoute { get; private set; }
+        public List<PlaceholderNameAndValue> TemplatePlaceholderNameAndValues { get; }
+        public ReRoute ReRoute { get; }
     }
 }

@@ -191,8 +191,8 @@ namespace Ocelot.IntegrationTests
                 Random = random;
             }
 
-            public int Result { get; private set; }
-            public int Random { get; private set; }
+            public int Result { get; }
+            public int Random { get; }
         }
     }
 }

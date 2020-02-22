@@ -20,14 +20,14 @@ namespace Ocelot.Cache
             ReasonPhrase = reasonPhrase;
         }
 
-        public HttpStatusCode StatusCode { get; private set; }
+        public HttpStatusCode StatusCode { get; }
 
-        public Dictionary<string, IEnumerable<string>> Headers { get; private set; }
+        public Dictionary<string, IEnumerable<string>> Headers { get; }
 
-        public Dictionary<string, IEnumerable<string>> ContentHeaders { get; private set; }
+        public Dictionary<string, IEnumerable<string>> ContentHeaders { get; }
 
-        public string Body { get; private set; }
+        public string Body { get; }
 
-        public string ReasonPhrase { get; private set; }
+        public string ReasonPhrase { get; }
     }
 }

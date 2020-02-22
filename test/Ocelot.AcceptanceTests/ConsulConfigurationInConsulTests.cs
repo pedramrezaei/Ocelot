@@ -414,7 +414,7 @@ namespace Ocelot.AcceptanceTests
             public int LockIndex => 200;
             public string Key => "InternalConfiguration";
             public int Flags => 0;
-            public string Value { get; private set; }
+            public string Value { get; }
             public string Session => "adf4238a-882b-9ddc-4a9d-5b6758e4159e";
         }
 
