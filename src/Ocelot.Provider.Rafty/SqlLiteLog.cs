@@ -249,7 +249,9 @@ namespace Ocelot.Provider.Rafty
             }
         }
 
+#pragma warning disable SA1316 // Tuple element names should use correct casing
         public async Task<List<(int index, LogEntry logEntry)>> GetFrom(int index)
+#pragma warning restore SA1316 // Tuple element names should use correct casing
         {
             _sempaphore.Wait();
             var logsToReturn = new List<(int, LogEntry)>();
