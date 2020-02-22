@@ -1,25 +1,26 @@
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Ocelot.Configuration;
-using Ocelot.Configuration.Builder;
-using Ocelot.Configuration.Creator;
-using Ocelot.DownstreamRouteFinder.Finder;
-using Ocelot.DownstreamRouteFinder.UrlMatcher;
-using Ocelot.Logging;
-using Shouldly;
-using System.Collections.Generic;
-using TestStack.BDDfy;
-using Xunit;
-
 namespace Ocelot.UnitTests.DownstreamRouteFinder
 {
+    using System;
+    using Microsoft.Extensions.DependencyInjection;
+    using Moq;
+    using Ocelot.Configuration;
+    using Ocelot.Configuration.Builder;
+    using Ocelot.Configuration.Creator;
+    using Ocelot.DownstreamRouteFinder.Finder;
+    using Ocelot.DownstreamRouteFinder.UrlMatcher;
+    using Ocelot.Logging;
+    using Shouldly;
+    using System.Collections.Generic;
+    using TestStack.BDDfy;
+    using Xunit;
+
     public class DownstreamRouteProviderFactoryTests
     {
         private readonly DownstreamRouteProviderFactory _factory;
         private IInternalConfiguration _config;
         private IDownstreamRouteProvider _result;
-        private readonly Mock<IOcelotLogger> _logger;
-        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
+        private Mock<IOcelotLogger> _logger;
+        private Mock<IOcelotLoggerFactory> _loggerFactory;
 
         public DownstreamRouteProviderFactoryTests()
         {
@@ -27,7 +28,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
             services.AddSingleton<IPlaceholderNameAndValueFinder, UrlPathPlaceholderNameAndValueFinder>();
             services.AddSingleton<IUrlPathToUrlTemplateMatcher, RegExUrlMatcher>();
             services.AddSingleton<IQoSOptionsCreator, QoSOptionsCreator>();
-            services.AddSingleton<IDownstreamRouteProvider, Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>();
+            services.AddSingleton<IDownstreamRouteProvider, DownstreamRouteFinder>();
             services.AddSingleton<IDownstreamRouteProvider, DownstreamRouteCreator>();
             var provider = services.BuildServiceProvider();
             _logger = new Mock<IOcelotLogger>();
@@ -41,12 +42,12 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
         {
             var reRoutes = new List<ReRoute>
             {
-                new ReRouteBuilder().Build(),
+                new ReRouteBuilder().Build()
             };
 
             this.Given(_ => GivenTheReRoutes(reRoutes))
                 .When(_ => WhenIGet())
-                .Then(_ => ThenTheResultShouldBe<Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>())
+                .Then(_ => ThenTheResultShouldBe<DownstreamRouteFinder>())
                 .BDDfy();
         }
 
@@ -56,12 +57,12 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
             var spConfig = new ServiceProviderConfigurationBuilder().WithHost("test").WithPort(50).WithType("test").Build();
             var reRoutes = new List<ReRoute>
             {
-                new ReRouteBuilder().WithUpstreamPathTemplate(new UpstreamPathTemplateBuilder().WithOriginalValue("woot").Build()).Build(),
+                new ReRouteBuilder().WithUpstreamPathTemplate(new UpstreamPathTemplateBuilder().WithOriginalValue("woot").Build()).Build()
             };
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
                 .When(_ => WhenIGet())
-                .Then(_ => ThenTheResultShouldBe<Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>())
+                .Then(_ => ThenTheResultShouldBe<DownstreamRouteFinder>())
                 .BDDfy();
         }
 
@@ -73,7 +74,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
                 .When(_ => WhenIGet())
-                .Then(_ => ThenTheResultShouldBe<Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>())
+                .Then(_ => ThenTheResultShouldBe<DownstreamRouteFinder>())
                 .BDDfy();
         }
 
@@ -85,7 +86,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
                 .When(_ => WhenIGet())
-                .Then(_ => ThenTheResultShouldBe<Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>())
+                .Then(_ => ThenTheResultShouldBe<DownstreamRouteFinder>())
                 .BDDfy();
         }
 
@@ -97,7 +98,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
                 .When(_ => WhenIGet())
-                .Then(_ => ThenTheResultShouldBe<Ocelot.DownstreamRouteFinder.Finder.DownstreamRouteFinder>())
+                .Then(_ => ThenTheResultShouldBe<DownstreamRouteFinder>())
                 .BDDfy();
         }
 
@@ -119,7 +120,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
             var spConfig = new ServiceProviderConfigurationBuilder().WithHost("test").WithPort(50).WithType("test").Build();
             var reRoutes = new List<ReRoute>
             {
-                new ReRouteBuilder().Build(),
+                new ReRouteBuilder().Build()
             };
 
             this.Given(_ => GivenTheReRoutes(reRoutes, spConfig))
@@ -140,12 +141,12 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
 
         private void GivenTheReRoutes(List<ReRoute> reRoutes)
         {
-            _config = new InternalConfiguration(reRoutes, string.Empty, null, string.Empty, new LoadBalancerOptionsBuilder().Build(), string.Empty, new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build());
+            _config = new InternalConfiguration(reRoutes, "", null, "", new LoadBalancerOptionsBuilder().Build(), "", new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build(), new Version("1.1"));
         }
 
         private void GivenTheReRoutes(List<ReRoute> reRoutes, ServiceProviderConfiguration config)
         {
-            _config = new InternalConfiguration(reRoutes, string.Empty, config, string.Empty, new LoadBalancerOptionsBuilder().Build(), string.Empty, new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build());
+            _config = new InternalConfiguration(reRoutes, "", config, "", new LoadBalancerOptionsBuilder().Build(), "", new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build(), new Version("1.1"));
         }
     }
 }

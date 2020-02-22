@@ -1,34 +1,35 @@
-﻿using Microsoft.AspNetCore.Http;
-using Moq;
-using Ocelot.Configuration;
-using Ocelot.Configuration.Builder;
-using Ocelot.DownstreamRouteFinder;
-using Ocelot.DownstreamRouteFinder.Finder;
-using Ocelot.DownstreamRouteFinder.Middleware;
-using Ocelot.DownstreamRouteFinder.UrlMatcher;
-using Ocelot.Logging;
-using Ocelot.Middleware;
-using Ocelot.Middleware.Multiplexer;
-using Ocelot.Responses;
-using Shouldly;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TestStack.BDDfy;
-using Xunit;
-
-namespace Ocelot.UnitTests.DownstreamRouteFinder
+﻿namespace Ocelot.UnitTests.DownstreamRouteFinder
 {
+    using System;
+    using Microsoft.AspNetCore.Http;
+    using Moq;
+    using Ocelot.Configuration;
+    using Ocelot.Configuration.Builder;
+    using Ocelot.DownstreamRouteFinder;
+    using Ocelot.DownstreamRouteFinder.Finder;
+    using Ocelot.DownstreamRouteFinder.Middleware;
+    using Ocelot.DownstreamRouteFinder.UrlMatcher;
+    using Ocelot.Logging;
+    using Ocelot.Middleware;
+    using Ocelot.Middleware.Multiplexer;
+    using Ocelot.Responses;
+    using Shouldly;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using TestStack.BDDfy;
+    using Xunit;
+
     public class DownstreamRouteFinderMiddlewareTests
     {
         private readonly Mock<IDownstreamRouteProvider> _finder;
         private readonly Mock<IDownstreamRouteProviderFactory> _factory;
         private Response<DownstreamRoute> _downstreamRoute;
         private IInternalConfiguration _config;
-        private readonly Mock<IOcelotLoggerFactory> _loggerFactory;
-        private readonly Mock<IOcelotLogger> _logger;
+        private Mock<IOcelotLoggerFactory> _loggerFactory;
+        private Mock<IOcelotLogger> _logger;
         private readonly DownstreamRouteFinderMiddleware _middleware;
         private readonly DownstreamContext _downstreamContext;
-        private readonly OcelotRequestDelegate _next;
+        private OcelotRequestDelegate _next;
         private readonly Mock<IMultiplexer> _multiplexer;
 
         public DownstreamRouteFinderMiddlewareTests()
@@ -48,7 +49,7 @@ namespace Ocelot.UnitTests.DownstreamRouteFinder
         [Fact]
         public void should_call_scoped_data_repository_correctly()
         {
-            var config = new InternalConfiguration(null, null, new ServiceProviderConfigurationBuilder().Build(), string.Empty, new LoadBalancerOptionsBuilder().Build(), string.Empty, new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build());
+            var config = new InternalConfiguration(null, null, new ServiceProviderConfigurationBuilder().Build(), "", new LoadBalancerOptionsBuilder().Build(), "", new QoSOptionsBuilder().Build(), new HttpHandlerOptionsBuilder().Build(), new Version("1.1"));
 
             var downstreamReRoute = new DownstreamReRouteBuilder()
                 .WithDownstreamPathTemplate("any old string")

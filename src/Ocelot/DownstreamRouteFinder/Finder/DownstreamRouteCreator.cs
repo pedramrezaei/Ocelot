@@ -1,15 +1,16 @@
-﻿using Ocelot.Configuration;
-using Ocelot.Configuration.Builder;
-using Ocelot.Configuration.Creator;
-using Ocelot.LoadBalancer.LoadBalancers;
-using Ocelot.Responses;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using Ocelot.DownstreamRouteFinder.UrlMatcher;
-
-namespace Ocelot.DownstreamRouteFinder.Finder
+﻿namespace Ocelot.DownstreamRouteFinder.Finder
 {
+    using System;
+    using Configuration;
+    using Configuration.Builder;
+    using Configuration.Creator;
+    using LoadBalancer.LoadBalancers;
+    using Responses;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using UrlMatcher;
+
     public class DownstreamRouteCreator : IDownstreamRouteProvider
     {
         private readonly IQoSOptionsCreator _qoSOptionsCreator;
@@ -54,6 +55,7 @@ namespace Ocelot.DownstreamRouteFinder.Finder
                 .WithQosOptions(qosOptions)
                 .WithDownstreamScheme(configuration.DownstreamScheme)
                 .WithLoadBalancerOptions(configuration.LoadBalancerOptions)
+                .WithDownstreamHttpVersion(configuration.DownstreamHttpVersion)
                 .WithUpstreamPathTemplate(upstreamPathTemplate);
 
             var rateLimitOptions = configuration

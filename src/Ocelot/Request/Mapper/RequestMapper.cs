@@ -25,6 +25,7 @@ namespace Ocelot.Request.Mapper
                     Content = await MapContent(request),
                     Method = MapMethod(request, downstreamReRoute),
                     RequestUri = MapUri(request),
+                    Version = downstreamReRoute.DownstreamHttpVersion,
                 };
 
                 MapHeaders(request, requestMessage);

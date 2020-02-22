@@ -1,35 +1,37 @@
-﻿using Moq;
-using Ocelot.Cache;
-using Ocelot.Configuration;
-using Ocelot.Configuration.Builder;
-using Ocelot.Configuration.Creator;
-using Ocelot.Configuration.File;
-using Ocelot.Values;
-using Shouldly;
-using System.Collections.Generic;
-using System.Linq;
-using TestStack.BDDfy;
-using Xunit;
-
-namespace Ocelot.UnitTests.Configuration
+﻿namespace Ocelot.UnitTests.Configuration
 {
+    using System;
+    using Moq;
+    using Ocelot.Cache;
+    using Ocelot.Configuration;
+    using Ocelot.Configuration.Builder;
+    using Ocelot.Configuration.Creator;
+    using Ocelot.Configuration.File;
+    using Ocelot.Values;
+    using Shouldly;
+    using System.Collections.Generic;
+    using System.Linq;
+    using TestStack.BDDfy;
+    using Xunit;
+
     public class ReRoutesCreatorTests
     {
-        private readonly ReRoutesCreator _creator;
-        private readonly Mock<IClaimsToThingCreator> _cthCreator;
-        private readonly Mock<IAuthenticationOptionsCreator> _aoCreator;
-        private readonly Mock<IUpstreamTemplatePatternCreator> _utpCreator;
-        private readonly Mock<IRequestIdKeyCreator> _ridkCreator;
-        private readonly Mock<IQoSOptionsCreator> _qosoCreator;
-        private readonly Mock<IReRouteOptionsCreator> _rroCreator;
-        private readonly Mock<IRateLimitOptionsCreator> _rloCreator;
-        private readonly Mock<IRegionCreator> _rCreator;
-        private readonly Mock<IHttpHandlerOptionsCreator> _hhoCreator;
-        private readonly Mock<IHeaderFindAndReplaceCreator> _hfarCreator;
-        private readonly Mock<IDownstreamAddressesCreator> _daCreator;
-        private readonly Mock<ILoadBalancerOptionsCreator> _lboCreator;
-        private readonly Mock<IReRouteKeyCreator> _rrkCreator;
-        private readonly Mock<ISecurityOptionsCreator> _soCreator;
+        private ReRoutesCreator _creator;
+        private Mock<IClaimsToThingCreator> _cthCreator;
+        private Mock<IAuthenticationOptionsCreator> _aoCreator;
+        private Mock<IUpstreamTemplatePatternCreator> _utpCreator;
+        private Mock<IRequestIdKeyCreator> _ridkCreator;
+        private Mock<IQoSOptionsCreator> _qosoCreator;
+        private Mock<IReRouteOptionsCreator> _rroCreator;
+        private Mock<IRateLimitOptionsCreator> _rloCreator;
+        private Mock<IRegionCreator> _rCreator;
+        private Mock<IHttpHandlerOptionsCreator> _hhoCreator;
+        private Mock<IHeaderFindAndReplaceCreator> _hfarCreator;
+        private Mock<IDownstreamAddressesCreator> _daCreator;
+        private Mock<ILoadBalancerOptionsCreator> _lboCreator;
+        private Mock<IReRouteKeyCreator> _rrkCreator;
+        private Mock<ISecurityOptionsCreator> _soCreator;
+        private Mock<IVersionCreator> _versionCreator;
         private FileConfiguration _fileConfig;
         private ReRouteOptions _rro;
         private string _requestId;
@@ -45,6 +47,8 @@ namespace Ocelot.UnitTests.Configuration
         private List<DownstreamHostAndPort> _dhp;
         private LoadBalancerOptions _lbo;
         private List<ReRoute> _result;
+        private SecurityOptions _securityOptions;
+        private Version _expectedVersion;
 
         public ReRoutesCreatorTests()
         {
@@ -62,6 +66,7 @@ namespace Ocelot.UnitTests.Configuration
             _lboCreator = new Mock<ILoadBalancerOptionsCreator>();
             _rrkCreator = new Mock<IReRouteKeyCreator>();
             _soCreator = new Mock<ISecurityOptionsCreator>();
+            _versionCreator = new Mock<IVersionCreator>();
 
             _creator = new ReRoutesCreator(
                 _cthCreator.Object,
@@ -77,7 +82,8 @@ namespace Ocelot.UnitTests.Configuration
                 _daCreator.Object,
                 _lboCreator.Object,
                 _rrkCreator.Object,
-                _soCreator.Object
+                _soCreator.Object,
+                _versionCreator.Object
                 );
         }
 
@@ -105,17 +111,17 @@ namespace Ocelot.UnitTests.Configuration
                         DangerousAcceptAnyServerCertificateValidator = true,
                         AddClaimsToRequest = new Dictionary<string, string>
                         {
-                            { "a","b" },
+                            { "a","b" }
                         },
                         AddHeadersToRequest = new Dictionary<string, string>
                         {
-                            { "c","d" },
+                            { "c","d" }
                         },
                         AddQueriesToRequest = new Dictionary<string, string>
                         {
-                            { "e","f" },
+                            { "e","f" }
                         },
-                        UpstreamHttpMethod = new List<string> { "GET", "POST" },
+                        UpstreamHttpMethod = new List<string> { "GET", "POST" }
                     },
                     new FileReRoute
                     {
@@ -123,19 +129,19 @@ namespace Ocelot.UnitTests.Configuration
                         DangerousAcceptAnyServerCertificateValidator = false,
                         AddClaimsToRequest = new Dictionary<string, string>
                         {
-                            { "g","h" },
+                            { "g","h" }
                         },
                         AddHeadersToRequest = new Dictionary<string, string>
                         {
-                            { "i","j" },
+                            { "i","j" }
                         },
                         AddQueriesToRequest = new Dictionary<string, string>
                         {
-                            { "k","l" },
+                            { "k","l" }
                         },
-                        UpstreamHttpMethod = new List<string> { "PUT", "DELETE" },
-                    },
-                },
+                        UpstreamHttpMethod = new List<string> { "PUT", "DELETE" }
+                    }
+                }
             };
 
             this.Given(_ => GivenThe(fileConfig))
@@ -154,6 +160,7 @@ namespace Ocelot.UnitTests.Configuration
 
         private void GivenTheDependenciesAreSetUpCorrectly()
         {
+            _expectedVersion = new Version("1.1");
             _rro = new ReRouteOptions(false, false, false, false, false);
             _requestId = "testy";
             _rrk = "besty";
@@ -181,6 +188,7 @@ namespace Ocelot.UnitTests.Configuration
             _hfarCreator.Setup(x => x.Create(It.IsAny<FileReRoute>())).Returns(_ht);
             _daCreator.Setup(x => x.Create(It.IsAny<FileReRoute>())).Returns(_dhp);
             _lboCreator.Setup(x => x.Create(It.IsAny<FileLoadBalancerOptions>())).Returns(_lbo);
+            _versionCreator.Setup(x => x.Create(It.IsAny<string>())).Returns(_expectedVersion);
         }
 
         private void ThenTheReRoutesAreCreated()
@@ -208,6 +216,7 @@ namespace Ocelot.UnitTests.Configuration
 
         private void ThenTheReRouteIsSet(FileReRoute expected, int reRouteIndex)
         {
+            _result[reRouteIndex].DownstreamReRoute[0].DownstreamHttpVersion.ShouldBe(_expectedVersion);
             _result[reRouteIndex].DownstreamReRoute[0].IsAuthenticated.ShouldBe(_rro.IsAuthenticated);
             _result[reRouteIndex].DownstreamReRoute[0].IsAuthorised.ShouldBe(_rro.IsAuthorised);
             _result[reRouteIndex].DownstreamReRoute[0].IsCached.ShouldBe(_rro.IsCached);
