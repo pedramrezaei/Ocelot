@@ -14,13 +14,11 @@ namespace Ocelot.Configuration
     {
         private readonly IFileConfigurationRepository _repo;
         private readonly IFileConfigurationSetter _setter;
-        private readonly IServiceProvider _provider;
 
-        public FileConfigurationController(IFileConfigurationRepository repo, IFileConfigurationSetter setter, IServiceProvider provider)
+        public FileConfigurationController(IFileConfigurationRepository repo, IFileConfigurationSetter setter)
         {
             _repo = repo;
             _setter = setter;
-            _provider = provider;
         }
 
         [HttpGet]

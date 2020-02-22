@@ -20,14 +20,12 @@ namespace Ocelot.UnitTests.Controllers
         private readonly Mock<IFileConfigurationSetter> _setter;
         private IActionResult _result;
         private FileConfiguration _fileConfiguration;
-        private readonly Mock<IServiceProvider> _provider;
 
         public FileConfigurationControllerTests()
         {
-            _provider = new Mock<IServiceProvider>();
             _repo = new Mock<IFileConfigurationRepository>();
             _setter = new Mock<IFileConfigurationSetter>();
-            _controller = new FileConfigurationController(_repo.Object, _setter.Object, _provider.Object);
+            _controller = new FileConfigurationController(_repo.Object, _setter.Object);
         }
 
         [Fact]
