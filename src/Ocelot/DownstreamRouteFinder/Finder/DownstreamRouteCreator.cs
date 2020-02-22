@@ -1,5 +1,4 @@
-﻿using System;
-using Ocelot.Configuration;
+﻿using Ocelot.Configuration;
 using Ocelot.Configuration.Builder;
 using Ocelot.Configuration.Creator;
 using Ocelot.LoadBalancer.LoadBalancers;
